@@ -8,14 +8,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString()
 ---
 
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <meta name="theme-color" content="#0d1119" />
+    <meta name="theme-color" content="#ffffff" />
     <meta name="generator" content={Astro.generator} />
 
     <meta property="og:type" content="website" />
@@ -23,9 +23,23 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString()
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="OpsMaxx" />
+    <meta property="og:image" content={`${site.url}/shots/fleet.png`} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={`${site.url}/shots/fleet.png`} />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" as="image" href="/shots/fleet.png" />
+
+    <!-- Light is the default. Only a stored preference turns the page dark,
+         so a first-time visitor never gets a flash of the wrong theme. -->
+    <script is:inline>
+      try {
+        if (localStorage.getItem('theme') === 'dark') {
+          document.documentElement.classList.add('dark')
+        }
+      } catch (e) {}
+    </script>
+
     <script
       type="application/ld+json"
       set:html={JSON.stringify({
@@ -34,6 +48,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString()
         name: 'OpsMaxx',
         applicationCategory: 'DeveloperApplication',
         operatingSystem: 'Windows, macOS, Linux',
+        softwareVersion: site.version,
         license: 'https://opensource.org/licenses/MIT',
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
         url: site.url

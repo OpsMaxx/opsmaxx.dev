@@ -33,7 +33,7 @@ export function InstallTabs() {
     <Tabs defaultValue={install.tabs[0].id} className="w-full">
       <TabsList variant="line" className="mb-6 h-auto gap-6">
         {install.tabs.map((t) => (
-          <TabsTrigger key={t.id} value={t.id} className="px-0 text-sm">
+          <TabsTrigger key={t.id} value={t.id} className="flex-none px-0 text-sm">
             {t.label}
           </TabsTrigger>
         ))}
