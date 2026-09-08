@@ -2,8 +2,8 @@
 import '@/styles/global.css'
 import { site, faq } from '@/data/copy'
 
-interface Props { title?: string; description?: string }
-const { title = site.title, description = site.description } = Astro.props
+interface Props { title?: string; description?: string; preloadHero?: boolean }
+const { title = site.title, description = site.description, preloadHero = false } = Astro.props
 const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString()
 ---
 
@@ -32,7 +32,27 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString()
     <meta name="twitter:image" content={`${site.url}/shots/fleet.png`} />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preload" as="image" href="/shots/fleet.webp" type="image/webp" fetchpriority="high" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Both of these open a connection during first paint; the handshake is
+         worth doing early rather than when the parser reaches the tag. -->
+    <link rel="preconnect" href="https://cdn-cookieyes.com" crossorigin />
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <!-- Preloading a fixed URL would have pulled the 1800px hero on a phone
+         whatever the srcset said, so the preload carries the same candidate
+         list and sizes as the <picture> and resolves to the same file. -->
+    {preloadHero && (
+    <link
+      rel="preload"
+      as="image"
+      type="image/webp"
+      imagesrcset="/shots/fleet-700.webp 700w, /shots/fleet-1100.webp 1100w, /shots/fleet-1400.webp 1400w, /shots/fleet.webp 1800w"
+      imagesizes="(min-width: 1152px) 1104px, (min-width: 640px) calc(100vw - 3rem), calc(100vw - 2.5rem)"
+      fetchpriority="high"
+    />
+    )}
 
     <!-- Consent, then the banner, then analytics. Order matters: the defaults
          have to be on the dataLayer before gtag.js loads, or Google Analytics

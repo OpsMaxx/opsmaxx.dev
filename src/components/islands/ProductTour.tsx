@@ -41,7 +41,17 @@ export function ProductTour() {
         <div className="shot-frame relative aspect-[99/50] w-full">
           {tour.map((t) => (
             <picture key={t.id}>
-              <source srcSet={t.shot.replace('.png', '.webp')} type="image/webp" />
+              {/* The frame is at most 670px wide, so shipping the 1800px
+                  original wasted ~86% of its pixels on desktop and ~96% on a
+                  phone. */}
+              <source
+                type="image/webp"
+                srcSet={[700, 1100, 1400]
+                  .map((w) => `${t.shot.replace('.png', '')}-${w}.webp ${w}w`)
+                  .concat(`${t.shot.replace('.png', '.webp')} 1800w`)
+                  .join(', ')}
+                sizes="(min-width: 1024px) 670px, calc(100vw - 2.5rem)"
+              />
               <img
                 src={t.shot}
                 alt={t.alt}

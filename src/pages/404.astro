@@ -1,0 +1,30 @@
+---
+import Base from '@/layouts/Base.astro'
+import { buttonVariants } from '@/components/ui/button'
+import { ArrowLeft } from 'lucide-react'
+import { site } from '@/data/copy'
+---
+
+<Base
+  title="Not found — OpsMaxx"
+  description="That page does not exist on opsmaxx.dev."
+>
+  <main class="mx-auto flex min-h-screen max-w-xl flex-col items-center justify-center px-5 text-center sm:px-6">
+    <img src="/favicon.svg" alt="" width="40" height="40" />
+    <p class="mt-8 font-mono text-[0.72rem] uppercase tracking-[0.16em] text-brand">Error 404</p>
+    <h1 class="mt-4 text-3xl font-semibold sm:text-4xl">There is nothing at this address.</h1>
+    <p class="mt-5 text-[1.02rem] leading-relaxed text-muted-foreground">
+      The page you asked for does not exist. Everything OpsMaxx has lives on one page,
+      and the source is on GitHub.
+    </p>
+    <div class="mt-9 flex flex-col items-center gap-3 sm:flex-row">
+      <a href="/" class={buttonVariants({ size: 'lg' }) + ' w-full gap-2.5 sm:w-auto'}>
+        <ArrowLeft className="size-4" />
+        Back to opsmaxx.dev
+      </a>
+      <a href={site.repo} class={buttonVariants({ variant: 'outline', size: 'lg' }) + ' w-full sm:w-auto'}>
+        View on GitHub
+      </a>
+    </div>
+  </main>
+</Base>
