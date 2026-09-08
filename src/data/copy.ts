@@ -259,29 +259,6 @@ export const ai = {
   pairing: 'opsmaxx claude'
 }
 
-/* ---------------------------------------------------------------- compare */
-
-export const compare = {
-  eyebrow: 'Comparison',
-  headline: 'Next to MobaXterm, PuTTY, Termius and SecureCRT.',
-  deck: 'Each of them sends you to a second application the moment you need a table or a key.',
-  cols: ['OpsMaxx', 'MobaXterm', 'PuTTY', 'Termius', 'SecureCRT'],
-  rows: [
-    { label: 'Price', v: ['Free, MIT', 'Free tier, paid Pro', 'Free', 'Free tier, paid Pro', 'Paid licence'] },
-    { label: 'Open source', v: [true, false, true, false, false] },
-    { label: 'Windows / macOS / Linux', v: ['All three', 'Windows only', 'All three', 'All three', 'All three'] },
-    { label: 'Account required', v: ['No', 'No', 'No', 'Yes, for sync', 'No'] },
-    { label: 'Telemetry', v: ['None', 'Some', 'None', 'Yes', 'Some'] },
-    { label: 'Saved sessions', v: ['Unlimited', '12 on free tier', 'Unlimited', 'Limited on free tier', 'Unlimited'] },
-    { label: 'Database client', v: ['5 engines', false, false, false, false] },
-    { label: 'Encrypted secrets vault', v: ['AES-256-GCM', 'Password store', false, 'Cloud vault', false] },
-    { label: 'Live server monitoring', v: [true, 'Basic', false, false, false] },
-    { label: 'AI agent access (MCP)', v: ['Scoped per capability', false, false, false, false] }
-  ]
-}
-
-/* ---------------------------------------------------------------- install */
-
 export type Platform = {
   id: string
   label: string

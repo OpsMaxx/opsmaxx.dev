@@ -135,6 +135,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString()
         addEventListener('scroll', schedule, { passive: true })
         addEventListener('resize', schedule)
         addEventListener('load', schedule)
+        // A background tab pauses rAF, so anything queued while hidden never
+        // ran. Sweep again the moment the tab is looked at.
+        addEventListener('visibilitychange', function () {
+          if (!document.hidden) schedule()
+        })
         sweep()
       })()
     </script>
