@@ -1,6 +1,0 @@
-# Cloudflare Pages matches static assets before these rules, so this only fires
-# for paths that do not exist. The destination is the built file rather than the
-# clean URL: Pages resolves the rule against its asset manifest, where the page
-# lives as 404.html. The 404 status keeps the response a 404 instead of turning
-# a missing page into a 200.
-/*  /404.html  404

@@ -1,0 +1,17 @@
+{
+  // Without this file `wrangler deploy` finds no config, tries to convert the
+  // project with an interactive `astro add cloudflare`, and fails — which is
+  // why every build after the icons one deployed nothing.
+  //
+  // The site is static, so this is an assets-only Worker: no `main`, no
+  // adapter, no server. `not_found_handling` is what makes Cloudflare serve
+  // dist/404.html for a path that does not exist, which a _redirects
+  // catch-all was never going to do here.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "opsmaxx-dev",
+  "compatibility_date": "2026-09-08",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}
