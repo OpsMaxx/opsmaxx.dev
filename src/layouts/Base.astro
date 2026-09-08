@@ -1,6 +1,6 @@
 ---
 import '@/styles/global.css'
-import { site } from '@/data/copy'
+import { site, faq } from '@/data/copy'
 
 interface Props { title?: string; description?: string }
 const { title = site.title, description = site.description } = Astro.props
@@ -24,11 +24,15 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString()
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="OpsMaxx" />
     <meta property="og:image" content={`${site.url}/shots/fleet.png`} />
+    <meta property="og:image:width" content="1800" />
+    <meta property="og:image:height" content="908" />
+    <meta property="og:image:alt" content="The OpsMaxx fleet monitor: fifteen servers with live CPU, memory, disk and network" />
+    <meta property="og:locale" content="en_GB" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={`${site.url}/shots/fleet.png`} />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preload" as="image" href="/shots/fleet.png" />
+    <link rel="preload" as="image" href="/shots/fleet.webp" type="image/webp" fetchpriority="high" />
 
     <!-- Consent, then the banner, then analytics. Order matters: the defaults
          have to be on the dataLayer before gtag.js loads, or Google Analytics
@@ -76,6 +80,19 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString()
         }
       } catch (e) {}
     </script>
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faq.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a }
+        }))
+      })}
+    />
 
     <script
       type="application/ld+json"
@@ -178,6 +195,68 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString()
           if (!document.hidden) schedule()
         })
         sweep()
+      })()
+    </script>
+
+    <!-- Download and platform tracking.
+         GA4's enhanced measurement fires file_download for .exe but not for
+         .dmg, .AppImage or .deb, so left alone it would count every Windows
+         download and none of the Mac or Linux ones — a worse dataset than no
+         dataset. This fires one event for any release asset, whatever the
+         extension, which is why it is named app_download rather than
+         file_download: the .exe would otherwise be counted twice.
+
+         Delegated from the document, so links rendered later by an island are
+         covered without the islands knowing anything about analytics. gtag
+         itself honours consent, so nothing is sent before someone accepts. -->
+    <script is:inline>
+      ;(function () {
+        var PLATFORM = [
+          [/\.dmg$/i, 'macos'],
+          [/\.exe$/i, 'windows'],
+          [/\.AppImage$/i, 'linux'],
+          [/\.deb$/i, 'linux']
+        ]
+
+        document.addEventListener(
+          'click',
+          function (e) {
+            var t = e.target
+            if (!t || !t.closest) return
+
+            var link = t.closest('a[href*="/releases/download/"]')
+            if (link) {
+              var url = link.getAttribute('href') || ''
+              var file = url.split('/').pop() || ''
+              var version = (url.match(/\/download\/v?([^/]+)\//) || [])[1] || ''
+              var platform = 'unknown'
+              for (var i = 0; i < PLATFORM.length; i++) {
+                if (PLATFORM[i][0].test(file)) { platform = PLATFORM[i][1]; break }
+              }
+              gtag('event', 'app_download', {
+                platform: platform,
+                file_name: file,
+                file_extension: (file.split('.').pop() || '').toLowerCase(),
+                app_version: version,
+                // Which block on the page earned the click.
+                source: (link.closest('section') || {}).id || 'header',
+                link_url: url
+              })
+              return
+            }
+
+            // Switching the install tab says what someone runs even when they
+            // do not download, which is the only read on audience mix that
+            // does not depend on a conversion.
+            var tab = t.closest('#install [role="tab"]')
+            if (tab) {
+              gtag('event', 'install_platform_select', {
+                platform: (tab.textContent || '').trim().toLowerCase()
+              })
+            }
+          },
+          true
+        )
       })()
     </script>
   </body>

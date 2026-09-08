@@ -11,6 +11,11 @@
 /favicon.svg
   Cache-Control: public, max-age=2592000
 
+# Screenshots are not content-hashed, so a week with revalidation in the
+# background rather than the immutable year the /_astro assets get.
+/shots/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
 # HTML is not hashed and must revalidate.
 /*.html
   Cache-Control: public, max-age=300, must-revalidate

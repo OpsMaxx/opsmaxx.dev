@@ -40,19 +40,21 @@ export function ProductTour() {
             page and every capture reads as the same window. */}
         <div className="shot-frame relative aspect-[99/50] w-full">
           {tour.map((t) => (
-            <img
-              key={t.id}
-              src={t.shot}
-              alt={t.alt}
-              width={1800}
-              height={908}
-              loading="lazy"
-              decoding="async"
-              className={cn(
-                'absolute inset-0 size-full object-cover object-top transition-opacity duration-500',
-                t.id === active ? 'opacity-100' : 'pointer-events-none opacity-0'
-              )}
-            />
+            <picture key={t.id}>
+              <source srcSet={t.shot.replace('.png', '.webp')} type="image/webp" />
+              <img
+                src={t.shot}
+                alt={t.alt}
+                width={1800}
+                height={908}
+                loading="lazy"
+                decoding="async"
+                className={cn(
+                  'absolute inset-0 size-full object-cover object-top transition-opacity duration-500',
+                  t.id === active ? 'opacity-100' : 'pointer-events-none opacity-0'
+                )}
+              />
+            </picture>
           ))}
         </div>
       </div>

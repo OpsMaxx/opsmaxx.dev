@@ -50,7 +50,7 @@ const icons = {
   </header>
 
   <!-- ───────────────────────────────────────────────────────────── hero -->
-  <section class="relative overflow-hidden">
+  <section id="hero" class="relative overflow-hidden">
     <div class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[34rem] bg-gradient-to-b from-brand-soft to-transparent"></div>
 
     <div class="mx-auto max-w-6xl px-5 pb-16 pt-16 sm:px-6 sm:pb-20 sm:pt-28">
@@ -79,15 +79,18 @@ const icons = {
       </div>
 
       <figure class="mt-16 sm:mt-20" data-reveal>
-        <img
-          src={hero.shot.src}
-          alt={hero.shot.alt}
-          width="1800"
-          height="908"
-          fetchpriority="high"
-          decoding="async"
-          class="shot-frame w-full"
-        />
+        <picture>
+          <source srcset={hero.shot.src.replace('.png', '.webp')} type="image/webp" />
+          <img
+            src={hero.shot.src}
+            alt={hero.shot.alt}
+            width="1800"
+            height="908"
+            fetchpriority="high"
+            decoding="async"
+            class="shot-frame w-full"
+          />
+        </picture>
         <figcaption class="mt-4 text-center font-mono text-[0.72rem] uppercase tracking-[0.14em] text-muted-foreground">
           {hero.shot.caption}
         </figcaption>
@@ -331,7 +334,7 @@ const icons = {
   </section>
 
   <!-- ──────────────────────────────────────────────────────── final cta -->
-  <section class="border-t border-border">
+  <section id="cta" class="border-t border-border">
     <div class="mx-auto max-w-3xl px-5 sm:px-6 py-28 text-center sm:py-36">
       <h2 class="text-[2.4rem] font-semibold leading-tight sm:text-[3.2rem]">{finalCta.headline}</h2>
       <p class="mx-auto mt-5 max-w-md text-[1.02rem] text-muted-foreground">{finalCta.line}</p>
