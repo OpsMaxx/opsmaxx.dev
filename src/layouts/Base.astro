@@ -30,6 +30,43 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString()
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preload" as="image" href="/shots/fleet.png" />
 
+    <!-- Consent, then the banner, then analytics. Order matters: the defaults
+         have to be on the dataLayer before gtag.js loads, or Google Analytics
+         fires once before anyone has been asked. CookieYes flips these to
+         granted with a consent update when the visitor accepts.
+
+         This needs "Google Consent Mode" switched on in the CookieYes
+         dashboard. Without it nothing ever sends the update and analytics
+         stays denied forever — quietly, which is the failure mode to watch
+         for if the GA4 property shows no traffic. -->
+    <script is:inline>
+      window.dataLayer = window.dataLayer || []
+      function gtag() { dataLayer.push(arguments) }
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+        functionality_storage: 'denied',
+        personalization_storage: 'denied',
+        security_storage: 'granted',
+        wait_for_update: 500
+      })
+    </script>
+
+    <script
+      is:inline
+      id="cookieyes"
+      type="text/javascript"
+      src="https://cdn-cookieyes.com/client_data/a2d4a67c0b1af9ee19ba19c5f66a12ae/script.js"
+    ></script>
+
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-PF96S41GE7"></script>
+    <script is:inline>
+      gtag('js', new Date())
+      gtag('config', 'G-PF96S41GE7')
+    </script>
+
     <!-- Light is the default. Only a stored preference turns the page dark,
          so a first-time visitor never gets a flash of the wrong theme. -->
     <script is:inline>
