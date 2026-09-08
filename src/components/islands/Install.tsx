@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { ArrowDownToLine, Check, Copy, ShieldCheck, TriangleAlert } from 'lucide-react'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { install, site } from '@/data/copy'
+import { install } from '@/data/copy'
+import type { Release } from '@/lib/releases'
 
 function detect(): string {
   if (typeof navigator === 'undefined') return 'macos'
@@ -48,7 +49,7 @@ function StepHead({ n, title, sub }: { n: string; title: string; sub: string }) 
   )
 }
 
-export function Install() {
+export function Install({ release }: { release: Release }) {
   // Detected after mount, not during render: the first client render has to
   // match the server HTML or React bails out of hydration. client:load means
   // the correction happens at load, long before this section is scrolled to.
@@ -56,6 +57,7 @@ export function Install() {
   useEffect(() => setOs(detect()), [])
 
   const p = install.platforms.find((x) => x.id === os) ?? install.platforms[0]
+  const r = release.platforms[p.id]
   const [s1, s2, s3] = install.steps
 
   return (
@@ -89,23 +91,42 @@ export function Install() {
         <div className="min-w-0 rounded-2xl border border-border bg-background p-6 sm:p-7">
           <StepHead n={s1.n} title={s1.title} sub={s1.sub} />
 
-          <div className="mt-6 rounded-xl border border-brand/25 bg-brand-soft p-4">
-            <p className="font-mono text-[0.8rem] font-medium text-brand">{p.primary.file}</p>
-            <p className="mt-1 text-[0.8rem] text-muted-foreground">{p.primary.note}</p>
-          </div>
-
-          <ul className="mt-3 space-y-2">
-            {p.others.map((o) => (
-              <li key={o.file} className="rounded-xl border border-border p-4">
-                <p className="font-mono text-[0.8rem]">{o.file}</p>
-                <p className="mt-1 text-[0.8rem] text-muted-foreground">{o.note}</p>
-              </li>
-            ))}
-          </ul>
-
-          <a href={site.releases} className={cn(buttonVariants({ size: 'sm' }), 'mt-5 w-full gap-2')}>
+          <a
+            href={r.primary?.url ?? release.url}
+            className={cn(buttonVariants({ size: 'lg' }), 'mt-6 w-full gap-2.5')}
+          >
             <ArrowDownToLine className="size-4" />
-            Go to the release page
+            Download for {p.label}
+          </a>
+
+          {r.primary && (
+            <p className="mt-2.5 text-center font-mono text-[0.72rem] text-muted-foreground">
+              {r.primary.file} · {r.primary.size}
+            </p>
+          )}
+          <p className="mt-1 text-center text-[0.8rem] text-muted-foreground">{p.primaryNote}</p>
+
+          {r.others.map((o) => (
+            <a
+              key={o.file}
+              href={o.url}
+              className="mt-4 flex items-center justify-between gap-3 rounded-xl border border-border p-4 transition-colors hover:border-brand/40"
+            >
+              <span className="min-w-0">
+                <span className="block truncate font-mono text-[0.78rem]">{o.file}</span>
+                <span className="mt-0.5 block text-[0.8rem] text-muted-foreground">
+                  {p.otherNote} · {o.size}
+                </span>
+              </span>
+              <ArrowDownToLine className="size-4 shrink-0 text-muted-foreground" />
+            </a>
+          ))}
+
+          <a
+            href={release.url}
+            className="mt-4 block text-center text-[0.8rem] text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+          >
+            All files and checksums
           </a>
         </div>
 
@@ -178,7 +199,7 @@ export function Install() {
           <ShieldCheck className="mt-0.5 size-4 shrink-0 text-brand" />
           <span>{install.trustLine}</span>
         </p>
-        <Command cmd={p.verify.cmd} label={install.verifyLabel} />
+        <Command cmd={r.verify} label={install.verifyLabel} />
       </div>
 
       <style>{`@keyframes stepin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}`}</style>

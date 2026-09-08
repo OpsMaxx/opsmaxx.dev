@@ -260,11 +260,10 @@ export const ai = {
 }
 
 export type Platform = {
-  id: string
+  id: 'macos' | 'windows' | 'linux'
   label: string
-  primary: { file: string; note: string }
-  others: { file: string; note: string }[]
-  verify: { cmd: string; shell: string }
+  primaryNote: string
+  otherNote: string
   warning: {
     quote: string | null
     why: string
@@ -283,9 +282,8 @@ export const install = {
     {
       id: 'macos',
       label: 'macOS',
-      primary: { file: 'OpsMaxx-arm64.dmg', note: 'Apple Silicon, M1 and later' },
-      others: [{ file: 'OpsMaxx-x64.dmg', note: 'Intel Macs' }],
-      verify: { cmd: 'shasum -a 256 OpsMaxx-arm64.dmg', shell: 'bash' },
+      primaryNote: 'Apple Silicon, M1 and later',
+      otherNote: 'Intel Macs',
       warning: {
         quote: 'Apple could not verify OpsMaxx is free of malware.',
         why: 'The macOS build is ad-hoc signed, so the system can tell the bundle has not been altered since it was built — but not who built it. That needs a $99/year developer account.',
@@ -294,15 +292,14 @@ export const install = {
           'macOS 14 and earlier: right-click the app → Open → Open'
         ],
         cmd: '/usr/bin/xattr -cr /Applications/OpsMaxx.app',
-        cmdNote: 'The /usr/bin/ prefix is deliberate. A Homebrew or pip xattr comes earlier on your PATH and does not accept -r.'
+        cmdNote: 'Optional, if you would rather not click through it. The /usr/bin/ prefix is deliberate: a Homebrew or pip xattr comes earlier on your PATH and does not accept -r.'
       }
     },
     {
       id: 'windows',
       label: 'Windows',
-      primary: { file: 'OpsMaxx-setup.exe', note: 'Installer. Pick this one if unsure.' },
-      others: [{ file: 'OpsMaxx-portable.exe', note: 'One file, no install, runs from a USB stick' }],
-      verify: { cmd: 'Get-FileHash OpsMaxx-setup.exe -Algorithm SHA256', shell: 'powershell' },
+      primaryNote: 'Installer. Pick this one if unsure.',
+      otherNote: 'One file, no install, runs from a USB stick',
       warning: {
         quote: 'Windows protected your PC.',
         why: 'The Windows build carries no signature at all. A code-signing certificate runs $200–$400 a year, which a free MIT project has no income to cover.',
@@ -312,15 +309,14 @@ export const install = {
     {
       id: 'linux',
       label: 'Linux',
-      primary: { file: 'OpsMaxx-x86_64.AppImage', note: 'Runs on any distribution' },
-      others: [{ file: 'OpsMaxx-amd64.deb', note: 'Debian and Ubuntu' }],
-      verify: { cmd: 'sha256sum OpsMaxx-x86_64.AppImage', shell: 'bash' },
+      primaryNote: 'Runs on any distribution',
+      otherNote: 'Debian and Ubuntu',
       warning: {
         quote: null,
         why: 'Nothing stands in your way here. Make the AppImage executable and run it, or install the .deb.',
         steps: [],
         cmd: 'chmod +x OpsMaxx-*.AppImage && ./OpsMaxx-*.AppImage',
-        cmdNote: 'Or: sudo apt install ./OpsMaxx-amd64.deb'
+        cmdNote: 'Or install the .deb: sudo apt install ./OpsMaxx-*-amd64.deb'
       }
     }
   ] as Platform[],

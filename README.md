@@ -50,3 +50,15 @@ Cloudflare Pages, connected to this repository. Every push to `main` deploys.
 
 `public/_headers` carries the cache and security headers; Pages applies it at the edge.
 The build is fully static, so any other static host works the same way.
+
+### Download links
+
+`src/lib/releases.ts` reads the latest release from the GitHub API **at build time**
+and matches assets by their naming scheme, so every download button points straight at
+the right installer with its real filename and size. Visitors make no API call of their
+own, and there is no rate limit to hit.
+
+The trade-off is that a new release only appears once the site rebuilds.
+`.github/workflows/refresh-release-links.yml` triggers a Pages build daily, and can be
+run by hand after publishing a release — set the `CF_PAGES_DEPLOY_HOOK` secret first. If
+the API call fails during a build, the buttons fall back to the releases page.

@@ -1,0 +1,27 @@
+# The download links are baked in at build time from the GitHub API, so the
+# site has to rebuild for a new release to appear. This nudges Cloudflare
+# Pages daily, and can be run by hand right after publishing a release.
+#
+# Setup: Pages project → Settings → Builds & deployments → Deploy hooks,
+# create one, and save the URL as the CF_PAGES_DEPLOY_HOOK secret on this repo.
+name: Refresh release links
+
+on:
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger a Cloudflare Pages build
+        env:
+          HOOK: ${{ secrets.CF_PAGES_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "CF_PAGES_DEPLOY_HOOK is not set; nothing to do."
+            exit 0
+          fi
+          curl -fsS -X POST "$HOOK" -o /dev/null
+          echo "Requested a rebuild."
