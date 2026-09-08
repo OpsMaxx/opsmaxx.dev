@@ -38,5 +38,15 @@ ones and need no licence key.
 
 ## Deploy
 
-`npm run build` emits a fully static `dist/`. Any static host works — Cloudflare Pages,
-Vercel, Netlify, GitHub Pages. Build command `npm run build`, output directory `dist`.
+Cloudflare Pages, connected to this repository. Every push to `main` deploys.
+
+| Setting | Value |
+|---|---|
+| Framework preset | Astro |
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+| Root directory | *(leave empty)* |
+| Node version | 22, from `.nvmrc` |
+
+`public/_headers` carries the cache and security headers; Pages applies it at the edge.
+The build is fully static, so any other static host works the same way.
