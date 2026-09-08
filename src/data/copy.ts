@@ -63,7 +63,7 @@ export const tour: TourItem[] = [
     bullets: [
       'Four groups ship with the app; add as many as you want',
       'ASK holds the request in Approvals until you answer',
-      'Sudo and unrestricted shells are refused for every group'
+      'Escalation shells are refused for every group'
     ],
     shot: '/shots/access.png',
     alt: 'Access group editor with ALLOW, ASK and DENY set per capability'
@@ -252,9 +252,9 @@ export const ai = {
     'Database credentials',
     'Hostnames, IPs and usernames',
     'Anything in the vault',
-    'Sudo or root shells'
+    'An interactive root shell'
   ],
-  closing: 'The bridge listens on 127.0.0.1. Sudo and unrestricted shells are refused for every group, with no setting that turns them back on.',
+  closing: 'The bridge listens on 127.0.0.1. Escalation shells — sudo -i, su, sudo bash — are refused for every group, with no setting that turns them back on.',
   cta: 'Read the threat model',
   pairing: 'opsmaxx claude'
 }
@@ -327,7 +327,7 @@ export const install = {
     { n: '03', title: 'Add your servers', sub: 'Or hand the whole lot to an agent.' }
   ],
 
-  trustLine: 'Every release is scanned by 70+ antivirus engines and publishes a SHA-256 for each file.',
+  trustLine: 'Every installer is scanned before release, and every file\'s SHA-256 is published in the release notes.',
   verifyLabel: 'Optional: check the hash against the release page',
 
   finish: {
@@ -349,7 +349,7 @@ export const install = {
 export const faq = [
   {
     q: 'Why does my computer warn me about the download?',
-    a: 'OpsMaxx is not signed with a code-signing certificate, which costs $200–$400 a year. The warning means your OS cannot confirm who published the app, not that the file is unsafe. Every release is scanned by 70+ antivirus engines and publishes a SHA-256 you can check yourself.'
+    a: 'The Windows build carries no signature, and the macOS build is ad-hoc signed rather than notarized. Certificates cost $200–$400 a year for Windows and $99 for Apple. The warning means your OS cannot confirm who published the app, not that the file is unsafe. Every installer is scanned with ClamAV, the Windows one with Defender, and the .exe and .dmg with VirusTotal\'s 70+ engines — and every SHA-256 is in the release notes for you to check.'
   },
   {
     q: 'Is it really free, or free for now?',
@@ -361,7 +361,7 @@ export const faq = [
   },
   {
     q: 'Can an AI agent do something I did not intend?',
-    a: 'Only within the access group you set. Sudo and unrestricted shells are refused for every group with no setting that reverses it, sensitive actions wait for your approval, and everything that happened is in the audit log.'
+    a: 'Only within the access group you set. Escalation shells — sudo -i, su, sudo bash — are refused for every group with no setting that reverses it, anything set to ASK waits for your approval, and every action lands in the audit log. Individual privileged reads do use sudo -n, which you can turn off.'
   },
   {
     q: 'Do I have to give up the setup I already have?',
@@ -369,7 +369,7 @@ export const faq = [
   },
   {
     q: 'Where are my passwords and keys stored?',
-    a: 'In your operating system keychain, with the vault encrypted using AES-256-GCM. Nothing is uploaded anywhere, and there is no MCP tool that can read the vault at all.'
+    a: 'Server credentials go in your operating system keychain, read only by the main process. The vault is separate: AES-256-GCM under a master password that is never stored, derived with scrypt. Neither leaves your machine, and no MCP tool can read the vault at all.'
   }
 ]
 
