@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
 
+# https://llmstxt.org — a plain-text brief of this site for language models.
+# Generated at build time from the same copy the page renders.
 Sitemap: https://opsmaxx.dev/sitemap-index.xml
