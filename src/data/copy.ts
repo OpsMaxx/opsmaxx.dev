@@ -328,6 +328,20 @@ export const install = {
   ],
 
   trustLine: 'Every installer is scanned before release, and every file\'s SHA-256 is published in the release notes.',
+
+  // A package manager is the install some people will not go without, so the
+  // routes that exist are named on the page rather than buried in the README.
+  managers: {
+    label: 'Or use a package manager',
+    rows: [
+      { id: 'macos', cmd: 'brew install --cask opsmaxx/tap/opsmaxx', note: 'Run brew trust opsmaxx/tap first — Homebrew will not load a third-party tap until you do.' },
+      { id: 'windows', cmd: 'winget install OpsMaxx.OpsMaxx', note: 'In review at microsoft/winget-pkgs. Use the installer above until it lands.' },
+      // Deliberately no Linux row: there is no apt or AUR repository yet, and
+      // repeating the .deb command from step 02 under a "package manager"
+      // heading would imply one exists.
+
+    ]
+  },
   verifyLabel: 'Optional: check the hash against the release page',
 
   finish: {

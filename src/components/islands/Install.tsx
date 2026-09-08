@@ -61,6 +61,7 @@ export function Install({ release }: { release: Release }) {
 
   const p = install.platforms.find((x) => x.id === os) ?? install.platforms[0]
   const r = release.platforms[p.id]
+  const manager = install.managers.rows.find((m) => m.id === p.id)
   const [s1, s2, s3] = install.steps
 
   return (
@@ -134,6 +135,20 @@ export function Install({ release }: { release: Release }) {
           >
             All files and checksums
           </a>
+
+          {manager && (
+            <div className="mt-6 border-t border-border pt-5">
+              <p className="text-[0.8rem] font-medium text-muted-foreground">
+                {install.managers.label}
+              </p>
+              <div className="mt-3">
+                <Command cmd={manager.cmd} />
+              </div>
+              <p className="mt-2 text-[0.78rem] leading-relaxed text-muted-foreground">
+                {manager.note}
+              </p>
+            </div>
+          )}
         </div>
 
         {/* 02 — the warning */}
