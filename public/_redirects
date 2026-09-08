@@ -1,0 +1,5 @@
+# Cloudflare Pages matches static assets first, so this only fires for paths
+# that do not exist. Astro emits 404.html, but Pages rewrites .html to a clean
+# URL and then stops finding it, so the fallback is stated explicitly and keeps
+# the 404 status rather than redirecting to a 200.
+/*  /404  404
