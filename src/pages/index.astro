@@ -37,6 +37,7 @@ const icons = {
         <a href="#tour" class="hidden px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground md:block">Tour</a>
         <a href="#operations" class="hidden px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground lg:block">Operations</a>
         <a href="/mcp/" class="hidden px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground md:block">MCP</a>
+        <a href="/changelog/" class="hidden px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground lg:block">Changelog</a>
         <a href="#faq" class="hidden px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground md:block">FAQ</a>
         <ThemeToggle client:idle />
         <a href={site.repo} class={buttonVariants({ variant: 'ghost', size: 'icon-sm' }) + ' text-muted-foreground'} aria-label="GitHub">
@@ -362,6 +363,7 @@ const icons = {
       <div class="flex items-center gap-6">
         <a href={site.repo} class="transition-colors hover:text-foreground">GitHub</a>
         <a href={site.repo + '/blob/main/SECURITY.md'} class="transition-colors hover:text-foreground">Security</a>
+        <a href="/changelog/" class="transition-colors hover:text-foreground">Changelog</a>
         <a href={site.releases} class="transition-colors hover:text-foreground">Releases</a>
         <!-- CookieYes binds this class to reopen its consent banner. -->
         <button type="button" class="cky-banner-element transition-colors hover:text-foreground">Cookie settings</button>
