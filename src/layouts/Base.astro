@@ -57,5 +57,86 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString()
   </head>
   <body class="min-h-screen bg-background font-sans">
     <slot />
+
+    <!-- Reveal-on-scroll and the counters. Deliberately not a framework:
+         a single rAF-throttled pass, no hydration, and it degrades to
+         "everything visible" if it never runs. The pass is a sweep rather
+         than an observer so that scrolling past a section quickly can never
+         leave it stuck invisible. -->
+    <script is:inline>
+      ;(function () {
+        var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
+        var pending = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'))
+
+        function showAll() {
+          pending.forEach(function (el) { el.classList.add('is-static') })
+          document.querySelectorAll('[data-count]').forEach(function (el) {
+            el.textContent = el.getAttribute('data-count')
+          })
+          pending = []
+        }
+
+        if (reduced) return showAll()
+
+        // Stagger siblings inside a group, so a grid arrives as a wave.
+        document.querySelectorAll('[data-reveal-group]').forEach(function (g) {
+          Array.prototype.forEach.call(g.children, function (child, i) {
+            var el = child.hasAttribute('data-reveal') ? child : child.querySelector('[data-reveal]')
+            if (el) el.style.setProperty('--reveal-delay', Math.min(i, 8) * 55 + 'ms')
+          })
+        })
+
+        var queued = false
+        function schedule() {
+          if (queued) return
+          queued = true
+          requestAnimationFrame(sweep)
+        }
+
+        function sweep() {
+          queued = false
+          var limit = innerHeight * 0.9
+          var still = []
+          for (var i = 0; i < pending.length; i++) {
+            var el = pending[i]
+            if (el.getBoundingClientRect().top < limit) {
+              el.classList.add('is-in')
+              var c = el.matches('[data-count]') ? el : el.querySelector('[data-count]')
+              if (c) count(c)
+            } else {
+              still.push(el)
+            }
+          }
+          pending = still
+          if (!pending.length) {
+            removeEventListener('scroll', schedule)
+            removeEventListener('resize', schedule)
+          }
+        }
+
+        // Counts up to the number in data-count, keeping any suffix ("20+").
+        function count(el) {
+          if (el.dataset.counted) return
+          el.dataset.counted = '1'
+          var raw = el.getAttribute('data-count')
+          var target = parseInt(raw, 10)
+          if (isNaN(target)) return
+          var suffix = raw.replace(/^[0-9]+/, '')
+          if (target === 0) { el.textContent = '0' + suffix; return }
+          var start = performance.now()
+          function frame(now) {
+            var t = Math.min((now - start) / 900, 1)
+            el.textContent = Math.round(target * (1 - Math.pow(1 - t, 3))) + suffix
+            if (t < 1) requestAnimationFrame(frame)
+          }
+          requestAnimationFrame(frame)
+        }
+
+        addEventListener('scroll', schedule, { passive: true })
+        addEventListener('resize', schedule)
+        addEventListener('load', schedule)
+        sweep()
+      })()
+    </script>
   </body>
 </html>

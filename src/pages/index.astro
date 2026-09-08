@@ -4,21 +4,24 @@ import { ProductTour } from '@/components/islands/ProductTour'
 import { InstallTabs } from '@/components/islands/InstallTabs'
 import { Faq } from '@/components/islands/Faq'
 import { ThemeToggle } from '@/components/islands/ThemeToggle'
+import { McpFlow } from '@/components/islands/McpFlow'
 import { DownloadButton } from '@/components/islands/DownloadButton'
 import { IconTile } from '@/components/reui/icon-tile'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { buttonVariants } from '@/components/ui/button'
 import {
-  ArrowRight, Bot, Check, Database, FolderTree, Lock, Minus,
-  Network, Radar, Server, ShieldCheck, TerminalSquare
+  ArrowRight, Bot, Briefcase, Check, Database, FolderTree, Keyboard,
+  Layers, Lock, Minus, Network, Server, Siren, TerminalSquare
 } from 'lucide-react'
 import {
-  site, hero, stats, featuresSection, features, ai, compare, install, finalCta
+  site, hero, stats, featuresSection, features, operations, personas,
+  ai, compare, install, finalCta
 } from '@/data/copy'
 
 const icons = {
   terminal: TerminalSquare, folder: FolderTree, database: Database, network: Network,
-  lock: Lock, server: Server, radar: Radar, bot: Bot
+  lock: Lock, server: Server, bot: Bot, layers: Layers, keyboard: Keyboard,
+  siren: Siren, briefcase: Briefcase
 }
 ---
 
@@ -31,7 +34,8 @@ const icons = {
       </a>
       <div class="flex items-center gap-1">
         <a href="#tour" class="hidden px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground md:block">Tour</a>
-        <a href="#agents" class="hidden px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground md:block">AI agents</a>
+        <a href="#operations" class="hidden px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground lg:block">Operations</a>
+        <a href="#agents" class="hidden px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground md:block">MCP</a>
         <a href="#compare" class="hidden px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground md:block">Compare</a>
         <a href="#faq" class="hidden px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground md:block">FAQ</a>
         <ThemeToggle client:idle />
@@ -74,7 +78,7 @@ const icons = {
         <p class="mt-5 text-[0.85rem] text-muted-foreground">{hero.trust}</p>
       </div>
 
-      <figure class="mt-16 sm:mt-20">
+      <figure class="mt-16 sm:mt-20" data-reveal>
         <img
           src={hero.shot.src}
           alt={hero.shot.alt}
@@ -93,10 +97,10 @@ const icons = {
 
   <!-- ──────────────────────────────────────────────────────────── stats -->
   <section class="border-y border-border bg-band">
-    <div class="mx-auto grid max-w-5xl gap-10 px-6 py-14 sm:grid-cols-3 sm:gap-6">
+    <div class="mx-auto grid max-w-5xl gap-10 px-6 py-14 sm:grid-cols-3 sm:gap-6" data-reveal-group>
       {stats.map((s) => (
-        <div class="text-center">
-          <div class="text-4xl font-semibold tracking-tight text-brand">{s.n}</div>
+        <div class="text-center" data-reveal>
+          <div class="text-4xl font-semibold tracking-tight tabular-nums text-brand" data-count={s.n}>{s.n}</div>
           <div class="mx-auto mt-2 max-w-[14rem] text-[0.9rem] leading-snug text-muted-foreground">{s.label}</div>
         </div>
       ))}
@@ -111,74 +115,195 @@ const icons = {
   <!-- ────────────────────────────────────────────────────────── features -->
   <section class="border-y border-border bg-band">
     <div class="mx-auto max-w-6xl px-6 py-24 sm:py-32">
-      <div class="max-w-2xl">
+      <div class="max-w-2xl" data-reveal>
         <p class="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-brand">{featuresSection.eyebrow}</p>
         <h2 class="mt-4 text-3xl font-semibold leading-tight sm:text-[2.6rem]">{featuresSection.headline}</h2>
         <p class="mt-5 text-[1.02rem] leading-relaxed text-muted-foreground">{featuresSection.deck}</p>
       </div>
 
-      <div class="mt-14 grid gap-x-10 gap-y-11 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-reveal-group>
         {features.map((f) => {
           const Icon = icons[f.icon as keyof typeof icons]
           return (
-            <div>
+            <article
+              data-reveal
+              class:list={[
+                'lift lift-hover group rounded-2xl border border-border bg-background p-7',
+                f.span === 'wide' && 'sm:col-span-2'
+              ]}
+            >
               <IconTile variant="soft" size="default" className="text-brand">
                 <Icon />
               </IconTile>
-              <h3 class="mt-4 text-[0.98rem] font-semibold">{f.name}</h3>
-              <p class="mt-2 text-[0.88rem] leading-relaxed text-muted-foreground">{f.line}</p>
-            </div>
+              <h3 class="mt-5 text-[1.05rem] font-semibold leading-snug">{f.name}</h3>
+              <p class="mt-2.5 max-w-lg text-[0.92rem] leading-relaxed text-muted-foreground">{f.line}</p>
+              {f.chips && (
+                <ul class="mt-5 flex flex-wrap gap-1.5">
+                  {f.chips.map((c) => (
+                    <li class="rounded-md border border-border bg-band px-2 py-1 font-mono text-[0.68rem] text-muted-foreground transition-colors duration-300 group-hover:border-brand/25 group-hover:text-foreground/70">
+                      {c}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </article>
           )
         })}
       </div>
     </div>
   </section>
 
-  <!-- ─────────────────────────────────────────────────────────────── ai -->
-  <section id="agents" class="mx-auto max-w-6xl px-6 py-24 sm:py-32">
-    <div class="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:gap-20">
-      <div>
-        <p class="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-brand">{ai.eyebrow}</p>
-        <h2 class="mt-4 max-w-xl text-3xl font-semibold leading-tight sm:text-[2.6rem]">{ai.headline}</h2>
-        <p class="mt-6 max-w-xl text-[1.02rem] leading-relaxed text-muted-foreground">{ai.body}</p>
-        <p class="mt-8 max-w-xl border-l-2 border-brand/40 pl-5 text-[0.95rem] leading-relaxed text-foreground/75">
-          {ai.closing}
-        </p>
-        <a href={site.repo + '/blob/main/docs/AI-SECURITY.md'} class={buttonVariants({ variant: 'outline' }) + ' mt-9'}>
-          {ai.cta}
-          <ArrowRight className="size-4" />
-        </a>
+  <!-- ──────────────────────────────────────────────────────── operations -->
+  <section id="operations" class="mx-auto max-w-6xl px-6 py-24 sm:py-32">
+    <div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,20rem)] lg:items-end lg:gap-16">
+      <div data-reveal>
+        <p class="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-brand">{operations.eyebrow}</p>
+        <h2 class="mt-4 max-w-xl text-3xl font-semibold leading-tight sm:text-[2.6rem]">{operations.headline}</h2>
+        <p class="mt-5 max-w-xl text-[1.02rem] leading-relaxed text-muted-foreground">{operations.deck}</p>
+      </div>
+      <dl class="grid grid-cols-3 gap-6 lg:pb-2" data-reveal-group>
+        {operations.stats.map((s) => (
+          <div data-reveal>
+            <dt class="text-3xl font-semibold tabular-nums text-brand" data-count={s.n}>{s.n}</dt>
+            <dd class="mt-1.5 text-[0.78rem] leading-snug text-muted-foreground">{s.label}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <div class="mt-14 grid gap-px overflow-hidden rounded-2xl border border-border bg-border lg:grid-cols-3" data-reveal-group>
+      {operations.groups.map((g) => (
+        <div class="bg-background p-7" data-reveal>
+          <h3 class="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-muted-foreground">{g.title}</h3>
+          <ul class="mt-6 space-y-5">
+            {g.items.map(([name, detail]) => (
+              <li>
+                <p class="text-[0.92rem] font-medium">{name}</p>
+                <p class="mt-1 text-[0.83rem] leading-relaxed text-muted-foreground">{detail}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <p class="mt-6 text-center text-[0.83rem] text-muted-foreground" data-reveal>{operations.footnote}</p>
+  </section>
+
+  <!-- ───────────────────────────────────────────────────────── personas -->
+  <section class="border-y border-border bg-band">
+    <div class="mx-auto max-w-6xl px-6 py-24 sm:py-32">
+      <div class="max-w-2xl" data-reveal>
+        <p class="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-brand">{personas.eyebrow}</p>
+        <h2 class="mt-4 text-3xl font-semibold leading-tight sm:text-[2.6rem]">{personas.headline}</h2>
       </div>
 
-      <div class="h-fit rounded-2xl border border-border bg-band p-7">
-        <div class="flex items-center gap-3">
-          <IconTile variant="soft" size="default" className="text-brand">
-            <ShieldCheck />
-          </IconTile>
-          <span class="text-[0.82rem] font-medium text-muted-foreground">{ai.neverLabel}</span>
+      <div class="mt-14 grid gap-4 sm:grid-cols-2" data-reveal-group>
+        {personas.items.map((p) => {
+          const Icon = icons[p.icon as keyof typeof icons]
+          return (
+            <article class="lift lift-hover rounded-2xl border border-border bg-background p-7" data-reveal>
+              <div class="flex items-center gap-3">
+                <IconTile variant="soft" size="default" className="text-brand">
+                  <Icon />
+                </IconTile>
+                <h3 class="text-[1.05rem] font-semibold">{p.role}</h3>
+              </div>
+              <p class="mt-4 text-[0.92rem] leading-relaxed text-muted-foreground">{p.line}</p>
+              <ul class="mt-5 flex flex-wrap gap-1.5">
+                {p.tags.map((t) => (
+                  <li class="rounded-md bg-brand-soft px-2 py-1 font-mono text-[0.68rem] text-brand">{t}</li>
+                ))}
+              </ul>
+            </article>
+          )
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────── mcp -->
+  <section id="agents" class="mx-auto max-w-6xl px-6 py-24 sm:py-32">
+    <div class="max-w-2xl" data-reveal>
+      <p class="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-brand">{ai.eyebrow}</p>
+      <h2 class="mt-4 text-3xl font-semibold leading-tight sm:text-[2.6rem]">{ai.headline}</h2>
+      <p class="mt-6 text-[1.02rem] leading-relaxed text-muted-foreground">{ai.body}</p>
+      <ul class="mt-7 flex flex-wrap gap-1.5">
+        {ai.clients.map((c) => (
+          <li class="rounded-md border border-border bg-band px-2.5 py-1 font-mono text-[0.7rem] text-muted-foreground">{c}</li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="mt-14 grid gap-4 lg:grid-cols-3" data-reveal-group>
+      <!-- the pipeline -->
+      <div class="rounded-2xl border border-border bg-background p-7" data-reveal>
+        <h3 class="text-[0.82rem] font-medium text-muted-foreground">One request, end to end</h3>
+        <div class="mt-7">
+          <McpFlow client:visible />
         </div>
+      </div>
+
+      <!-- the tools -->
+      <div class="rounded-2xl border border-border bg-background p-7" data-reveal>
+        <h3 class="text-[0.82rem] font-medium text-muted-foreground">
+          <span class="tabular-nums text-foreground" data-count={String(ai.toolCount)}>{ai.toolCount}</span> tools an agent can call
+        </h3>
+        <div class="mt-6 space-y-5">
+          {ai.toolGroups.map((g) => (
+            <div>
+              <p class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-brand">{g.title}</p>
+              <ul class="mt-2 flex flex-wrap gap-1">
+                {g.tools.map((t) => (
+                  <li class="rounded border border-border bg-band px-1.5 py-0.5 font-mono text-[0.66rem] text-muted-foreground">{t}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <p class="mt-6 text-[0.83rem] leading-relaxed text-muted-foreground">
+          Each one is governed separately — ALLOW, ASK or DENY — and file paths can be
+          overridden on top of that.
+        </p>
+      </div>
+
+      <!-- what it never gets -->
+      <div class="flex flex-col rounded-2xl border border-border bg-band p-7" data-reveal>
+        <h3 class="text-[0.82rem] font-medium text-muted-foreground">{ai.neverLabel}</h3>
         <ul class="mt-6">
           {ai.never.map((n) => (
-            <li class="flex items-center gap-3 border-b border-border/70 py-3 last:border-0">
+            <li class="flex items-center gap-3 border-b border-border/70 py-3 first:pt-0 last:border-0">
               <Minus className="size-3.5 shrink-0 text-muted-foreground/50" />
-              <span class="text-[0.93rem]">{n}</span>
+              <span class="text-[0.92rem]">{n}</span>
             </li>
           ))}
         </ul>
+        <p class="mt-6 text-[0.83rem] leading-relaxed text-muted-foreground">{ai.closing}</p>
+        <div class="mt-auto pt-7">
+          <p class="text-[0.78rem] text-muted-foreground">Connect Claude Code:</p>
+          <pre class="mt-2 overflow-x-auto rounded-lg border border-brand/25 bg-brand-soft px-3.5 py-2.5 font-mono text-[0.78rem] text-brand"><code>{ai.pairing}</code></pre>
+        </div>
       </div>
+    </div>
+
+    <div class="mt-10" data-reveal>
+      <a href={site.repo + '/blob/main/docs/AI-SECURITY.md'} class={buttonVariants({ variant: 'outline' })}>
+        {ai.cta}
+        <ArrowRight className="size-4" />
+      </a>
     </div>
   </section>
 
   <!-- ────────────────────────────────────────────────────────── compare -->
   <section id="compare" class="border-y border-border bg-band">
     <div class="mx-auto max-w-6xl px-6 py-24 sm:py-32">
-      <div class="max-w-2xl">
+      <div class="max-w-2xl" data-reveal>
         <p class="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-brand">{compare.eyebrow}</p>
         <h2 class="mt-4 text-3xl font-semibold leading-tight sm:text-[2.6rem]">{compare.headline}</h2>
         <p class="mt-5 text-[1.02rem] leading-relaxed text-muted-foreground">{compare.deck}</p>
       </div>
 
-      <div class="mt-12 overflow-x-auto rounded-2xl border border-border bg-background">
+      <div class="mt-12 overflow-x-auto rounded-2xl border border-border bg-background" data-reveal>
         <Table className="min-w-[48rem]">
           <TableHeader>
             <TableRow className="hover:bg-transparent">
@@ -216,7 +341,7 @@ const icons = {
   <!-- ────────────────────────────────────────────────────────── install -->
   <section id="install" class="mx-auto max-w-6xl px-6 py-24 sm:py-32">
     <div class="grid gap-14 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:gap-20">
-      <div>
+      <div data-reveal>
         <p class="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-brand">{install.eyebrow}</p>
         <h2 class="mt-4 text-3xl font-semibold leading-tight sm:text-[2.4rem]">{install.headline}</h2>
         <p class="mt-5 text-[1.02rem] leading-relaxed text-muted-foreground">{install.deck}</p>
@@ -239,7 +364,7 @@ const icons = {
   <!-- ────────────────────────────────────────────────────────────── faq -->
   <section id="faq" class="border-t border-border bg-band">
     <div class="mx-auto max-w-3xl px-6 py-24 sm:py-32">
-      <h2 class="text-3xl font-semibold sm:text-[2.4rem]">Questions people ask first</h2>
+      <h2 class="text-3xl font-semibold sm:text-[2.4rem]" data-reveal>Questions people ask first</h2>
       <div class="mt-10">
         <Faq client:visible />
       </div>

@@ -104,23 +104,165 @@ export const featuresSection = {
   deck: 'All of it shares one encrypted credential store, so nothing has to be pasted between apps.'
 }
 
-export const features = [
-  { icon: 'terminal', name: 'SSH terminal', line: 'GPU-rendered xterm with split panes, search and copy-on-select.' },
-  { icon: 'folder', name: 'SFTP browser', line: 'Browse, edit and upload over the connection the terminal already opened.' },
-  { icon: 'database', name: 'Databases', line: 'Postgres, MySQL, SQL Server, MongoDB and Redis, each with a shell.' },
-  { icon: 'network', name: 'Tunnels and VPN', line: 'Local and remote forwards, SOCKS5, and WireGuard without admin rights.' },
-  { icon: 'lock', name: 'Secrets vault', line: 'AES-256-GCM store for logins, API keys and free-form pairs.' },
-  { icon: 'server', name: 'Fleet operations', line: 'Patch in waves that stop at the first server that comes back unhealthy.' },
-  { icon: 'radar', name: 'Traffic inspector', line: 'Read the HTTP and HTTPS a machine is really making, certificate included.' },
-  { icon: 'bot', name: 'MCP bridge', line: 'Claude Code, Codex and Gemini CLI, scoped by access group.' }
+export type Feature = {
+  icon: string
+  name: string
+  line: string
+  chips?: string[]
+  span?: 'wide' | 'tall'
+}
+
+export const features: Feature[] = [
+  {
+    icon: 'terminal',
+    name: 'Terminal and files, one connection',
+    line: 'A GPU-rendered xterm with split panes and search, and an SFTP browser riding the same session. Two-factor is a code you type once, not once per tab.',
+    chips: ['split panes', 'copy-on-select', 'unlimited jump hosts', 'sftp edit in place'],
+    span: 'wide'
+  },
+  {
+    icon: 'database',
+    name: 'Five database engines',
+    line: 'Query and shell into each one, through a bastion when that is the only route.',
+    chips: ['postgres', 'mysql', 'sql server', 'mongodb', 'redis']
+  },
+  {
+    icon: 'lock',
+    name: 'Encrypted vault',
+    line: 'AES-256-GCM store for logins, API keys and free-form pairs. No MCP tool can read it.',
+    chips: ['os keychain', 'per-workspace', 'portable backup']
+  },
+  {
+    icon: 'network',
+    name: 'Tunnels, VPN and inspection',
+    line: 'Local and remote forwards, a SOCKS5 proxy, userspace WireGuard that never touches your routing table, and a proxy that shows the HTTPS a machine is really making.',
+    chips: ['wireguard', 'openvpn', 'frp', 'socks5', 'traffic inspector'],
+    span: 'wide'
+  },
+  {
+    icon: 'layers',
+    name: 'Workspaces',
+    line: 'Separate, optionally password-protected spaces per client or environment.',
+    chips: ['per-client', 'one encrypted backup file']
+  },
+  {
+    icon: 'keyboard',
+    name: 'Every shortcut rebindable',
+    line: 'Per context, with conflict detection and export or import.',
+    chips: ['command palette', 'ctrl k']
+  }
 ]
+
+/* ------------------------------------------------------------- operations */
+
+export const operations = {
+  eyebrow: 'Fleet operations',
+  headline: 'Run the fleet, not one box at a time.',
+  deck: 'Twenty-odd operations across every server you have added — and every one of them stays off until you turn it on.',
+  stats: [
+    { n: '15', label: 'servers on one screen, live' },
+    { n: '20+', label: 'fleet operations built in' },
+    { n: '0', label: 'agents to install on a server' }
+  ],
+  groups: [
+    {
+      title: 'Know',
+      items: [
+        ['Inventory', 'OS, version, what is pending, last seen'],
+        ['Configuration drift', 'what changed since you last looked'],
+        ['Capacity trends', 'where disk and memory are heading'],
+        ['Security posture', 'ssh config, sudo rules, ports, firewall'],
+        ['Access and keys', 'which key opens which server, and whose'],
+        ['Fleet search', 'search what is collected, touching nothing']
+      ]
+    },
+    {
+      title: 'Change',
+      items: [
+        ['Patching in waves', 'stops at the first server that comes back unhealthy'],
+        ['Run one command everywhere', 'named in a confirmation, survives the app closing'],
+        ['Cron', 'read and edit crontabs, planned then approved'],
+        ['Rules', 'when this fires, run that — with the same approval'],
+        ['Backups', 'scheduled dumps, restore verified by restoring'],
+        ['Change log', 'who approved what, when, and what it did']
+      ]
+    },
+    {
+      title: 'Operate',
+      items: [
+        ['Docker', 'honest per-item sizes, reclaim by id, never a blind prune'],
+        ['Compose', 'services, state, and drift from the file on disk'],
+        ['Kubernetes', 'workloads, cordon, drain and exec'],
+        ['Databases, operated', 'replication lag, slow queries, table sizes'],
+        ['Log tailing', 'follow one file across many servers, in one pane'],
+        ['Runbooks', 'what was run the last three times this alert fired']
+      ]
+    }
+  ],
+  footnote: 'Drain refuses seven ways, and treats a read that did not answer as a refusal in itself.'
+}
+
+/* -------------------------------------------------------------- personas */
+
+export const personas = {
+  eyebrow: 'Who it is for',
+  headline: 'Four ways people actually use it.',
+  items: [
+    {
+      icon: 'siren',
+      role: 'On call at 3am',
+      line: 'An alert fires on CPU, memory or a dead systemd unit. The fleet monitor shows which server, the runbook shows what was run the last three times, and the terminal is one click away.',
+      tags: ['Alerts', 'Fleet monitor', 'Runbooks']
+    },
+    {
+      icon: 'briefcase',
+      role: 'Consulting across clients',
+      line: 'One workspace per client, each optionally password-protected, each with its own servers and secrets. The whole lot exports to a single passphrase-protected file that opens on your other machine.',
+      tags: ['Workspaces', 'Vault', 'Encrypted backup']
+    },
+    {
+      icon: 'server',
+      role: 'Keeping a platform patched',
+      line: 'Patch in waves that stop on the first unhealthy server, watch drift since last week, and read the security posture as it actually is on the box rather than as documented.',
+      tags: ['Patching', 'Drift', 'Security posture']
+    },
+    {
+      icon: 'bot',
+      role: 'Working alongside agents',
+      line: 'Give Claude Code a read-only group on staging and an ASK group on production. It works on its own until something matters, then it waits for you.',
+      tags: ['Access groups', 'Approvals', 'Audit log']
+    }
+  ]
+}
 
 /* --------------------------------------------------------------------- ai */
 
 export const ai = {
-  eyebrow: 'AI agents',
-  headline: 'Let an agent run your servers without handing it the keys.',
-  body: 'An agent asks for a server by the friendly name you gave it. OpsMaxx looks the real connection up in your OS keychain, checks the access group, runs the command over normal SSH, and strips secrets out of the output before the agent sees it.',
+  eyebrow: 'MCP',
+  headline: 'The best thing you can hand an AI agent is a name, not a key.',
+  body: 'An agent asks for a server by the friendly name you gave it. OpsMaxx looks the real connection up in your OS keychain, checks the access group, runs the command over normal SSH, and strips secrets out of the output before the agent sees any of it.',
+
+  clients: ['Claude Code', 'Claude Desktop', 'Codex', 'Gemini CLI', 'any MCP client'],
+
+  toolCount: 28,
+  toolGroups: [
+    { title: 'Servers', tools: ['list_servers', 'get_server_details', 'get_host_facts', 'get_server_metrics', 'execute_command', 'add_server'] },
+    { title: 'Files', tools: ['list_files', 'read_file', 'write_file'] },
+    { title: 'Containers', tools: ['list_containers', 'container_logs', 'container_action', 'list_images', 'compose_status'] },
+    { title: 'Databases', tools: ['list_databases', 'query_database'] },
+    { title: 'Network', tools: ['list_tunnels', 'set_tunnel', 'list_vpns', 'set_vpn'] },
+    { title: 'Fleet', tools: ['fleet_inventory', 'fleet_drift', 'get_config_drift', 'get_capacity_trends', 'list_alerts', 'backup_status'] }
+  ],
+
+  flow: [
+    { step: 'Agent asks', detail: 'execute_command on "Nginx Prod"' },
+    { step: 'Policy check', detail: 'access group says ALLOW, ASK or DENY' },
+    { step: 'You approve', detail: 'ASK waits in Approvals; the agent waits too' },
+    { step: 'OpsMaxx connects', detail: 'real host and key read from the OS keychain' },
+    { step: 'Output redacted', detail: 'secrets and secret-shaped strings stripped' },
+    { step: 'Written down', detail: 'agent, server, action and result in the audit log' }
+  ],
+
   neverLabel: 'What an agent never receives',
   never: [
     'SSH passwords',
@@ -130,8 +272,9 @@ export const ai = {
     'Anything in the vault',
     'Sudo or root shells'
   ],
-  closing: 'The bridge listens on 127.0.0.1. Anything set to ASK waits in Approvals, and an agent cannot approve its own request.',
-  cta: 'Read the threat model'
+  closing: 'The bridge listens on 127.0.0.1. Sudo and unrestricted shells are refused for every group, with no setting that turns them back on.',
+  cta: 'Read the threat model',
+  pairing: 'opsmaxx claude'
 }
 
 /* ---------------------------------------------------------------- compare */
