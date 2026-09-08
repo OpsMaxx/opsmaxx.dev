@@ -3,7 +3,6 @@ import Base from '@/layouts/Base.astro'
 import { getRelease } from '@/lib/releases'
 import { ProductTour } from '@/components/islands/ProductTour'
 import { Install } from '@/components/islands/Install'
-import { Faq } from '@/components/islands/Faq'
 import { ThemeToggle } from '@/components/islands/ThemeToggle'
 import { McpFlow } from '@/components/islands/McpFlow'
 import { DownloadButton } from '@/components/islands/DownloadButton'
@@ -15,7 +14,7 @@ import {
 } from 'lucide-react'
 import {
   site, hero, stats, featuresSection, features, operations, personas,
-  ai, install, finalCta
+  ai, install, faq, finalCta
 } from '@/data/copy'
 
 const release = await getRelease()
@@ -304,8 +303,29 @@ const icons = {
   <section id="faq" class="border-t border-border bg-band">
     <div class="mx-auto max-w-3xl px-5 sm:px-6 py-20 sm:py-32">
       <h2 class="text-3xl font-semibold sm:text-[2.4rem]" data-reveal>Questions people ask first</h2>
-      <div class="mt-10">
-        <Faq client:visible />
+
+      <!-- Native disclosure rather than a JS accordion: the answers are the
+           objections that decide whether someone downloads, so they belong in
+           the HTML where a crawler and a reader without JavaScript can both
+           reach them. A Radix accordion unmounts closed content entirely. -->
+      <div class="mt-10" data-reveal-group>
+        {faq.map((f) => (
+          <details class="group border-b border-border" data-reveal>
+            <summary
+              class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-left text-[1.02rem] font-medium transition-colors hover:text-brand [&::-webkit-details-marker]:hidden"
+            >
+              {f.q}
+              <svg
+                class="size-4 shrink-0 text-muted-foreground transition-transform duration-300 group-open:rotate-180"
+                viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+              >
+                <path d="M4 6l4 4 4-4" />
+              </svg>
+            </summary>
+            <p class="pb-6 pr-10 text-[0.95rem] leading-relaxed text-muted-foreground">{f.a}</p>
+          </details>
+        ))}
       </div>
     </div>
   </section>
