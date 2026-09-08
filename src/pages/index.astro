@@ -5,9 +5,9 @@ import { InstallTabs } from '@/components/islands/InstallTabs'
 import { Faq } from '@/components/islands/Faq'
 import { ThemeToggle } from '@/components/islands/ThemeToggle'
 import { McpFlow } from '@/components/islands/McpFlow'
+import { Comparison } from '@/components/islands/Comparison'
 import { DownloadButton } from '@/components/islands/DownloadButton'
 import { IconTile } from '@/components/reui/icon-tile'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { buttonVariants } from '@/components/ui/button'
 import {
   ArrowRight, Bot, Briefcase, Check, Database, FolderTree, Keyboard,
@@ -53,14 +53,14 @@ const icons = {
   <section class="relative overflow-hidden">
     <div class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[34rem] bg-gradient-to-b from-brand-soft to-transparent"></div>
 
-    <div class="mx-auto max-w-6xl px-6 pb-20 pt-20 sm:pt-28">
+    <div class="mx-auto max-w-6xl px-5 pb-16 pt-16 sm:px-6 sm:pb-20 sm:pt-28">
       <div class="mx-auto max-w-3xl text-center">
         <span class="inline-flex items-center gap-2 rounded-full border border-border bg-background px-3.5 py-1.5 text-[0.78rem] font-medium text-muted-foreground">
           <span class="size-1.5 rounded-full bg-brand"></span>
           {hero.eyebrow}
         </span>
 
-        <h1 class="mt-7 text-[2.6rem] font-semibold leading-[1.06] sm:text-[3.9rem]">
+        <h1 class="mt-7 text-[2.15rem] font-semibold leading-[1.08] xs:text-[2.6rem] sm:text-[3.9rem]">
           {hero.h1}
         </h1>
 
@@ -108,13 +108,13 @@ const icons = {
   </section>
 
   <!-- ───────────────────────────────────────────────────────────── tour -->
-  <section id="tour" class="mx-auto max-w-6xl px-6 py-24 sm:py-32">
+  <section id="tour" class="mx-auto max-w-6xl px-5 sm:px-6 py-20 sm:py-32">
     <ProductTour client:visible />
   </section>
 
   <!-- ────────────────────────────────────────────────────────── features -->
   <section class="border-y border-border bg-band">
-    <div class="mx-auto max-w-6xl px-6 py-24 sm:py-32">
+    <div class="mx-auto max-w-6xl px-5 sm:px-6 py-20 sm:py-32">
       <div class="max-w-2xl" data-reveal>
         <p class="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-brand">{featuresSection.eyebrow}</p>
         <h2 class="mt-4 text-3xl font-semibold leading-tight sm:text-[2.6rem]">{featuresSection.headline}</h2>
@@ -128,7 +128,7 @@ const icons = {
             <article
               data-reveal
               class:list={[
-                'lift lift-hover group rounded-2xl border border-border bg-background p-7',
+                'lift lift-hover group rounded-2xl border border-border bg-background p-6 sm:p-7',
                 f.span === 'wide' && 'sm:col-span-2'
               ]}
             >
@@ -154,17 +154,17 @@ const icons = {
   </section>
 
   <!-- ──────────────────────────────────────────────────────── operations -->
-  <section id="operations" class="mx-auto max-w-6xl px-6 py-24 sm:py-32">
+  <section id="operations" class="mx-auto max-w-6xl px-5 sm:px-6 py-20 sm:py-32">
     <div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,20rem)] lg:items-end lg:gap-16">
       <div data-reveal>
         <p class="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-brand">{operations.eyebrow}</p>
         <h2 class="mt-4 max-w-xl text-3xl font-semibold leading-tight sm:text-[2.6rem]">{operations.headline}</h2>
         <p class="mt-5 max-w-xl text-[1.02rem] leading-relaxed text-muted-foreground">{operations.deck}</p>
       </div>
-      <dl class="grid grid-cols-3 gap-6 lg:pb-2" data-reveal-group>
+      <dl class="grid grid-cols-3 gap-4 sm:gap-6 lg:pb-2" data-reveal-group>
         {operations.stats.map((s) => (
           <div data-reveal>
-            <dt class="text-3xl font-semibold tabular-nums text-brand" data-count={s.n}>{s.n}</dt>
+            <dt class="text-2xl font-semibold tabular-nums text-brand sm:text-3xl" data-count={s.n}>{s.n}</dt>
             <dd class="mt-1.5 text-[0.78rem] leading-snug text-muted-foreground">{s.label}</dd>
           </div>
         ))}
@@ -173,7 +173,7 @@ const icons = {
 
     <div class="mt-14 grid gap-px overflow-hidden rounded-2xl border border-border bg-border lg:grid-cols-3" data-reveal-group>
       {operations.groups.map((g) => (
-        <div class="bg-background p-7" data-reveal>
+        <div class="bg-background p-6 sm:p-7" data-reveal>
           <h3 class="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-muted-foreground">{g.title}</h3>
           <ul class="mt-6 space-y-5">
             {g.items.map(([name, detail]) => (
@@ -192,7 +192,7 @@ const icons = {
 
   <!-- ───────────────────────────────────────────────────────── personas -->
   <section class="border-y border-border bg-band">
-    <div class="mx-auto max-w-6xl px-6 py-24 sm:py-32">
+    <div class="mx-auto max-w-6xl px-5 sm:px-6 py-20 sm:py-32">
       <div class="max-w-2xl" data-reveal>
         <p class="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-brand">{personas.eyebrow}</p>
         <h2 class="mt-4 text-3xl font-semibold leading-tight sm:text-[2.6rem]">{personas.headline}</h2>
@@ -202,7 +202,7 @@ const icons = {
         {personas.items.map((p) => {
           const Icon = icons[p.icon as keyof typeof icons]
           return (
-            <article class="lift lift-hover rounded-2xl border border-border bg-background p-7" data-reveal>
+            <article class="lift lift-hover rounded-2xl border border-border bg-background p-6 sm:p-7" data-reveal>
               <div class="flex items-center gap-3">
                 <IconTile variant="soft" size="default" className="text-brand">
                   <Icon />
@@ -223,7 +223,7 @@ const icons = {
   </section>
 
   <!-- ─────────────────────────────────────────────────────────────── mcp -->
-  <section id="agents" class="mx-auto max-w-6xl px-6 py-24 sm:py-32">
+  <section id="agents" class="mx-auto max-w-6xl px-5 sm:px-6 py-20 sm:py-32">
     <div class="max-w-2xl" data-reveal>
       <p class="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-brand">{ai.eyebrow}</p>
       <h2 class="mt-4 text-3xl font-semibold leading-tight sm:text-[2.6rem]">{ai.headline}</h2>
@@ -237,7 +237,7 @@ const icons = {
 
     <div class="mt-14 grid gap-4 lg:grid-cols-3" data-reveal-group>
       <!-- the pipeline -->
-      <div class="rounded-2xl border border-border bg-background p-7" data-reveal>
+      <div class="rounded-2xl border border-border bg-background p-6 sm:p-7" data-reveal>
         <h3 class="text-[0.82rem] font-medium text-muted-foreground">One request, end to end</h3>
         <div class="mt-7">
           <McpFlow client:visible />
@@ -245,7 +245,7 @@ const icons = {
       </div>
 
       <!-- the tools -->
-      <div class="rounded-2xl border border-border bg-background p-7" data-reveal>
+      <div class="rounded-2xl border border-border bg-background p-6 sm:p-7" data-reveal>
         <h3 class="text-[0.82rem] font-medium text-muted-foreground">
           <span class="tabular-nums text-foreground" data-count={String(ai.toolCount)}>{ai.toolCount}</span> tools an agent can call
         </h3>
@@ -268,7 +268,7 @@ const icons = {
       </div>
 
       <!-- what it never gets -->
-      <div class="flex flex-col rounded-2xl border border-border bg-band p-7" data-reveal>
+      <div class="flex flex-col rounded-2xl border border-border bg-band p-6 sm:p-7" data-reveal>
         <h3 class="text-[0.82rem] font-medium text-muted-foreground">{ai.neverLabel}</h3>
         <ul class="mt-6">
           {ai.never.map((n) => (
@@ -296,50 +296,21 @@ const icons = {
 
   <!-- ────────────────────────────────────────────────────────── compare -->
   <section id="compare" class="border-y border-border bg-band">
-    <div class="mx-auto max-w-6xl px-6 py-24 sm:py-32">
+    <div class="mx-auto max-w-6xl px-5 sm:px-6 py-20 sm:py-32">
       <div class="max-w-2xl" data-reveal>
         <p class="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-brand">{compare.eyebrow}</p>
         <h2 class="mt-4 text-3xl font-semibold leading-tight sm:text-[2.6rem]">{compare.headline}</h2>
         <p class="mt-5 text-[1.02rem] leading-relaxed text-muted-foreground">{compare.deck}</p>
       </div>
 
-      <div class="mt-12 overflow-x-auto rounded-2xl border border-border bg-background" data-reveal>
-        <Table className="min-w-[48rem]">
-          <TableHeader>
-            <TableRow className="hover:bg-transparent">
-              <TableHead className="w-56 pl-6"></TableHead>
-              {compare.cols.map((c, i) => (
-                <TableHead class:list={['text-center text-[0.78rem] font-medium', i === 0 && 'bg-brand-soft text-brand']}>
-                  {c}
-                </TableHead>
-              ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {compare.rows.map((r) => (
-              <TableRow>
-                <TableCell className="pl-6 text-[0.88rem] text-muted-foreground">{r.label}</TableCell>
-                {r.v.map((v, i) => (
-                  <TableCell class:list={['text-center text-[0.88rem]', i === 0 ? 'bg-brand-soft font-medium' : 'text-muted-foreground']}>
-                    {v === true ? (
-                      <Check class:list={['mx-auto size-4', i === 0 ? 'text-brand' : 'text-muted-foreground']} />
-                    ) : v === false ? (
-                      <Minus className="mx-auto size-4 text-muted-foreground/35" />
-                    ) : (
-                      <span>{v}</span>
-                    )}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+      <div class="mt-14" data-reveal>
+        <Comparison client:visible />
       </div>
     </div>
   </section>
 
   <!-- ────────────────────────────────────────────────────────── install -->
-  <section id="install" class="mx-auto max-w-6xl px-6 py-24 sm:py-32">
+  <section id="install" class="mx-auto max-w-6xl px-5 sm:px-6 py-20 sm:py-32">
     <div class="grid gap-14 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:gap-20">
       <div data-reveal>
         <p class="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-brand">{install.eyebrow}</p>
@@ -363,7 +334,7 @@ const icons = {
 
   <!-- ────────────────────────────────────────────────────────────── faq -->
   <section id="faq" class="border-t border-border bg-band">
-    <div class="mx-auto max-w-3xl px-6 py-24 sm:py-32">
+    <div class="mx-auto max-w-3xl px-5 sm:px-6 py-20 sm:py-32">
       <h2 class="text-3xl font-semibold sm:text-[2.4rem]" data-reveal>Questions people ask first</h2>
       <div class="mt-10">
         <Faq client:visible />
@@ -373,7 +344,7 @@ const icons = {
 
   <!-- ──────────────────────────────────────────────────────── final cta -->
   <section class="border-t border-border">
-    <div class="mx-auto max-w-3xl px-6 py-28 text-center sm:py-36">
+    <div class="mx-auto max-w-3xl px-5 sm:px-6 py-28 text-center sm:py-36">
       <h2 class="text-[2.4rem] font-semibold leading-tight sm:text-[3.2rem]">{finalCta.headline}</h2>
       <p class="mx-auto mt-5 max-w-md text-[1.02rem] text-muted-foreground">{finalCta.line}</p>
       <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
