@@ -68,7 +68,7 @@ const icons = {
           {hero.sub}
         </p>
 
-        <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row sm:items-start">
           <DownloadButton release={release} showMeta client:load className="w-full sm:w-auto" />
           <a href={site.repo} class={buttonVariants({ variant: 'outline', size: 'lg' }) + ' w-full sm:w-auto'}>
             {hero.ctaSecondary}
@@ -335,7 +335,7 @@ const icons = {
     <div class="mx-auto max-w-3xl px-5 sm:px-6 py-28 text-center sm:py-36">
       <h2 class="text-[2.4rem] font-semibold leading-tight sm:text-[3.2rem]">{finalCta.headline}</h2>
       <p class="mx-auto mt-5 max-w-md text-[1.02rem] text-muted-foreground">{finalCta.line}</p>
-      <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+      <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:items-start">
         <DownloadButton release={release} showMeta client:load className="w-full sm:w-auto" />
         <a href={site.repo} class={buttonVariants({ variant: 'outline', size: 'lg' }) + ' w-full sm:w-auto'}>
           {finalCta.secondary}
