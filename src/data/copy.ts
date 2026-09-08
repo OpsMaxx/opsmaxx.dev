@@ -80,19 +80,6 @@ export const tour: TourItem[] = [
     ],
     shot: '/shots/audit.png',
     alt: 'Audit log listing agent actions with approval state and result'
-  },
-  {
-    id: 'connect',
-    tab: 'Jump hosts',
-    headline: 'Chain as many bastions as your network actually needs.',
-    body: 'Each hop carries its own credentials. Connections are shared, so a two-factor code is something you type once rather than once per session.',
-    bullets: [
-      'Unlimited chained hops per server',
-      'Imports ~/.ssh/config, ProxyJump entries included',
-      'Databases and SFTP ride the same connection'
-    ],
-    shot: '/shots/jumphosts.png',
-    alt: 'Server dialog with a chain of jump hosts, each with its own credentials'
   }
 ]
 
@@ -373,14 +360,19 @@ export const install = {
   ],
 
   trustLine: 'Every release is scanned by 70+ antivirus engines and publishes a SHA-256 for each file.',
-  verifyLabel: 'Check the hash against the one on the release page',
+  verifyLabel: 'Optional: check the hash against the release page',
 
   finish: {
     importTitle: 'Import what you already have',
     importBody: 'OpsMaxx reads ~/.ssh/config, ProxyJump entries included, so the servers you already reach by name are there on first run.',
     agentTitle: 'Connect Claude Code',
+    agentBody: 'AI & MCP → Overview → Connect Claude Code copies a ready command with the token already in it. One paste in a terminal and the bridge is live.',
     agentCmd: 'opsmaxx claude',
-    agentBody: 'One command registers the bridge and launches it. A pairing code appears in the app, so there is no token to copy or paste.'
+    agentCmdNote: {
+      macos: 'There is a CLI too, though the macOS installer does not put opsmaxx on your PATH — call the launcher inside the app bundle, or use the button above.',
+      windows: 'Or use the CLI, which the Windows installer does put on your PATH:',
+      linux: 'Or use the CLI:'
+    }
   }
 }
 

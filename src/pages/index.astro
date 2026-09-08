@@ -10,8 +10,8 @@ import { DownloadButton } from '@/components/islands/DownloadButton'
 import { IconTile } from '@/components/reui/icon-tile'
 import { buttonVariants } from '@/components/ui/button'
 import {
-  ArrowRight, Bot, Briefcase, Check, Database, FolderTree, Keyboard,
-  Layers, Lock, Minus, Network, Server, Siren, TerminalSquare
+  ArrowDownToLine, ArrowRight, Bot, Briefcase, Database, FolderTree, Keyboard,
+  Layers, Lock, Minus, Network, Server, ShieldCheck, Siren, TerminalSquare
 } from 'lucide-react'
 import {
   site, hero, stats, featuresSection, features, operations, personas,
@@ -318,7 +318,7 @@ const icons = {
     </div>
 
     <div class="mt-12" data-reveal>
-      <Install client:visible />
+      <Install client:load />
     </div>
   </section>
 
@@ -338,7 +338,10 @@ const icons = {
       <h2 class="text-[2.4rem] font-semibold leading-tight sm:text-[3.2rem]">{finalCta.headline}</h2>
       <p class="mx-auto mt-5 max-w-md text-[1.02rem] text-muted-foreground">{finalCta.line}</p>
       <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-        <DownloadButton client:visible className="w-full sm:w-auto" />
+        <a href={site.releases} class={buttonVariants({ size: 'lg' }) + ' w-full gap-2.5 sm:w-auto'}>
+          <ArrowDownToLine className="size-4" />
+          {finalCta.button}
+        </a>
         <a href={site.repo} class={buttonVariants({ variant: 'outline', size: 'lg' }) + ' w-full sm:w-auto'}>
           {finalCta.secondary}
         </a>

@@ -49,6 +49,9 @@ function StepHead({ n, title, sub }: { n: string; title: string; sub: string }) 
 }
 
 export function Install() {
+  // Detected after mount, not during render: the first client render has to
+  // match the server HTML or React bails out of hydration. client:load means
+  // the correction happens at load, long before this section is scrolled to.
   const [os, setOs] = useState('macos')
   useEffect(() => setOs(detect()), [])
 
@@ -156,11 +159,14 @@ export function Install() {
 
           <div className="mt-6 border-t border-border pt-6">
             <p className="text-[0.86rem] font-medium">{install.finish.agentTitle}</p>
-            <div className="mt-3">
+            <p className="mt-1.5 text-[0.86rem] leading-relaxed text-muted-foreground">
+              {install.finish.agentBody}
+            </p>
+            <div className="mt-4">
               <Command cmd={install.finish.agentCmd} />
             </div>
             <p className="mt-2.5 text-[0.86rem] leading-relaxed text-muted-foreground">
-              {install.finish.agentBody}
+              {install.finish.agentCmdNote[os as keyof typeof install.finish.agentCmdNote]}
             </p>
           </div>
         </div>

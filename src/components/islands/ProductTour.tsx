@@ -36,7 +36,9 @@ export function ProductTour() {
           </ul>
         </div>
 
-        <div className="relative">
+        {/* One frame at a fixed ratio, so switching tabs never resizes the
+            page and every capture reads as the same window. */}
+        <div className="shot-frame relative aspect-[99/50] w-full">
           {tour.map((t) => (
             <img
               key={t.id}
@@ -47,8 +49,8 @@ export function ProductTour() {
               loading="lazy"
               decoding="async"
               className={cn(
-                'shot-frame w-full transition-opacity duration-500',
-                t.id === active ? 'relative opacity-100' : 'pointer-events-none absolute inset-0 opacity-0'
+                'absolute inset-0 size-full object-cover object-top transition-opacity duration-500',
+                t.id === active ? 'opacity-100' : 'pointer-events-none opacity-0'
               )}
             />
           ))}
