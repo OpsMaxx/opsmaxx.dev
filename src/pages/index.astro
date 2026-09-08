@@ -155,21 +155,13 @@ const icons = {
 
   <!-- ──────────────────────────────────────────────────────── operations -->
   <section id="operations" class="mx-auto max-w-6xl px-5 sm:px-6 py-20 sm:py-32">
-    <div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,20rem)] lg:items-end lg:gap-16">
+    <div class="max-w-3xl">
       <div data-reveal>
         <p class="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-brand">{operations.eyebrow}</p>
         <h2 class="mt-4 max-w-xl text-3xl font-semibold leading-tight sm:text-[2.6rem]">{operations.headline}</h2>
         <p class="mt-5 max-w-xl text-[1.02rem] leading-relaxed text-muted-foreground">{operations.deck}</p>
       </div>
-      <dl class="grid grid-cols-3 gap-4 sm:gap-6 lg:pb-2" data-reveal-group>
-        {operations.stats.map((s) => (
-          <div data-reveal>
-            <dt class="text-2xl font-semibold tabular-nums text-brand sm:text-3xl" data-count={s.n}>{s.n}</dt>
-            <dd class="mt-1.5 text-[0.78rem] leading-snug text-muted-foreground">{s.label}</dd>
-          </div>
-        ))}
-      </dl>
-    </div>
+</div>
 
     <div class="mt-14 grid gap-px overflow-hidden rounded-2xl border border-border bg-border lg:grid-cols-3" data-reveal-group>
       {operations.groups.map((g) => (

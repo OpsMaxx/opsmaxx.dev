@@ -25,8 +25,8 @@ export const hero = {
 
 export const stats = [
   { n: '5', label: 'database engines built in' },
-  { n: '0', label: 'credentials an AI agent ever sees' },
-  { n: '3', label: 'platforms, one codebase' }
+  { n: '20', label: 'fleet operations, all off by default' },
+  { n: '0', label: 'credentials an AI agent ever sees' }
 ]
 
 /* ------------------------------------------------------------------ tour */
@@ -122,7 +122,7 @@ export const features: Feature[] = [
   {
     icon: 'network',
     name: 'Tunnels, VPN and inspection',
-    line: 'Local and remote forwards, a SOCKS5 proxy, userspace WireGuard that never touches your routing table, and a proxy that shows the HTTPS a machine is really making.',
+    line: 'Local and remote forwards, a SOCKS5 proxy, userspace WireGuard that needs no administrator rights, and a proxy that shows the HTTPS a machine is really making.',
     chips: ['wireguard', 'openvpn', 'frp', 'socks5', 'traffic inspector'],
     span: 'wide'
   },
@@ -146,11 +146,6 @@ export const operations = {
   eyebrow: 'Fleet operations',
   headline: 'Run the fleet, not one box at a time.',
   deck: 'Twenty-odd operations across every server you have added — and every one of them stays off until you turn it on.',
-  stats: [
-    { n: '15', label: 'servers on one screen, live' },
-    { n: '20+', label: 'fleet operations built in' },
-    { n: '0', label: 'agents to install on a server' }
-  ],
   groups: [
     {
       title: 'Know',
