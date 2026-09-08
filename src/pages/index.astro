@@ -1,0 +1,223 @@
+---
+import Base from '@/layouts/Base.astro'
+import { Knife } from '@/components/islands/Knife'
+import { InstallTabs } from '@/components/islands/InstallTabs'
+import { Faq } from '@/components/islands/Faq'
+import { Badge } from '@/components/reui/badge'
+import { IconTile } from '@/components/reui/icon-tile'
+import { Frame, FramePanel } from '@/components/reui/frame'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { buttonVariants } from '@/components/ui/button'
+import { Check, X, ArrowRight, ShieldCheck } from 'lucide-react'
+import { site, hero, stats, blades, bladesSection, ai, compare, install, finalCta } from '@/data/copy'
+---
+
+<Base>
+  <!-- nav -->
+  <header class="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-xl">
+    <nav class="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
+      <a href="/" class="flex items-center gap-2.5 font-semibold tracking-tight">
+        <img src="/favicon.svg" alt="" width="22" height="22" />
+        OpsMaxx
+      </a>
+      <div class="flex items-center gap-1.5">
+        <a href="#compare" class="hidden px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground sm:block">Compare</a>
+        <a href="#agents" class="hidden px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground sm:block">AI agents</a>
+        <a href={site.repo} class={buttonVariants({ variant: 'ghost', size: 'icon-sm' })} aria-label="GitHub">
+          <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
+          </svg>
+        </a>
+        <a href={site.releases} class={buttonVariants({ size: 'sm' })}>Download</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- hero -->
+  <section class="relative overflow-hidden">
+    <div class="grid-bg mask-fade-b pointer-events-none absolute inset-0 -z-10"></div>
+    <div class="pointer-events-none absolute left-1/2 top-0 -z-10 h-[28rem] w-[52rem] -translate-x-1/2 rounded-full bg-brand/8 blur-[120px]"></div>
+
+    <div class="mx-auto max-w-6xl px-6 pb-24 pt-24 text-center sm:pt-32">
+      <Badge variant="primary-outline" size="xl" radius="full" className="font-mono text-[0.7rem] tracking-[0.16em] uppercase">
+        {hero.eyebrow}
+      </Badge>
+
+      <h1 class="text-glow mx-auto mt-8 max-w-3xl text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.03em] sm:text-6xl">
+        {hero.h1}
+      </h1>
+
+      <p class="mx-auto mt-7 max-w-xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
+        {hero.sub}
+      </p>
+
+      <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <a href={site.releases} class={buttonVariants({ size: 'lg' }) + ' w-full sm:w-auto'}>
+          {hero.ctaPrimary}
+          <ArrowRight className="size-4" />
+        </a>
+        <a href={site.repo} class={buttonVariants({ variant: 'outline', size: 'lg' }) + ' w-full sm:w-auto'}>
+          {hero.ctaSecondary}
+        </a>
+      </div>
+
+      <p class="mt-5 text-sm text-muted-foreground">{hero.trust}</p>
+    </div>
+  </section>
+
+  <!-- stats -->
+  <section class="mx-auto max-w-5xl px-6">
+    <Frame variant="inverse" spacing="lg" className="grid gap-1 sm:grid-cols-3">
+      {stats.map((s) => (
+        <FramePanel className="flex flex-col items-center gap-1.5 py-9 text-center">
+          <span class="font-mono text-4xl font-semibold tracking-tight text-brand">{s.n}</span>
+          <span class="max-w-[13rem] text-sm leading-snug text-muted-foreground">{s.label}</span>
+        </FramePanel>
+      ))}
+    </Frame>
+  </section>
+
+  <!-- blades -->
+  <section id="tools" class="mx-auto max-w-6xl px-6 py-28 sm:py-36">
+    <div class="max-w-xl">
+      <h2 class="text-3xl font-semibold tracking-[-0.025em] sm:text-4xl">{bladesSection.headline}</h2>
+      <p class="mt-4 text-base text-muted-foreground">{bladesSection.deck}</p>
+    </div>
+    <div class="mt-16">
+      <Knife blades={blades} client:visible />
+    </div>
+  </section>
+
+  <!-- ai -->
+  <section id="agents" class="relative border-y border-border/60 bg-card/20">
+    <div class="mx-auto grid max-w-6xl gap-14 px-6 py-28 lg:grid-cols-2 lg:gap-20 sm:py-36">
+      <div>
+        <h2 class="max-w-md text-3xl font-semibold tracking-[-0.025em] sm:text-4xl">{ai.headline}</h2>
+        <p class="mt-5 max-w-md text-base leading-relaxed text-muted-foreground">{ai.deck}</p>
+        <p class="mt-10 max-w-md border-l-2 border-brand/50 pl-5 text-sm leading-relaxed text-foreground/80">
+          {ai.closing}
+        </p>
+      </div>
+
+      <Frame variant="inverse" spacing="lg" className="h-fit">
+        <FramePanel className="py-7">
+          <div class="flex items-center gap-3">
+            <IconTile variant="soft" size="default" className="text-brand">
+              <ShieldCheck />
+            </IconTile>
+            <span class="font-mono text-xs uppercase tracking-[0.14em] text-muted-foreground">
+              {ai.neverLabel}
+            </span>
+          </div>
+          <ul class="mt-7 space-y-0">
+            {ai.never.map((n) => (
+              <li class="flex items-center gap-3 border-b border-border/60 py-3.5 last:border-0">
+                <X className="size-3.5 shrink-0 text-destructive/80" />
+                <span class="text-[0.95rem]">{n}</span>
+              </li>
+            ))}
+          </ul>
+        </FramePanel>
+      </Frame>
+    </div>
+  </section>
+
+  <!-- compare -->
+  <section id="compare" class="mx-auto max-w-6xl px-6 py-28 sm:py-36">
+    <div class="max-w-xl">
+      <h2 class="text-3xl font-semibold tracking-[-0.025em] sm:text-4xl">{compare.headline}</h2>
+      <p class="mt-4 text-base text-muted-foreground">{compare.deck}</p>
+    </div>
+
+    <Frame variant="inverse" spacing="sm" className="mt-14 overflow-hidden">
+      <FramePanel className="overflow-x-auto p-0">
+        <Table className="min-w-[46rem]">
+          <TableHeader>
+            <TableRow className="hover:bg-transparent">
+              <TableHead className="w-56 pl-6"></TableHead>
+              {compare.cols.map((c, i) => (
+                <TableHead class:list={['text-center text-xs uppercase tracking-wider', i === 0 && 'bg-brand/[0.07] text-brand']}>
+                  {c}
+                </TableHead>
+              ))}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {compare.rows.map((r) => (
+              <TableRow>
+                <TableCell className="pl-6 text-sm text-muted-foreground">{r.label}</TableCell>
+                {r.v.map((v, i) => (
+                  <TableCell class:list={['text-center text-sm', i === 0 && 'bg-brand/[0.07] font-medium text-foreground']}>
+                    {v === true ? (
+                      <Check class:list={['mx-auto size-4', i === 0 ? 'text-brand' : 'text-muted-foreground']} />
+                    ) : v === false ? (
+                      <X className="mx-auto size-4 text-muted-foreground/35" />
+                    ) : (
+                      <span class:list={[i !== 0 && 'text-muted-foreground']}>{v}</span>
+                    )}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </FramePanel>
+    </Frame>
+  </section>
+
+  <!-- install -->
+  <section id="install" class="border-y border-border/60 bg-card/20">
+    <div class="mx-auto grid max-w-6xl gap-14 px-6 py-28 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:gap-20 sm:py-36">
+      <div>
+        <h2 class="text-3xl font-semibold tracking-[-0.025em] sm:text-4xl">{install.headline}</h2>
+        <p class="mt-4 text-base text-muted-foreground">{install.line}</p>
+        <a href={site.releases} class={buttonVariants({ variant: 'outline' }) + ' mt-8'}>
+          Go to releases
+          <ArrowRight className="size-4" />
+        </a>
+      </div>
+      <div>
+        <InstallTabs client:visible />
+        <div class="mt-12 border-t border-border pt-8">
+          <p class="font-mono text-xs uppercase tracking-[0.14em] text-muted-foreground">
+            {install.agentLabel}
+          </p>
+          <pre class="mt-4 overflow-x-auto rounded-lg border border-brand/25 bg-brand/5 px-4 py-3.5 font-mono text-[0.8rem] text-brand"><code>{install.agentCmd}</code></pre>
+          <p class="mt-3 text-sm text-muted-foreground">{install.agentNote}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- faq -->
+  <section id="faq" class="mx-auto max-w-3xl px-6 py-28 sm:py-36">
+    <h2 class="text-3xl font-semibold tracking-[-0.025em] sm:text-4xl">Questions</h2>
+    <div class="mt-10">
+      <Faq client:visible />
+    </div>
+  </section>
+
+  <!-- final cta -->
+  <section class="relative overflow-hidden border-t border-border/60">
+    <div class="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-80 w-[44rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/10 blur-[110px]"></div>
+    <div class="mx-auto max-w-3xl px-6 py-32 text-center sm:py-40">
+      <h2 class="text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">{finalCta.headline}</h2>
+      <p class="mx-auto mt-5 max-w-md text-base text-muted-foreground">{finalCta.line}</p>
+      <a href={site.releases} class={buttonVariants({ size: 'lg' }) + ' mt-10'}>
+        {finalCta.button}
+        <ArrowRight className="size-4" />
+      </a>
+    </div>
+  </section>
+
+  <footer class="border-t border-border/60">
+    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-10 text-sm text-muted-foreground sm:flex-row">
+      <span>OpsMaxx — MIT licensed. {site.domain}</span>
+      <div class="flex items-center gap-6">
+        <a href={site.repo} class="transition-colors hover:text-foreground">GitHub</a>
+        <a href={site.repo + '/blob/main/SECURITY.md'} class="transition-colors hover:text-foreground">Security</a>
+        <a href={site.releases} class="transition-colors hover:text-foreground">Releases</a>
+      </div>
+    </div>
+  </footer>
+</Base>
