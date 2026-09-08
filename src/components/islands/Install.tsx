@@ -18,7 +18,10 @@ function Command({ cmd, label }: { cmd: string; label?: string }) {
     <div className="min-w-0">
       {label && <p className="mb-2 text-[0.78rem] text-muted-foreground">{label}</p>}
       <div className="relative">
-        <pre className="overflow-x-auto rounded-lg border border-border bg-band py-3 pl-4 pr-12 font-mono text-[0.78rem] leading-6">
+        {/* Wraps rather than scrolls: a command you cannot read in full is a
+            command you cannot check before running it. overflow-wrap:anywhere
+            handles paths, which have no spaces to break on. */}
+        <pre className="rounded-lg border border-border bg-band py-3 pl-4 pr-12 font-mono text-[0.78rem] leading-6 whitespace-pre-wrap [overflow-wrap:anywhere]">
           <code>{cmd}</code>
         </pre>
         <button
