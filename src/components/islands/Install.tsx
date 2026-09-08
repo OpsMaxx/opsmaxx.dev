@@ -116,7 +116,10 @@ export function Install({ release }: { release: Release }) {
               className="mt-4 flex items-center justify-between gap-3 rounded-xl border border-border p-4 transition-colors hover:border-brand/40"
             >
               <span className="min-w-0">
-                <span className="block truncate font-mono text-[0.78rem]">{o.file}</span>
+                {/* Wraps rather than truncates: an ellipsis in the middle of a
+                    filename hides the architecture, which is the one part a
+                    reader is checking. */}
+                <span className="block font-mono text-[0.78rem] [overflow-wrap:anywhere]">{o.file}</span>
                 <span className="mt-0.5 block text-[0.8rem] text-muted-foreground">
                   {p.otherNote} · {o.size}
                 </span>

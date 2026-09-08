@@ -24,19 +24,22 @@ export function DownloadButton({
   release,
   size = 'lg',
   className,
-  showMeta = false
+  showMeta = false,
+  compact = false
 }: {
   release: Release
   size?: 'sm' | 'default' | 'lg'
   className?: string
   showMeta?: boolean
+  /** Header use: the platform name is too long for a phone-width bar. */
+  compact?: boolean
 }) {
   const [os, setOs] = useState<Id | null>(null)
   useEffect(() => setOs(detect()), [])
 
   const asset = os ? release.platforms[os].primary : null
   const href = asset?.url ?? release.url
-  const label = os ? `Download for ${NAMES[os]}` : 'Download OpsMaxx'
+  const label = compact ? 'Download' : os ? `Download for ${NAMES[os]}` : 'Download OpsMaxx'
 
   return (
     <span className={cn('inline-flex flex-col items-center', showMeta && 'gap-2', className)}>
