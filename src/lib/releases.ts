@@ -114,13 +114,39 @@ async function viaApi(): Promise<Release | null> {
   }
 }
 
-/** Follows /releases/latest to read the tag, then sizes each asset with a HEAD. */
+/**
+ * Follows /releases/latest to read the tag, then sizes each asset with a HEAD.
+ *
+ * The hop count is deliberate. This reads `Location` by hand rather than
+ * letting fetch follow, because the tag is only visible in the header and is
+ * gone by the time a followed request settles. But "one hop lands on /tag/"
+ * is an assumption github.com is free to break, and did: a repo rename adds a
+ * slug redirect in front, so /releases/latest answers with the *new* repo's
+ * /releases/latest and the tag only appears on the hop after that. Matching a
+ * single response meant this layer threw, and since it exists precisely for
+ * when the API has already failed, the site fell through to layer 3 and every
+ * download button degraded to "go to the releases page".
+ */
+const MAX_HOPS = 5
+
+async function tagFromRedirects(from: string): Promise<string | null> {
+  let url = from
+  for (let hop = 0; hop < MAX_HOPS; hop++) {
+    const res = await fetch(url, { redirect: 'manual', headers: { 'User-Agent': UA } })
+    const location = res.headers.get('location')
+    if (!location) return null
+    const next = new URL(location, url).toString()
+    const version = (next.match(/\/tag\/v?([^/]+)$/) || [])[1]
+    if (version) return version
+    url = next
+  }
+  return null
+}
+
 async function viaRedirect(): Promise<Release | null> {
   try {
-    const res = await fetch(RELEASES, { redirect: 'manual', headers: { 'User-Agent': UA } })
-    const location = res.headers.get('location') ?? ''
-    const version = (location.match(/\/tag\/v?([^/]+)$/) || [])[1]
-    if (!version) throw new Error(`no tag in redirect (${res.status})`)
+    const version = await tagFromRedirects(RELEASES)
+    if (!version) throw new Error(`no tag within ${MAX_HOPS} redirects from ${RELEASES}`)
 
     const size = async (file: string): Promise<Asset | null> => {
       const url = `https://github.com/${REPO}/releases/download/v${version}/${file}`
