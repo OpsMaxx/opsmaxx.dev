@@ -1,7 +1,7 @@
 ---
 import Base from '@/layouts/Base.astro'
 import { ProductTour } from '@/components/islands/ProductTour'
-import { InstallTabs } from '@/components/islands/InstallTabs'
+import { Install } from '@/components/islands/Install'
 import { Faq } from '@/components/islands/Faq'
 import { ThemeToggle } from '@/components/islands/ThemeToggle'
 import { McpFlow } from '@/components/islands/McpFlow'
@@ -237,7 +237,7 @@ const icons = {
 
     <div class="mt-14 grid gap-4 lg:grid-cols-3" data-reveal-group>
       <!-- the pipeline -->
-      <div class="rounded-2xl border border-border bg-background p-6 sm:p-7" data-reveal>
+      <div class="min-w-0 rounded-2xl border border-border bg-background p-6 sm:p-7" data-reveal>
         <h3 class="text-[0.82rem] font-medium text-muted-foreground">One request, end to end</h3>
         <div class="mt-7">
           <McpFlow client:visible />
@@ -245,7 +245,7 @@ const icons = {
       </div>
 
       <!-- the tools -->
-      <div class="rounded-2xl border border-border bg-background p-6 sm:p-7" data-reveal>
+      <div class="min-w-0 rounded-2xl border border-border bg-background p-6 sm:p-7" data-reveal>
         <h3 class="text-[0.82rem] font-medium text-muted-foreground">
           <span class="tabular-nums text-foreground" data-count={String(ai.toolCount)}>{ai.toolCount}</span> tools an agent can call
         </h3>
@@ -268,7 +268,7 @@ const icons = {
       </div>
 
       <!-- what it never gets -->
-      <div class="flex flex-col rounded-2xl border border-border bg-band p-6 sm:p-7" data-reveal>
+      <div class="flex min-w-0 flex-col rounded-2xl border border-border bg-band p-6 sm:p-7" data-reveal>
         <h3 class="text-[0.82rem] font-medium text-muted-foreground">{ai.neverLabel}</h3>
         <ul class="mt-6">
           {ai.never.map((n) => (
@@ -311,24 +311,14 @@ const icons = {
 
   <!-- ────────────────────────────────────────────────────────── install -->
   <section id="install" class="mx-auto max-w-6xl px-5 sm:px-6 py-20 sm:py-32">
-    <div class="grid gap-14 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:gap-20">
-      <div data-reveal>
-        <p class="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-brand">{install.eyebrow}</p>
-        <h2 class="mt-4 text-3xl font-semibold leading-tight sm:text-[2.4rem]">{install.headline}</h2>
-        <p class="mt-5 text-[1.02rem] leading-relaxed text-muted-foreground">{install.deck}</p>
-        <a href={site.releases} class={buttonVariants({ variant: 'outline' }) + ' mt-8'}>
-          All downloads
-          <ArrowRight className="size-4" />
-        </a>
-      </div>
-      <div>
-        <InstallTabs client:visible />
-        <div class="mt-11 border-t border-border pt-8">
-          <p class="text-[0.82rem] font-medium text-muted-foreground">{install.agentLabel}</p>
-          <pre class="mt-3.5 overflow-x-auto rounded-lg border border-brand/25 bg-brand-soft px-4 py-3.5 font-mono text-[0.82rem] text-brand"><code>{install.agentCmd}</code></pre>
-          <p class="mt-3 text-[0.86rem] text-muted-foreground">{install.agentNote}</p>
-        </div>
-      </div>
+    <div class="max-w-2xl" data-reveal>
+      <p class="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-brand">{install.eyebrow}</p>
+      <h2 class="mt-4 text-3xl font-semibold leading-tight sm:text-[2.6rem]">{install.headline}</h2>
+      <p class="mt-5 text-[1.02rem] leading-relaxed text-muted-foreground">{install.deck}</p>
+    </div>
+
+    <div class="mt-12" data-reveal>
+      <Install client:visible />
     </div>
   </section>
 

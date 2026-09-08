@@ -300,33 +300,88 @@ export const compare = {
 
 /* ---------------------------------------------------------------- install */
 
+export type Platform = {
+  id: string
+  label: string
+  primary: { file: string; note: string }
+  others: { file: string; note: string }[]
+  verify: { cmd: string; shell: string }
+  warning: {
+    quote: string | null
+    why: string
+    steps: string[]
+    cmd?: string
+    cmdNote?: string
+  }
+}
+
 export const install = {
-  eyebrow: 'Install',
-  headline: 'Download it, open it, add a server.',
-  deck: 'No sign-up, no licence key, nothing to activate.',
-  tabs: [
+  eyebrow: 'Getting started',
+  headline: 'Downloaded, past the warning, connected.',
+  deck: 'Three steps, and the middle one is the part nobody else tells you about honestly.',
+
+  platforms: [
     {
       id: 'macos',
       label: 'macOS',
-      cmd: '# Apple Silicon and Intel builds\nopen OpsMaxx-*.dmg',
-      note: 'Ad-hoc signed rather than notarized: right-click, then Open, the first time.'
+      primary: { file: 'OpsMaxx-arm64.dmg', note: 'Apple Silicon, M1 and later' },
+      others: [{ file: 'OpsMaxx-x64.dmg', note: 'Intel Macs' }],
+      verify: { cmd: 'shasum -a 256 OpsMaxx-arm64.dmg', shell: 'bash' },
+      warning: {
+        quote: 'Apple could not verify OpsMaxx is free of malware.',
+        why: 'The macOS build is ad-hoc signed, so the system can tell the bundle has not been altered since it was built — but not who built it. That needs a $99/year developer account.',
+        steps: [
+          'macOS 15 Sequoia and later: System Settings → Privacy & Security → Open Anyway',
+          'macOS 14 and earlier: right-click the app → Open → Open'
+        ],
+        cmd: '/usr/bin/xattr -cr /Applications/OpsMaxx.app',
+        cmdNote: 'The /usr/bin/ prefix is deliberate. A Homebrew or pip xattr comes earlier on your PATH and does not accept -r.'
+      }
     },
     {
       id: 'windows',
       label: 'Windows',
-      cmd: '# Installer, or a portable .exe that runs from a USB stick\nOpsMaxx-setup.exe',
-      note: 'SmartScreen shows a warning for unsigned apps: More info, then Run anyway.'
+      primary: { file: 'OpsMaxx-setup.exe', note: 'Installer. Pick this one if unsure.' },
+      others: [{ file: 'OpsMaxx-portable.exe', note: 'One file, no install, runs from a USB stick' }],
+      verify: { cmd: 'Get-FileHash OpsMaxx-setup.exe -Algorithm SHA256', shell: 'powershell' },
+      warning: {
+        quote: 'Windows protected your PC.',
+        why: 'The Windows build carries no signature at all. A code-signing certificate runs $200–$400 a year, which a free MIT project has no income to cover.',
+        steps: ['Click More info', 'Click Run anyway']
+      }
     },
     {
       id: 'linux',
       label: 'Linux',
-      cmd: 'chmod +x OpsMaxx-*.AppImage && ./OpsMaxx-*.AppImage\n# or: sudo apt install ./OpsMaxx-*-amd64.deb',
-      note: 'The AppImage runs on any distribution. A .deb is there for Debian and Ubuntu.'
+      primary: { file: 'OpsMaxx-x86_64.AppImage', note: 'Runs on any distribution' },
+      others: [{ file: 'OpsMaxx-amd64.deb', note: 'Debian and Ubuntu' }],
+      verify: { cmd: 'sha256sum OpsMaxx-x86_64.AppImage', shell: 'bash' },
+      warning: {
+        quote: null,
+        why: 'Nothing stands in your way here. Make the AppImage executable and run it, or install the .deb.',
+        steps: [],
+        cmd: 'chmod +x OpsMaxx-*.AppImage && ./OpsMaxx-*.AppImage',
+        cmdNote: 'Or: sudo apt install ./OpsMaxx-amd64.deb'
+      }
     }
+  ] as Platform[],
+
+  steps: [
+    { n: '01', title: 'Download it', sub: 'No sign-up, no licence key, nothing to activate.' },
+    { n: '02', title: 'Get past the first-run warning', sub: 'Unsigned is not the same as unsafe. Here is the difference.' },
+    { n: '03', title: 'Add your servers', sub: 'Or hand the whole lot to an agent.' }
   ],
-  agentLabel: 'Connecting Claude Code takes one command',
-  agentCmd: 'opsmaxx claude',
-  agentNote: 'A pairing code appears in the app. There is no token to copy or paste.'
+
+  trustLine: 'Every release is scanned by 70+ antivirus engines and publishes a SHA-256 for each file.',
+  verifyLabel: 'Check the hash against the one on the release page',
+
+  finish: {
+    importTitle: 'Import what you already have',
+    importBody: 'OpsMaxx reads ~/.ssh/config, ProxyJump entries included, so the servers you already reach by name are there on first run.',
+    agentTitle: 'Connect Claude Code',
+    agentCmd: 'opsmaxx claude',
+    agentBody: 'One command registers the bridge and launches it. A pairing code appears in the app, so there is no token to copy or paste.'
+  }
 }
 
 /* -------------------------------------------------------------------- faq */
