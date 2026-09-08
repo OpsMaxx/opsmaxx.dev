@@ -2,8 +2,8 @@
 import '@/styles/global.css'
 import { site, faq } from '@/data/copy'
 
-interface Props { title?: string; description?: string; preloadHero?: boolean }
-const { title = site.title, description = site.description, preloadHero = false } = Astro.props
+interface Props { title?: string; description?: string; preloadHero?: boolean; version?: string | null }
+const { title = site.title, description = site.description, preloadHero = false, version = null } = Astro.props
 const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString()
 ---
 
@@ -123,7 +123,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString()
         name: 'OpsMaxx',
         applicationCategory: 'DeveloperApplication',
         operatingSystem: 'Windows, macOS, Linux',
-        softwareVersion: site.version,
+        ...(version ? { softwareVersion: version } : {}),
         license: 'https://opensource.org/licenses/MIT',
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
         url: site.url

@@ -3,7 +3,6 @@ export const site = {
   url: 'https://opsmaxx.dev',
   repo: 'https://github.com/OpsMaxx/OpsMaxx',
   releases: 'https://github.com/OpsMaxx/OpsMaxx/releases/latest',
-  version: '0.28.2',
   title: 'OpsMaxx — SSH, SFTP, databases and a vault in one free app',
   description:
     'Free, open-source SSH client, SFTP browser, database manager, secrets vault and MCP gateway for AI agents. Windows, macOS, Linux. No account, no telemetry.'
