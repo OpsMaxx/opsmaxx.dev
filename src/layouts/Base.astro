@@ -17,6 +17,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString()
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#ffffff" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
