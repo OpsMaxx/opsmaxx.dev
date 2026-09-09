@@ -3,14 +3,17 @@ export const site = {
   url: 'https://opsmaxx.dev',
   repo: 'https://github.com/OpsMaxx/OpsMaxx',
   releases: 'https://github.com/OpsMaxx/OpsMaxx/releases/latest',
-  title: 'OpsMaxx — SSH, SFTP, databases and a vault in one free app',
-  // Leads with the positioning line, because this is what a pasted link shows
-  // under the title and it is the only sentence most people will read. The
-  // feature list follows rather than opens: "SSH client, SFTP browser,
-  // database manager" describes the parts, not what having them together is
-  // for. Kept short enough that WhatsApp and Slack do not truncate mid-clause.
+  title: 'OpsMaxx — your infrastructure control plane',
+  // The title carries the positioning and this continues the sentence, so a
+  // link preview reads as one line: "OpsMaxx — your infrastructure control
+  // plane / For you and your AI agents."
+  //
+  // Deliberately about 100 characters. WhatsApp cut the previous 156-character
+  // version at "and a secrets vault" — mid-phrase, with the closing claims
+  // lost. Anything that fits whole cannot be truncated badly, and a short
+  // meta description is no worse for search than a clipped one.
   description:
-    'Your infrastructure control plane — for you and your AI agents. SSH, SFTP, databases, tunnels and a secrets vault in one free app. No account, no telemetry.'
+    'For you and your AI agents. SSH, SFTP, databases, tunnels and a vault. Free, no account, no telemetry.'
 }
 
 export const hero = {
