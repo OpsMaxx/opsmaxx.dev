@@ -31,7 +31,9 @@ OpsMaxx is a desktop application, not a hosted service. One window holds an SSH
 terminal, an SFTP browser, five database engines, tunnels and VPN, an encrypted
 secrets vault, fleet operations across every server you add, and a
 policy-scoped MCP bridge for AI agents — all sharing one credential store.
-Current release: ${v}.
+Everything belongs to a workspace: a separate, optionally password-locked space
+per client or environment, which is also the boundary an AI agent is scoped to
+and the unit a backup restores. Current release: ${v}.
 
 ## Download
 

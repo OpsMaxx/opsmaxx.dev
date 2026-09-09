@@ -11,7 +11,7 @@ export const site = {
 export const hero = {
   eyebrow: 'Free and open source · MIT',
   h1: 'Every server you look after, in one window.',
-  sub: 'OpsMaxx keeps your terminal, files, databases, tunnels and secrets in a single app — all sharing one credential store, so you stop hunting for the key you saved somewhere else.',
+  sub: 'OpsMaxx keeps your terminal, files, databases, tunnels and secrets in a single app — separated into workspaces per client or environment, sharing one credential store, so you stop hunting for the key you saved somewhere else.',
   ctaPrimary: 'Download OpsMaxx',
   ctaSecondary: 'View on GitHub',
   trust: 'No account. No telemetry. No paid tier.',
@@ -41,6 +41,19 @@ export type TourItem = {
 }
 
 export const tour: TourItem[] = [
+  {
+    id: 'workspaces',
+    tab: 'Workspaces',
+    headline: 'One app, one client at a time.',
+    body: 'Every server, database, tunnel, vault entry and agent session belongs to a workspace. Switch, and the whole app switches with you — so a production box is not one keystroke away while you are working on staging.',
+    bullets: [
+      'A password on a workspace locks it, not just hides it',
+      'Agents are scoped to a workspace and cannot see past it',
+      'Each one backs up and restores as a single encrypted file'
+    ],
+    shot: '/shots/workspaces.png',
+    alt: 'Workspace manager listing separate workspaces for different clients, one of them password-protected'
+  },
   {
     id: 'fleet',
     tab: 'Fleet',
@@ -100,6 +113,13 @@ export type Feature = {
 
 export const features: Feature[] = [
   {
+    icon: 'layers',
+    name: 'Workspaces keep clients apart',
+    line: 'Servers, databases, tunnels, vault entries and agent sessions all belong to a workspace. Give one a password and it is locked rather than hidden — and an AI agent scoped to it cannot see a thing outside it.',
+    chips: ['per client or environment', 'password-locked', 'agent scope boundary', 'one encrypted backup file'],
+    span: 'wide'
+  },
+  {
     icon: 'terminal',
     name: 'Terminal and files, one connection',
     line: 'A GPU-rendered xterm with split panes and search, and an SFTP browser riding the same session. Two-factor is a code you type once, not once per tab.',
@@ -124,12 +144,6 @@ export const features: Feature[] = [
     line: 'Local and remote forwards, a SOCKS5 proxy, userspace WireGuard that needs no administrator rights, and a proxy that shows the HTTPS a machine is really making.',
     chips: ['wireguard', 'openvpn', 'frp', 'socks5', 'traffic inspector'],
     span: 'wide'
-  },
-  {
-    icon: 'layers',
-    name: 'Workspaces',
-    line: 'Separate, optionally password-protected spaces per client or environment.',
-    chips: ['per-client', 'one encrypted backup file']
   },
   {
     icon: 'keyboard',
