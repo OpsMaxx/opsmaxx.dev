@@ -4,8 +4,13 @@ export const site = {
   repo: 'https://github.com/OpsMaxx/OpsMaxx',
   releases: 'https://github.com/OpsMaxx/OpsMaxx/releases/latest',
   title: 'OpsMaxx — SSH, SFTP, databases and a vault in one free app',
+  // Leads with the positioning line, because this is what a pasted link shows
+  // under the title and it is the only sentence most people will read. The
+  // feature list follows rather than opens: "SSH client, SFTP browser,
+  // database manager" describes the parts, not what having them together is
+  // for. Kept short enough that WhatsApp and Slack do not truncate mid-clause.
   description:
-    'Free, open-source SSH client, SFTP browser, database manager, secrets vault and MCP gateway for AI agents. Windows, macOS, Linux. No account, no telemetry.'
+    'Your infrastructure control plane — for you and your AI agents. SSH, SFTP, databases, tunnels and a secrets vault in one free app. No account, no telemetry.'
 }
 
 export const hero = {

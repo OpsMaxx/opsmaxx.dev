@@ -24,13 +24,20 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString()
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="OpsMaxx" />
-    <meta property="og:image" content={`${site.url}/shots/fleet.png`} />
-    <meta property="og:image:width" content="1800" />
-    <meta property="og:image:height" content="908" />
+    <!-- A card built for scrapers, not the hero screenshot reused.
+         `fleet.png` is 1800x908 and 306KB; WhatsApp fetches nothing over
+         300KB and silently falls back to a text-only preview, which is what a
+         pasted link looked like. This is the same screenshot at the 1.91:1
+         card ratio every scraper expects, as JPEG, at 108KB. -->
+    <meta property="og:image" content={`${site.url}/og.jpg`} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="The OpsMaxx fleet monitor: fifteen servers with live CPU, memory, disk and network" />
     <meta property="og:locale" content="en_GB" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content={`${site.url}/shots/fleet.png`} />
+    <meta name="twitter:image" content={`${site.url}/og.jpg`} />
+    <meta name="twitter:image:alt" content="The OpsMaxx fleet monitor: fifteen servers with live CPU, memory, disk and network" />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
