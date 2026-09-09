@@ -384,7 +384,7 @@ export const install = {
 export const faq = [
   {
     q: 'Why does my computer warn me about the download?',
-    a: 'The Windows build carries no signature, and the macOS build is ad-hoc signed rather than notarized. Certificates cost $200–$400 a year for Windows and $99 for Apple. The warning means your OS cannot confirm who published the app, not that the file is unsafe. Every installer is scanned with ClamAV, the Windows one with Defender, and the .exe and .dmg with VirusTotal\'s 70+ engines — and every SHA-256 is in the release notes for you to check.'
+    a: 'macOS does not warn any more: since 0.30.1 that build is signed with an Apple Developer ID and notarized by Apple, with the ticket stapled in, so it opens normally even offline. Windows still warns, because that build carries no signature — a certificate there is $200–$400 a year. The warning means Windows cannot confirm who published the app, not that the file is unsafe. Every installer is scanned with ClamAV, the Windows one with Defender, and the .exe and .dmg with VirusTotal\'s 70+ engines — and every SHA-256 is in the release notes for you to check.'
   },
   {
     q: 'Is it really free, or free for now?',

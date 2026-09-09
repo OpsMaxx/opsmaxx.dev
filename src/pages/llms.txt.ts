@@ -42,9 +42,10 @@ ${dl('windows', 'Windows')}
 ${dl('linux', 'Linux')}
 - All files and checksums: ${r.url}
 
-The Windows build is unsigned and the macOS build is ad-hoc signed rather than
-notarized, so both operating systems show a first-run warning. Every installer
-is scanned before release and every SHA-256 is published in the release notes.
+The macOS build is signed with an Apple Developer ID and notarized by Apple, so
+it opens without a warning. The Windows build is unsigned and does show a
+first-run warning. Every installer is scanned before release and every SHA-256
+is published in the release notes.
 
 ## What it does
 
