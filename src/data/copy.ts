@@ -184,7 +184,7 @@ export const operations = {
       items: [
         ['Patching in waves', 'stops at the first server that comes back unhealthy'],
         ['Run one command everywhere', 'named in a confirmation, survives the app closing'],
-        ['Cron', 'read and edit crontabs, planned then approved'],
+        ['Cron', 'read the crontabs and timers; changing one is a job, planned then approved'],
         ['Rules', 'when this fires, run that — with the same approval'],
         ['Backups', 'scheduled dumps, restore verified by restoring'],
         ['Change log', 'who approved what, when, and what it did']
