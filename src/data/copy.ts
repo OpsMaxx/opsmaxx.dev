@@ -32,7 +32,7 @@ export const hero = {
 
 export const stats = [
   { n: '5', label: 'database engines built in' },
-  { n: '20', label: 'fleet operations, all off by default' },
+  { n: '21', label: 'fleet operations, every write off by default' },
   { n: '0', label: 'credentials an AI agent ever sees' }
 ]
 
@@ -166,7 +166,7 @@ export const features: Feature[] = [
 export const operations = {
   eyebrow: 'Fleet operations',
   headline: 'Run the fleet, not one box at a time.',
-  deck: 'Twenty-odd operations across every server you have added — and every one of them stays off until you turn it on.',
+  deck: 'Twenty-odd operations across every server you have added. The four that write — patching, a command run everywhere, jobs and revoking a key — stay off until you turn them on, and a new one added in a later version never switches itself on.',
   groups: [
     {
       title: 'Know',
@@ -296,8 +296,8 @@ export type Platform = {
 
 export const install = {
   eyebrow: 'Getting started',
-  headline: 'Downloaded, past the warning, connected.',
-  deck: 'Three steps, and the middle one is the part nobody else tells you about honestly.',
+  headline: 'Downloaded, opened, connected.',
+  deck: 'Three steps, and only Windows still needs the middle one.',
 
   platforms: [
     {
@@ -306,14 +306,9 @@ export const install = {
       primaryNote: 'Apple Silicon, M1 and later',
       otherNote: 'Intel Macs',
       warning: {
-        quote: 'Apple could not verify OpsMaxx is free of malware.',
-        why: 'The macOS build is ad-hoc signed, so the system can tell the bundle has not been altered since it was built — but not who built it. That needs a $99/year developer account.',
-        steps: [
-          'macOS 15 Sequoia and later: System Settings → Privacy & Security → Open Anyway',
-          'macOS 14 and earlier: right-click the app → Open → Open'
-        ],
-        cmd: '/usr/bin/xattr -cr /Applications/OpsMaxx.app',
-        cmdNote: 'Optional, if you would rather not click through it. The /usr/bin/ prefix is deliberate: a Homebrew or pip xattr comes earlier on your PATH and does not accept -r.'
+        quote: null,
+        why: 'Since 0.30.1 the macOS build is signed with an Apple Developer ID, notarized by Apple and has the ticket stapled into the app, so it opens normally — offline included. Nothing to click through and nothing to run.',
+        steps: []
       }
     },
     {
@@ -344,7 +339,7 @@ export const install = {
 
   steps: [
     { n: '01', title: 'Download it', sub: 'No sign-up, no licence key, nothing to activate.' },
-    { n: '02', title: 'Get past the first-run warning', sub: 'Unsigned is not the same as unsafe. Here is the difference.' },
+    { n: '02', title: 'Get past the Windows warning', sub: 'Only Windows still warns, and unsigned is not the same as unsafe.' },
     { n: '03', title: 'Add your servers', sub: 'Or hand the whole lot to an agent.' }
   ],
 

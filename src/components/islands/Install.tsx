@@ -163,7 +163,7 @@ export function Install({ release }: { release: Release }) {
           ) : (
             <p className="mt-6 flex gap-3 rounded-xl border border-brand/25 bg-brand-soft p-4 text-[0.86rem] leading-relaxed">
               <ShieldCheck className="mt-0.5 size-4 shrink-0 text-brand" />
-              <span>No warning on Linux.</span>
+              <span>No warning on {p.label}.</span>
             </p>
           )}
 
