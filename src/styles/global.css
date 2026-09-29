@@ -5,7 +5,7 @@
 /* ---------------------------------------------------------------------------
    OpsMaxx — the product's own look, on the page as well as in the app: warm
    near-black, one lime accent, heavy tight headlines, a faint square grid.
-   The previous light palette stays one click away behind the theme toggle,
+   A light version of the same look is one click away on the theme toggle,
    as `.light`.
 --------------------------------------------------------------------------- */
 
@@ -36,6 +36,7 @@
 
   --primary: oklch(0.899 0.203 123);
   --primary-foreground: oklch(0.152 0.007 122);
+  --primary-ink: oklch(0.899 0.203 123);
   --secondary: oklch(0.232 0.011 115);
   --secondary-foreground: oklch(0.961 0.009 113);
   --muted: oklch(0.219 0.010 116);
@@ -68,28 +69,34 @@
   --grid-line: oklch(1 0 0 / 5%);
 }
 
+/* The OpsMaxx theme on a light page: warm off-white, near-black ink, the same
+   lime as the fill of every primary control. Lime cannot be TEXT on white
+   (1.4:1), so the accent-as-text roles -- --primary-ink and --brand -- are a
+   dark olive of the same hue, 5.4:1 or better on every light surface. The
+   same fill/ink split the app makes with --accent and --accent-ink. */
 .light {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.205 0.008 265);
+  --background: oklch(0.975 0.007 107);
+  --foreground: oklch(0.196 0.014 114);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.205 0.008 265);
+  --card-foreground: oklch(0.196 0.014 114);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.205 0.008 265);
+  --popover-foreground: oklch(0.196 0.014 114);
 
-  --primary: oklch(0.556 0.086 205);
-  --primary-foreground: oklch(0.99 0.002 90);
-  --secondary: oklch(0.972 0.004 90);
-  --secondary-foreground: oklch(0.268 0.008 265);
-  --muted: oklch(0.972 0.004 90);
-  --muted-foreground: oklch(0.508 0.011 265);
-  --accent: oklch(0.966 0.006 90);
-  --accent-foreground: oklch(0.268 0.008 265);
+  --primary: oklch(0.899 0.203 123);
+  --primary-foreground: oklch(0.196 0.014 114);
+  --primary-ink: oklch(0.481 0.125 127);
+  --secondary: oklch(0.950 0.011 107);
+  --secondary-foreground: oklch(0.196 0.014 114);
+  --muted: oklch(0.950 0.011 107);
+  --muted-foreground: oklch(0.466 0.019 115);
+  --accent: oklch(0.949 0.012 112);
+  --accent-foreground: oklch(0.196 0.014 114);
 
   --destructive: oklch(0.577 0.216 27);
   --destructive-foreground: oklch(0.99 0 0);
-  --border: oklch(0.912 0.005 90);
-  --input: oklch(0.912 0.005 90);
-  --ring: oklch(0.556 0.086 205 / 45%);
+  --border: oklch(0.912 0.015 111);
+  --input: oklch(0.912 0.015 111);
+  --ring: oklch(0.481 0.125 127 / 45%);
 
   --success: var(--color-emerald-600);
   --success-foreground: var(--color-emerald-700);
@@ -100,13 +107,13 @@
   --invert: var(--color-zinc-900);
   --invert-foreground: var(--color-zinc-50);
 
-  /* Brand + page furniture */
-  --brand: oklch(0.556 0.086 205);
-  --brand-soft: oklch(0.556 0.086 205 / 9%);
-  --band: oklch(0.977 0.005 85);
-  --ink: oklch(0.205 0.008 265);
-  --mark: oklch(0.556 0.086 205 / 18%);
-  --grid-line: oklch(0 0 0 / 5%);
+  --brand: oklch(0.481 0.125 127);
+  --brand-soft: oklch(0.899 0.203 123 / 22%);
+  --band: oklch(0.949 0.012 112);
+  --ink: oklch(0.196 0.014 114);
+  /* A lime bar behind near-black headline text, as the dark page has olive. */
+  --mark: oklch(0.899 0.203 123 / 75%);
+  --grid-line: oklch(0 0 0 / 6%);
 }
 
 @theme inline {
@@ -118,6 +125,7 @@
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-ink: var(--primary-ink);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);

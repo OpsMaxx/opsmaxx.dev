@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils"
  *
  * Tone: `soft` and `solid` derive every fill and border from `currentColor`, so
  * a single text color class (e.g. `text-success`) retints the whole tile. They
- * default to `text-primary`; override it to recolor without touching internals.
+ * default to `text-primary-ink`; override it to recolor without touching internals.
  */
 const iconTileVariants = cva(
   [
@@ -44,7 +44,7 @@ const iconTileVariants = cva(
          * quiet, colorful sibling of `frame`. Retint with a text color class.
          */
         soft: [
-          "isolate p-(--icon-tile-inset) text-primary bg-current/10",
+          "isolate p-(--icon-tile-inset) text-primary-ink bg-current/10",
           "after:absolute after:-z-10 after:inset-(--icon-tile-inset)",
           "after:rounded-[calc(var(--icon-tile-radius)-var(--icon-tile-inset))]",
           "after:border after:border-current/20 after:bg-current/5",
