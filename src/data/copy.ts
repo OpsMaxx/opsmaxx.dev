@@ -19,6 +19,8 @@ export const site = {
 export const hero = {
   eyebrow: 'Free and open source · MIT',
   h1: 'Every server you look after, in one window.',
+  // The words the olive highlight bar sits behind. Must occur in h1.
+  h1Mark: 'one window',
   sub: 'OpsMaxx keeps your terminal, files, databases, tunnels and secrets in a single app — separated into workspaces per client or environment, sharing one credential store, so you stop hunting for the key you saved somewhere else.',
   ctaPrimary: 'Download OpsMaxx',
   ctaSecondary: 'View on GitHub',

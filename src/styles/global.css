@@ -1,15 +1,74 @@
 @import "tailwindcss";
-@custom-variant dark (&:is(.dark *));
+/* Dark is the default now, so `dark:` means "not switched to light". */
+@custom-variant dark (&:where(:root:not(.light), :root:not(.light) *));
 
 /* ---------------------------------------------------------------------------
-   OpsMaxx — light first. The page is white; the product is dark. That contrast
-   is the whole visual idea, so the light palette stays warm and quiet and the
-   screenshots do the shouting.
+   OpsMaxx — the product's own look, on the page as well as in the app: warm
+   near-black, one lime accent, heavy tight headlines, a faint square grid.
+   The previous light palette stays one click away behind the theme toggle,
+   as `.light`.
 --------------------------------------------------------------------------- */
 
-:root {
-  --radius: 0.875rem;
+@font-face {
+  font-family: "Geist";
+  src: url("/fonts/Geist-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/fonts/GeistMono-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
 
+:root {
+  --radius: 0.75rem;
+
+  --background: oklch(0.152 0.007 122);
+  --foreground: oklch(0.961 0.009 113);
+  --card: oklch(0.198 0.008 119);
+  --card-foreground: oklch(0.961 0.009 113);
+  --popover: oklch(0.219 0.010 116);
+  --popover-foreground: oklch(0.961 0.009 113);
+
+  --primary: oklch(0.899 0.203 123);
+  --primary-foreground: oklch(0.152 0.007 122);
+  --secondary: oklch(0.232 0.011 115);
+  --secondary-foreground: oklch(0.961 0.009 113);
+  --muted: oklch(0.219 0.010 116);
+  --muted-foreground: oklch(0.716 0.020 113);
+  --accent: oklch(0.264 0.015 119);
+  --accent-foreground: oklch(0.961 0.009 113);
+
+  --destructive: oklch(0.709 0.183 28);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.276 0.015 119);
+  --input: oklch(0.276 0.015 119);
+  --ring: oklch(0.899 0.203 123 / 50%);
+
+  --success: var(--color-emerald-400);
+  --success-foreground: var(--color-emerald-300);
+  --info: var(--color-sky-400);
+  --info-foreground: var(--color-sky-300);
+  --warning: var(--color-amber-400);
+  --warning-foreground: var(--color-amber-300);
+  --invert: var(--color-zinc-100);
+  --invert-foreground: var(--color-zinc-900);
+
+  /* Brand + page furniture */
+  --brand: oklch(0.899 0.203 123);
+  --brand-soft: oklch(0.899 0.203 123 / 14%);
+  --band: oklch(0.166 0.008 119);
+  --ink: oklch(0.961 0.009 113);
+  /* The olive bar behind a highlighted headline word, and the grid lines. */
+  --mark: oklch(0.385 0.080 122);
+  --grid-line: oklch(1 0 0 / 5%);
+}
+
+.light {
   --background: oklch(1 0 0);
   --foreground: oklch(0.205 0.008 265);
   --card: oklch(1 0 0);
@@ -46,44 +105,8 @@
   --brand-soft: oklch(0.556 0.086 205 / 9%);
   --band: oklch(0.977 0.005 85);
   --ink: oklch(0.205 0.008 265);
-}
-
-.dark {
-  --background: oklch(0.181 0.014 258);
-  --foreground: oklch(0.968 0.005 240);
-  --card: oklch(0.219 0.016 258);
-  --card-foreground: oklch(0.968 0.005 240);
-  --popover: oklch(0.219 0.016 258);
-  --popover-foreground: oklch(0.968 0.005 240);
-
-  --primary: oklch(0.792 0.116 199);
-  --primary-foreground: oklch(0.181 0.014 258);
-  --secondary: oklch(0.271 0.018 258);
-  --secondary-foreground: oklch(0.968 0.005 240);
-  --muted: oklch(0.265 0.017 258);
-  --muted-foreground: oklch(0.712 0.016 250);
-  --accent: oklch(0.285 0.021 255);
-  --accent-foreground: oklch(0.968 0.005 240);
-
-  --destructive: oklch(0.704 0.191 22);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.99 0.02 210 / 12%);
-  --input: oklch(0.99 0.02 210 / 16%);
-  --ring: oklch(0.792 0.116 199 / 55%);
-
-  --success: var(--color-emerald-400);
-  --success-foreground: var(--color-emerald-300);
-  --info: var(--color-sky-400);
-  --info-foreground: var(--color-sky-300);
-  --warning: var(--color-amber-400);
-  --warning-foreground: var(--color-amber-300);
-  --invert: var(--color-zinc-100);
-  --invert-foreground: var(--color-zinc-900);
-
-  --brand: oklch(0.792 0.116 199);
-  --brand-soft: oklch(0.792 0.116 199 / 14%);
-  --band: oklch(0.208 0.016 258);
-  --ink: oklch(0.968 0.005 240);
+  --mark: oklch(0.556 0.086 205 / 18%);
+  --grid-line: oklch(0 0 0 / 5%);
 }
 
 @theme inline {
@@ -126,8 +149,8 @@
   --radius-xl: calc(var(--radius) + 6px);
   --radius-2xl: calc(var(--radius) + 14px);
 
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
 
   /* One extra stop below Tailwind's sm, for 360px-class phones. */
   --breakpoint-xs: 26rem;
@@ -141,7 +164,7 @@
     font-feature-settings: "cv02", "cv03", "cv04", "ss01";
     text-wrap: pretty;
   }
-  h1, h2, h3 { text-wrap: balance; letter-spacing: -0.022em; }
+  h1, h2, h3 { text-wrap: balance; letter-spacing: -0.035em; }
   ::selection { background: var(--brand-soft); }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -155,13 +178,13 @@
 /* A screenshot of a dark app needs a frame that reads as a window, not a card. */
 @utility shot-frame {
   border-radius: calc(var(--radius) + 10px);
-  border: 1px solid oklch(0 0 0 / 8%);
+  border: 1px solid var(--border);
   box-shadow:
-    0 1px 2px oklch(0 0 0 / 6%),
-    0 12px 24px -12px oklch(0 0 0 / 18%),
-    0 40px 80px -40px oklch(0 0 0 / 30%);
+    0 1px 2px oklch(0 0 0 / 20%),
+    0 12px 24px -12px oklch(0 0 0 / 40%),
+    0 40px 80px -40px oklch(0 0 0 / 60%);
   overflow: hidden;
-  background: oklch(0.181 0.014 258);
+  background: var(--background);
 }
 
 /* ---------------------------------------------------------------------------
@@ -210,4 +233,47 @@
     border-color: color-mix(in oklch, var(--brand) 35%, var(--border));
     box-shadow: 0 10px 30px -18px oklch(0 0 0 / 30%);
   }
+}
+
+/* ---------------------------------------------------------------------------
+   The OpsMaxx page furniture: a faint square grid, L-shaped crop marks at a
+   region's corners, a tracked caps eyebrow, and an olive bar behind a word.
+--------------------------------------------------------------------------- */
+
+@utility grid-bg {
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: center top;
+}
+
+@utility corner-brackets {
+  position: relative;
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    pointer-events: none;
+    border-color: color-mix(in oklch, var(--foreground) 35%, transparent);
+  }
+  &::before { top: 0; left: 0; border-top: 1px solid; border-left: 1px solid; }
+  &::after { bottom: 0; right: 0; border-bottom: 1px solid; border-right: 1px solid; }
+}
+
+@utility eyebrow {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+@utility mark {
+  background: linear-gradient(transparent 12%, var(--mark) 12%, var(--mark) 92%, transparent 92%);
+  padding-inline: 0.12em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }

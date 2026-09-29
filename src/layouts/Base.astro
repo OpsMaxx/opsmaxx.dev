@@ -15,7 +15,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString()
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#0b0c09" />
     <meta name="generator" content={Astro.generator} />
     <meta name="robots" content="index, follow, max-image-preview:large" />
 
@@ -99,12 +99,13 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString()
       gtag('config', 'G-PF96S41GE7')
     </script>
 
-    <!-- Light is the default. Only a stored preference turns the page dark,
-         so a first-time visitor never gets a flash of the wrong theme. -->
+    <!-- Dark is the default. Only a stored preference turns the page light,
+         so a first-time visitor never gets a flash of the wrong theme. A
+         stored 'dark' from when light was the default now means the default. -->
     <script is:inline>
       try {
-        if (localStorage.getItem('theme') === 'dark') {
-          document.documentElement.classList.add('dark')
+        if (localStorage.getItem('theme') === 'light') {
+          document.documentElement.classList.add('light')
         }
       } catch (e) {}
     </script>
