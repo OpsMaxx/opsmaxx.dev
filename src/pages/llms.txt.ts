@@ -25,7 +25,7 @@ export const GET: APIRoute = async () => {
 
   const body = `# OpsMaxx
 
-> ${hero.sub} Free, MIT licensed, no account and no telemetry. Windows, macOS and Linux.
+> ${hero.plain} Free, MIT licensed, no account and no telemetry. Windows, macOS and Linux.
 
 OpsMaxx is a desktop application, not a hosted service. One window holds an SSH
 terminal, an SFTP browser, five database engines, tunnels and VPN, an encrypted

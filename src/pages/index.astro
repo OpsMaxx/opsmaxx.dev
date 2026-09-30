@@ -13,11 +13,17 @@ import {
   Layers, Lock, Minus, Network, Server, ShieldCheck, Siren, TerminalSquare
 } from 'lucide-react'
 import {
-  site, hero, tour, agentTour, stats, featuresSection, features, operations, personas,
+  site, hero, heroVariants, tour, agentTour, stats, featuresSection, features, operations, personas,
   ai, install, faq, finalCta
 } from '@/data/copy'
 
 const release = await getRelease()
+
+// A mark that is not in its headline would render the highlight in the wrong
+// place, or not at all, and only on the ad that points at it. Fail the build.
+for (const h of [hero, ...Object.values(heroVariants)]) {
+  if (!h.h1.includes(h.h1Mark)) throw new Error(`h1Mark "${h.h1Mark}" is not in h1 "${h.h1}"`)
+}
 const [h1Before, h1After] = hero.h1.split(hero.h1Mark)
 
 const icons = {
@@ -59,16 +65,33 @@ const icons = {
       <div class="corner-brackets mx-auto max-w-3xl px-4 py-8 text-center sm:px-10 sm:py-12">
         <span class="eyebrow inline-flex items-center gap-2 rounded-full border border-border bg-background px-3.5 py-1.5">
           <span class="size-1.5 rounded-full bg-brand"></span>
-          {hero.eyebrow}
+          <span id="hero-eyebrow">{hero.eyebrow}</span>
         </span>
 
-        <h1 class="mt-7 text-[2.3rem] font-bold leading-[1.02] xs:text-[2.8rem] sm:text-[4.4rem]">
+        <h1 id="hero-h1" class="mt-7 text-[2.3rem] font-bold leading-[1.02] xs:text-[2.8rem] sm:text-[4.4rem]">
           {h1Before}<span class="mark">{hero.h1Mark}</span>{h1After}
         </h1>
 
-        <p class="mx-auto mt-6 max-w-2xl text-[1.05rem] leading-relaxed text-muted-foreground sm:text-[1.15rem]">
+        <p id="hero-sub" class="mx-auto mt-6 max-w-2xl text-[1.05rem] leading-relaxed text-muted-foreground sm:text-[1.15rem]">
           {hero.sub}
         </p>
+
+        <!-- Ad landing: ?v=<key> swaps in the matching hero from heroVariants.
+             Inline and synchronous, straight after the text it replaces, so it
+             runs before first paint and the default never flashes. -->
+        <script is:inline define:vars={{ heroVariants }}>
+          const key = new URLSearchParams(location.search).get('v')
+          const v = key && Object.hasOwn(heroVariants, key) ? heroVariants[key] : null
+          if (v) {
+            const [before, after] = v.h1.split(v.h1Mark)
+            const mark = document.createElement('span')
+            mark.className = 'mark'
+            mark.textContent = v.h1Mark
+            document.getElementById('hero-h1').replaceChildren(before, mark, after)
+            document.getElementById('hero-eyebrow').textContent = v.eyebrow
+            document.getElementById('hero-sub').textContent = v.sub
+          }
+        </script>
 
         <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row sm:items-start">
           <DownloadButton release={release} showMeta client:load className="w-full sm:w-auto" />
@@ -239,7 +262,7 @@ const icons = {
     <div class="mt-14 grid gap-4 lg:grid-cols-3" data-reveal-group>
       <!-- the pipeline -->
       <div class="min-w-0 rounded-2xl border border-border bg-background p-6 sm:p-7" data-reveal>
-        <h3 class="text-[0.82rem] font-medium text-muted-foreground">One request, end to end</h3>
+        <h3 class="text-[0.82rem] font-medium text-muted-foreground">One request, start to receipt</h3>
         <div class="mt-7">
           <McpFlow client:visible />
         </div>
@@ -320,7 +343,7 @@ const icons = {
   <!-- ────────────────────────────────────────────────────────────── faq -->
   <section id="faq" class="border-t border-border bg-band">
     <div class="mx-auto max-w-3xl px-5 sm:px-6 py-20 sm:py-32">
-      <h2 class="text-3xl font-semibold sm:text-[2.4rem]" data-reveal>Questions people ask first</h2>
+      <h2 class="text-3xl font-semibold sm:text-[2.4rem]" data-reveal>Before you ask</h2>
 
       <!-- Native disclosure rather than a JS accordion: the answers are the
            objections that decide whether someone downloads, so they belong in

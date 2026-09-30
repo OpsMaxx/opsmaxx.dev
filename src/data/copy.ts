@@ -3,39 +3,76 @@ export const site = {
   url: 'https://opsmaxx.dev',
   repo: 'https://github.com/OpsMaxx/OpsMaxx',
   releases: 'https://github.com/OpsMaxx/OpsMaxx/releases/latest',
-  title: 'OpsMaxx — your infrastructure control plane',
-  // The title carries the positioning and this continues the sentence, so a
-  // link preview reads as one line: "OpsMaxx — your infrastructure control
-  // plane / For you and your AI agents."
+  title: 'OpsMaxx — stop tab-maxxing your servers',
+  // The title carries the hook and this says what the thing is, so a link
+  // preview in an ad or a group chat reads as joke, then substance.
   //
-  // Deliberately about 100 characters. WhatsApp cut the previous 156-character
-  // version at "and a secrets vault" — mid-phrase, with the closing claims
-  // lost. Anything that fits whole cannot be truncated badly, and a short
-  // meta description is no worse for search than a clipped one.
+  // Deliberately 100 characters or fewer. WhatsApp cut an earlier
+  // 156-character version at "and a secrets vault" — mid-phrase, with the
+  // closing claims lost. Anything that fits whole cannot be truncated badly,
+  // and a short meta description is no worse for search than a clipped one.
   description:
-    'For you and your AI agents. SSH, SFTP, databases, tunnels and a vault. Free, no account, no telemetry.'
+    'SSH, SFTP, databases, tunnels and a vault in one window. For you and your agents. Free, no account.'
 }
 
+export type HeroCopy = { eyebrow: string; h1: string; h1Mark: string; sub: string }
+
 export const hero = {
-  eyebrow: 'Free and open source · MIT',
-  h1: 'Every server you look after, in one window.',
-  // The words the olive highlight bar sits behind. Must occur in h1.
-  h1Mark: 'one window',
-  sub: 'OpsMaxx keeps your terminal, files, databases, tunnels and secrets in a single app — separated into workspaces per client or environment, sharing one credential store, so you stop hunting for the key you saved somewhere else.',
+  eyebrow: 'Free · MIT · zero rizz required',
+  h1: 'Stop tab-maxxing. Start OpsMaxxing.',
+  // The words the olive highlight bar sits behind. Must occur in h1 — the
+  // build fails if it does not (see index.astro).
+  h1Mark: 'OpsMaxxing',
+  sub: 'Terminal, files, databases, tunnels and secrets in one window. One workspace per client, one vault for every key. No more “which laptop has the prod key” energy.',
+  // The same pitch without the voice, for llms.txt: a model summarising the
+  // product should not have to decode slang to get the facts.
+  plain: 'OpsMaxx keeps your terminal, files, databases, tunnels and secrets in a single app — separated into workspaces per client or environment, sharing one credential store, so you stop hunting for the key you saved somewhere else.',
   ctaPrimary: 'Download OpsMaxx',
-  ctaSecondary: 'View on GitHub',
-  trust: 'No account. No telemetry. No paid tier.',
+  ctaSecondary: 'Read the source',
+  trust: 'No account. No telemetry. No paid tier. No cap.',
   shot: {
     src: '/shots/v2/fleet.png',
     alt: 'The OpsMaxx fleet monitor: fifteen servers grouped by role, each with live CPU, memory, disk and network',
-    caption: 'Fleet monitor · 15 servers, live metrics'
+    caption: 'Fleet monitor · 15 servers, one glance'
+  }
+}
+
+// Ad landing heroes, picked by ?v=<key> (see the inline script in
+// index.astro). Each ad angle lands on a headline that finishes its sentence;
+// an unknown or missing key keeps the default hero above, which is also what
+// crawlers and visitors without JavaScript get. Every sub restates a claim the
+// rest of the page already makes — an ad is not a licence to promise more.
+export const heroVariants: Record<string, HeroCopy> = {
+  agents: {
+    eyebrow: 'MCP · ALLOW / ASK / DENY',
+    h1: 'Let your agent touch prod. Keep the keys.',
+    h1Mark: 'Keep the keys.',
+    sub: 'Claude Code, Codex and Gemini CLI get a server name and an access group. Passwords, keys and hostnames never reach them, and anything set to ASK waits for your yes.'
+  },
+  oncall: {
+    eyebrow: 'For whoever holds the pager',
+    h1: 'Paged at 3am? One window, not fourteen.',
+    h1Mark: 'One window',
+    sub: 'The fleet monitor shows which box, the runbook shows what was run the last three times, and the terminal is one click away. Back to sleep sooner.'
+  },
+  clients: {
+    eyebrow: 'For consultants and agencies',
+    h1: 'Five clients. Zero prod mix-ups.',
+    h1Mark: 'Zero prod mix-ups.',
+    sub: 'One workspace per client, each with its own servers, secrets and agent scope. Put a password on one and it is locked, not just hidden.'
+  },
+  free: {
+    eyebrow: 'MIT licensed',
+    h1: 'Actually free. No cap.',
+    h1Mark: 'No cap.',
+    sub: 'No account, no telemetry, no paid tier, no session limit. SSH, SFTP, five databases, tunnels and a vault in one window, and the source is public.'
   }
 }
 
 export const stats = [
-  { n: '5', label: 'database engines built in' },
-  { n: '21', label: 'fleet operations, every write off by default' },
-  { n: '0', label: 'credentials an AI agent ever sees' }
+  { n: '5', label: 'database engines, zero extra apps' },
+  { n: '21', label: 'fleet operations. Every write ships switched off.' },
+  { n: '0', label: 'credentials your AI agent ever sees. Literally zero.' }
 ]
 
 /* ------------------------------------------------------------------ tour */
@@ -59,7 +96,7 @@ export const tour: TourItem[] = [
   {
     id: 'workspaces',
     tab: 'Workspaces',
-    headline: 'One app, one client at a time.',
+    headline: 'One client at a time. Prod stays out of reach.',
     body: 'Every server, database, tunnel, vault entry and agent session belongs to a workspace. Switch, and the whole app switches with you — so a production box is not one keystroke away while you are working on staging.',
     bullets: [
       'A password on a workspace locks it, not just hides it',
@@ -72,7 +109,7 @@ export const tour: TourItem[] = [
   {
     id: 'fleet',
     tab: 'Fleet',
-    headline: 'See every server at once, not one tab at a time.',
+    headline: 'Fifteen servers, one glance. Not fifteen tabs.',
     body: 'Group servers by role and watch CPU, memory, disk and network across all of them. Background checks keep running while you are looking at something else.',
     bullets: [
       'Live metrics per server, grouped how you work',
@@ -85,7 +122,7 @@ export const tour: TourItem[] = [
   {
     id: 'terminal',
     tab: 'Terminal',
-    headline: 'A real terminal, on the connection you already have.',
+    headline: 'A real terminal. Two-factor once, not once per tab.',
     body: 'A GPU-rendered xterm with split panes and search, and a live monitor strip for the server under it. Jump hosts, two-factor and keys are settled once per connection, not once per tab.',
     bullets: ['Split panes and search', 'Unlimited jump hosts, each with its own credentials', 'Live CPU, memory, disk and network under the prompt'],
     shot: shot('terminal'),
@@ -94,7 +131,7 @@ export const tour: TourItem[] = [
   {
     id: 'files',
     tab: 'Files',
-    headline: 'Files beside the shell, on the same session.',
+    headline: 'SFTP on the session you already opened.',
     body: 'An SFTP browser riding the connection the terminal already opened — no second login, no separate app. Browse, filter, upload and edit in place.',
     bullets: ['Same connection, same credentials as the terminal', 'Edit a remote file in place', 'Size, modified time and permissions at a glance'],
     shot: shot('files'),
@@ -103,7 +140,7 @@ export const tour: TourItem[] = [
   {
     id: 'databases',
     tab: 'Databases',
-    headline: 'Query the database without leaving the window.',
+    headline: 'Five databases. Zero extra apps.',
     body: 'Five engines built in — Postgres, MySQL, SQL Server, MongoDB and Redis — each with a query editor, a shell and its own operations view, reachable through a bastion when that is the only route.',
     bullets: ['Tables listed as soon as you connect', 'Results in a grid, with row count and timing', 'Nothing is sent to the server until you press Run'],
     shot: shot('database'),
@@ -112,7 +149,7 @@ export const tour: TourItem[] = [
   {
     id: 'docker',
     tab: 'Docker',
-    headline: 'What is running under Docker, grouped the way you deployed it.',
+    headline: 'Docker, grouped the way you deployed it.',
     body: 'Containers on one host, grouped by compose project, with state, image, uptime and ports — and their logs, disk usage and live stats a click away. It uses the docker binary already on the server.',
     bullets: ['Grouped by compose project', 'Logs, disk usage and live CPU and memory', 'Nothing is started, stopped or removed until you ask'],
     shot: shot('docker'),
@@ -121,7 +158,7 @@ export const tour: TourItem[] = [
   {
     id: 'kubernetes',
     tab: 'Kubernetes',
-    headline: 'Your cluster, through the kubeconfig the server already has.',
+    headline: 'Spot the CrashLoopBackOff before Slack does.',
     body: 'Pods, workloads, nodes and events across namespaces, read with kubectl on the server you pick. A pod in CrashLoopBackOff is marked in red, with how often it has restarted.',
     bullets: [
       'Pods, workloads, nodes, events, usage and storage',
@@ -134,7 +171,7 @@ export const tour: TourItem[] = [
   {
     id: 'posture',
     tab: 'Posture',
-    headline: 'How locked-down every server is, in one table.',
+    headline: 'How locked-down every box is. Checks, not vibes.',
     body: 'Firewall, SELinux or AppArmor, sshd settings, failed logins, security updates, OOM kills and certificate expiry, for every server at once. A check that could not run is reported as exactly that — never as a pass.',
     bullets: ['The weak sshd settings named, per server', 'Failed logins and OOM kills over a stated window', 'Unread is shown as unread, not as clean'],
     shot: shot('posture'),
@@ -143,7 +180,7 @@ export const tour: TourItem[] = [
   {
     id: 'vault',
     tab: 'Vault',
-    headline: 'One encrypted store for every credential.',
+    headline: 'Every key in one vault. Not on a sticky note.',
     body: 'AES-256-GCM for logins, API keys, SSH keys and free-form notes, filed per workspace. Servers point at an entry instead of copying it, and no MCP tool can read it.',
     bullets: ['Logins, keys, SSH keys, VPN profiles and notes', 'Per-workspace, or shared on purpose', 'Touch ID unlock on a Mac, or lock it by hand'],
     shot: shot('vault'),
@@ -152,7 +189,7 @@ export const tour: TourItem[] = [
   {
     id: 'http',
     tab: 'HTTP',
-    headline: 'An API client that can leave through any server.',
+    headline: 'Send the request from the server’s side of the firewall.',
     body: 'Send requests from this machine or through any server’s SSH connection, with environments, collections and history. WebSocket and GraphQL too, and it imports OpenAPI specs and cURL commands.',
     bullets: ['Route a request through a server you are connected to', 'Collections, environments and history', 'WebSocket, GraphQL, OpenAPI and cURL import'],
     shot: shot('http'),
@@ -164,7 +201,7 @@ export const agentTour: TourItem[] = [
   {
     id: 'access',
     tab: 'AI access',
-    headline: 'Decide what an agent may do, one capability at a time.',
+    headline: 'ALLOW, ASK or DENY. Per capability, not per vibe.',
     body: 'Access groups are not a single yes/no switch. Every capability is ALLOW, ASK or DENY, and you can override individual file paths on top of that.',
     bullets: [
       'Five groups ship with the app; add as many as you want',
@@ -177,7 +214,7 @@ export const agentTour: TourItem[] = [
   {
     id: 'approvals',
     tab: 'Approvals',
-    headline: 'When an agent asks, you see exactly what it wants to run.',
+    headline: 'Your agent wants sudo. You see exactly why.',
     body: 'The request waits, blocked, until you answer. You get the command, where it would run, how risky it is and why — and the agent’s own reason, marked as its words, not OpsMaxx’s.',
     bullets: ['Auto-denies if nobody answers in time', 'Approve once, deny, or decide later', 'One button to deny and stop all AI access'],
     shot: shot('approval'),
@@ -186,7 +223,7 @@ export const agentTour: TourItem[] = [
   {
     id: 'audit',
     tab: 'Audit log',
-    headline: 'Every action an agent took, and what happened to it.',
+    headline: 'Receipts for everything your agent did.',
     body: 'Allowed, approved, denied or failed — with the agent, the workspace, the server and the exact command. Secrets are stripped before anything is written down.',
     bullets: [
       'Claude Code, Codex and Gemini CLI, side by side',
@@ -201,9 +238,9 @@ export const agentTour: TourItem[] = [
 /* --------------------------------------------------------------- features */
 
 export const featuresSection = {
-  eyebrow: 'One app',
-  headline: 'The four windows you keep open, and four more you have been putting off.',
-  deck: 'All of it shares one encrypted credential store, so nothing has to be pasted between apps.'
+  eyebrow: 'The consolidation arc',
+  headline: 'Your whole ops stack, minus the alt-tab.',
+  deck: 'The four windows you keep open, the four you keep putting off, and one encrypted credential store under all of them. Nothing gets pasted between apps.'
 }
 
 export type Feature = {
@@ -217,40 +254,40 @@ export type Feature = {
 export const features: Feature[] = [
   {
     icon: 'layers',
-    name: 'Workspaces keep clients apart',
+    name: 'Workspaces: no more prod-by-accident',
     line: 'Servers, databases, tunnels, vault entries and agent sessions all belong to a workspace. Give one a password and it is locked rather than hidden — and an AI agent scoped to it cannot see a thing outside it.',
     chips: ['per client or environment', 'password-locked', 'agent scope boundary', 'one encrypted backup file'],
     span: 'wide'
   },
   {
     icon: 'terminal',
-    name: 'Terminal and files, one connection',
+    name: 'Terminal and files, one login',
     line: 'A GPU-rendered xterm with split panes and search, and an SFTP browser riding the same session. Two-factor is a code you type once, not once per tab.',
     chips: ['split panes', 'copy-on-select', 'unlimited jump hosts', 'sftp edit in place'],
     span: 'wide'
   },
   {
     icon: 'database',
-    name: 'Five database engines',
+    name: 'Five database engines, built in',
     line: 'Query and shell into each one, through a bastion when that is the only route.',
     chips: ['postgres', 'mysql', 'sql server', 'mongodb', 'redis']
   },
   {
     icon: 'lock',
-    name: 'Encrypted vault',
+    name: 'A vault your agent can’t open',
     line: 'AES-256-GCM store for logins, API keys and free-form pairs. No MCP tool can read it.',
     chips: ['os keychain', 'per-workspace', 'portable backup']
   },
   {
     icon: 'network',
-    name: 'Tunnels, VPN and inspection',
+    name: 'Tunnels, VPN and a traffic snitch',
     line: 'Local and remote forwards, a SOCKS5 proxy, userspace WireGuard that needs no administrator rights, and a proxy that shows the HTTPS a machine is really making.',
     chips: ['wireguard', 'openvpn', 'frp', 'socks5', 'traffic inspector'],
     span: 'wide'
   },
   {
     icon: 'keyboard',
-    name: 'Every shortcut rebindable',
+    name: 'Every shortcut rebindable. Keyboard maxxers, rejoice.',
     line: 'Per context, with conflict detection and export or import.',
     chips: ['command palette', 'ctrl k']
   }
@@ -260,8 +297,8 @@ export const features: Feature[] = [
 
 export const operations = {
   eyebrow: 'Fleet operations',
-  headline: 'Run the fleet, not one box at a time.',
-  deck: 'Twenty-odd operations across every server you have added. The four that write — patching, a command run everywhere, jobs and revoking a key — stay off until you turn them on, and a new one added in a later version never switches itself on.',
+  headline: 'Maxx the fleet, not one box at a time.',
+  deck: 'Twenty-odd operations across every server you have added. The four that write — patching, a command run everywhere, jobs and revoking a key — stay off until you flip them on, and a new one added in a later version never flips itself.',
   groups: [
     {
       title: 'Know',
@@ -297,36 +334,36 @@ export const operations = {
       ]
     }
   ],
-  footnote: 'Drain refuses seven ways, and treats a read that did not answer as a refusal in itself.'
+  footnote: 'Drain refuses seven ways, and treats a read that did not answer as a refusal in itself. Paranoid? On purpose.'
 }
 
 /* -------------------------------------------------------------- personas */
 
 export const personas = {
-  eyebrow: 'Who it is for',
-  headline: 'Four ways people actually use it.',
+  eyebrow: 'Pick your character',
+  headline: 'Four builds. Same app.',
   items: [
     {
       icon: 'siren',
-      role: 'On call at 3am',
+      role: 'The 3am pager holder',
       line: 'An alert fires on CPU, memory or a dead systemd unit. The fleet monitor shows which server, the runbook shows what was run the last three times, and the terminal is one click away.',
       tags: ['Alerts', 'Fleet monitor', 'Runbooks']
     },
     {
       icon: 'briefcase',
-      role: 'Consulting across clients',
+      role: 'The five-client consultant',
       line: 'One workspace per client, each optionally password-protected, each with its own servers and secrets. The whole lot exports to a single passphrase-protected file that opens on your other machine.',
       tags: ['Workspaces', 'Vault', 'Encrypted backup']
     },
     {
       icon: 'server',
-      role: 'Keeping a platform patched',
+      role: 'The patch-day grinder',
       line: 'Patch in waves that stop on the first unhealthy server, watch drift since last week, and read the security posture as it actually is on the box rather than as documented.',
       tags: ['Patching', 'Drift', 'Security posture']
     },
     {
       icon: 'bot',
-      role: 'Working alongside agents',
+      role: 'The agent wrangler',
       line: 'Give Claude Code a read-only group on staging and an ASK group on production. It works on its own until something matters, then it waits for you.',
       tags: ['Access groups', 'Approvals', 'Audit log']
     }
@@ -337,7 +374,7 @@ export const personas = {
 
 export const ai = {
   eyebrow: 'MCP',
-  headline: 'The best thing you can hand an AI agent is a name, not a key.',
+  headline: 'Hand your agent a name, not a key.',
   body: 'An agent asks for a server by the friendly name you gave it. OpsMaxx looks the real connection up in your OS keychain, checks the access group, runs the command over normal SSH, and strips secrets out of the output before the agent sees any of it.',
 
   clients: ['Claude Code', 'Claude Desktop', 'Codex', 'Gemini CLI', 'any MCP client'],
@@ -391,7 +428,7 @@ export type Platform = {
 
 export const install = {
   eyebrow: 'Getting started',
-  headline: 'Downloaded, opened, connected.',
+  headline: 'Download. Open. You’re OpsMaxxing.',
   deck: 'Three steps, and only Windows still needs the middle one.',
 
   platforms: [
@@ -433,9 +470,9 @@ export const install = {
   ] as Platform[],
 
   steps: [
-    { n: '01', title: 'Download it', sub: 'No sign-up, no licence key, nothing to activate.' },
+    { n: '01', title: 'Download it', sub: 'No sign-up, no licence key, no “contact sales”.' },
     { n: '02', title: 'Get past the Windows warning', sub: 'Only Windows still warns, and unsigned is not the same as unsafe.' },
-    { n: '03', title: 'Add your servers', sub: 'Or hand the whole lot to an agent.' }
+    { n: '03', title: 'Add your servers', sub: 'Or let your agent do the data entry.' }
   ],
 
   trustLine: 'Every installer is scanned before release, and every file\'s SHA-256 is published in the release notes.',
@@ -473,23 +510,23 @@ export const install = {
 
 export const faq = [
   {
-    q: 'Why does my computer warn me about the download?',
+    q: 'Why is Windows side-eyeing the download?',
     a: 'macOS does not warn any more: since 0.30.1 that build is signed with an Apple Developer ID and notarized by Apple, with the ticket stapled in, so it opens normally even offline. Windows still warns, because that build carries no signature — a certificate there is $200–$400 a year. The warning means Windows cannot confirm who published the app, not that the file is unsafe. Every installer is scanned with ClamAV, the Windows one with Defender, and the .exe and .dmg with VirusTotal\'s 70+ engines — and every SHA-256 is in the release notes for you to check.'
   },
   {
-    q: 'Is it really free, or free for now?',
+    q: 'Free free, or free-until-the-Series-A free?',
     a: 'MIT licensed, with no paid tier, no session limit and no subscription. The whole source is public, so a future paywall is something you could fork your way around.'
   },
   {
-    q: 'Does it phone home?',
+    q: 'Is it quietly phoning home?',
     a: 'No account, no telemetry, no analytics. Every connection the app makes is one you configured, apart from the update check you can switch off.'
   },
   {
-    q: 'Can an AI agent do something I did not intend?',
+    q: 'Can my agent go rogue?',
     a: 'Only within the access group you set. Escalation shells — sudo -i, su, sudo bash — are refused for every group with no setting that reverses it, anything set to ASK waits for your approval, and every action lands in the audit log. Individual privileged reads do use sudo -n, which you can turn off.'
   },
   {
-    q: 'Do I have to give up the setup I already have?',
+    q: 'Do I have to nuke my current setup?',
     a: 'No. OpsMaxx imports ~/.ssh/config including ProxyJump entries, and runs perfectly happily beside whatever you use today.'
   },
   {
@@ -499,8 +536,8 @@ export const faq = [
 ]
 
 export const finalCta = {
-  headline: 'Close a few of those windows.',
-  line: 'One download, three platforms, nothing to sign up for.',
+  headline: 'Close the tabs. Start OpsMaxxing.',
+  line: 'One download, three platforms, zero sign-up forms.',
   button: 'Download OpsMaxx',
   secondary: 'Browse the source'
 }
