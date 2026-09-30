@@ -13,7 +13,7 @@ import {
   Layers, Lock, Minus, Network, Server, ShieldCheck, Siren, TerminalSquare
 } from 'lucide-react'
 import {
-  site, hero, stats, featuresSection, features, operations, personas,
+  site, hero, tour, agentTour, stats, featuresSection, features, operations, personas,
   ai, install, faq, finalCta
 } from '@/data/copy'
 
@@ -84,14 +84,14 @@ const icons = {
         <picture>
           <source
             type="image/webp"
-            srcset={`/shots/fleet-700.webp 700w, /shots/fleet-1100.webp 1100w, /shots/fleet-1400.webp 1400w, /shots/fleet.webp 1800w`}
+            srcset={`/shots/v2/fleet-700.webp 700w, /shots/v2/fleet-1100.webp 1100w, /shots/v2/fleet-1400.webp 1400w, /shots/v2/fleet.webp 1800w`}
             sizes="(min-width: 1152px) 1104px, (min-width: 640px) calc(100vw - 3rem), calc(100vw - 2.5rem)"
           />
           <img
             src={hero.shot.src}
             alt={hero.shot.alt}
             width="1800"
-            height="908"
+            height="909"
             fetchpriority="high"
             decoding="async"
             class="shot-frame w-full"
@@ -118,7 +118,7 @@ const icons = {
 
   <!-- ───────────────────────────────────────────────────────────── tour -->
   <section id="tour" class="mx-auto max-w-6xl px-5 sm:px-6 py-20 sm:py-32">
-    <ProductTour client:visible />
+    <ProductTour items={tour} client:visible />
   </section>
 
   <!-- ────────────────────────────────────────────────────────── features -->
@@ -287,7 +287,11 @@ const icons = {
       </div>
     </div>
 
-    <div class="mt-10" data-reveal>
+    <div class="mt-20 sm:mt-28">
+      <ProductTour items={agentTour} client:visible />
+    </div>
+
+    <div class="mt-14" data-reveal>
       <div class="flex flex-col gap-3 sm:flex-row">
         <a href="/mcp/" class={buttonVariants({ variant: 'outline' })}>
           All 28 tools and how to connect

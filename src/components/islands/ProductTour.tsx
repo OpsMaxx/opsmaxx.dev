@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { Check } from 'lucide-react'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { cn } from '@/lib/utils'
-import { tour } from '@/data/copy'
+import type { TourItem } from '@/data/copy'
 
-export function ProductTour() {
+/** A tab strip and one screenshot frame. Used twice: the product, and the agents section. */
+export function ProductTour({ items: tour }: { items: TourItem[] }) {
   const [active, setActive] = useState(tour[0].id)
   const current = tour.find((t) => t.id === active) ?? tour[0]
 
@@ -56,7 +57,7 @@ export function ProductTour() {
                 src={t.shot}
                 alt={t.alt}
                 width={1800}
-                height={908}
+                height={909}
                 loading="lazy"
                 decoding="async"
                 className={cn(

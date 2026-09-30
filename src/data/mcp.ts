@@ -18,7 +18,7 @@ export const mcpPage = {
 
   capabilities: {
     title: 'Every capability is ALLOW, ASK or DENY',
-    body: 'An access group is not a single on/off switch. Each capability is set independently, and file paths can be overridden on top of the blanket read and write settings. Four groups ship with the app — Read Only, Read & Write, Sudo Access, Full Access — and you can create as many as you want.',
+    body: 'An access group is not a single on/off switch. Each capability is set independently, and file paths can be overridden on top of the blanket read and write settings. Five groups ship with the app — Read Only, Commands with no writes, Read & Write, Sudo Access, Full Access — and you can create as many as you want.',
     states: [
       { name: 'ALLOW', line: 'Runs immediately, and is written to the audit log.' },
       { name: 'ASK', line: 'Waits in Approvals. The agent blocks until you answer.' },

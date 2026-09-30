@@ -26,7 +26,7 @@ export const hero = {
   ctaSecondary: 'View on GitHub',
   trust: 'No account. No telemetry. No paid tier.',
   shot: {
-    src: '/shots/fleet.png',
+    src: '/shots/v2/fleet.png',
     alt: 'The OpsMaxx fleet monitor: fifteen servers grouped by role, each with live CPU, memory, disk and network',
     caption: 'Fleet monitor · 15 servers, live metrics'
   }
@@ -50,6 +50,11 @@ export type TourItem = {
   alt: string
 }
 
+// Screenshots come from the app repo's `npm run demo:shots`, an invented
+// estate (see scripts/shots.mjs). Every claim below is one the app makes on the
+// screen shown, or one the rest of this page already makes.
+const shot = (name: string): string => `/shots/v2/${name}.png`
+
 export const tour: TourItem[] = [
   {
     id: 'workspaces',
@@ -61,8 +66,8 @@ export const tour: TourItem[] = [
       'Agents are scoped to a workspace and cannot see past it',
       'Each one backs up and restores as a single encrypted file'
     ],
-    shot: '/shots/workspaces.png',
-    alt: 'Workspace manager listing separate workspaces for different clients, one of them password-protected'
+    shot: shot('workspaces'),
+    alt: 'Workspace manager listing three client workspaces, one of them locked with a password'
   },
   {
     id: 'fleet',
@@ -71,24 +76,112 @@ export const tour: TourItem[] = [
     body: 'Group servers by role and watch CPU, memory, disk and network across all of them. Background checks keep running while you are looking at something else.',
     bullets: [
       'Live metrics per server, grouped how you work',
-      'Alerts on CPU, memory and failed systemd units',
+      'Fleet health leads with the one server that needs you',
       'Webhooks to Slack, Discord or Teams — names, never hostnames'
     ],
-    shot: '/shots/fleet.png',
-    alt: 'Fleet monitor showing fifteen servers grouped into databases, production, jump servers and staging'
+    shot: shot('fleet'),
+    alt: 'Fleet monitor: fifteen servers grouped into databases and production, with CPU, memory, disk and network for each'
   },
+  {
+    id: 'terminal',
+    tab: 'Terminal',
+    headline: 'A real terminal, on the connection you already have.',
+    body: 'A GPU-rendered xterm with split panes and search, and a live monitor strip for the server under it. Jump hosts, two-factor and keys are settled once per connection, not once per tab.',
+    bullets: ['Split panes and search', 'Unlimited jump hosts, each with its own credentials', 'Live CPU, memory, disk and network under the prompt'],
+    shot: shot('terminal'),
+    alt: 'A terminal session on api-01 running uptime, docker ps and systemctl status, with a live monitor strip below'
+  },
+  {
+    id: 'files',
+    tab: 'Files',
+    headline: 'Files beside the shell, on the same session.',
+    body: 'An SFTP browser riding the connection the terminal already opened — no second login, no separate app. Browse, filter, upload and edit in place.',
+    bullets: ['Same connection, same credentials as the terminal', 'Edit a remote file in place', 'Size, modified time and permissions at a glance'],
+    shot: shot('files'),
+    alt: 'The SFTP file browser on api-01 listing a home directory with sizes, dates and permissions'
+  },
+  {
+    id: 'databases',
+    tab: 'Databases',
+    headline: 'Query the database without leaving the window.',
+    body: 'Five engines built in — Postgres, MySQL, SQL Server, MongoDB and Redis — each with a query editor, a shell and its own operations view, reachable through a bastion when that is the only route.',
+    bullets: ['Tables listed as soon as you connect', 'Results in a grid, with row count and timing', 'Nothing is sent to the server until you press Run'],
+    shot: shot('database'),
+    alt: 'A PostgreSQL connection with its tables listed and a query result grid of recent orders'
+  },
+  {
+    id: 'docker',
+    tab: 'Docker',
+    headline: 'What is running under Docker, grouped the way you deployed it.',
+    body: 'Containers on one host, grouped by compose project, with state, image, uptime and ports — and their logs, disk usage and live stats a click away. It uses the docker binary already on the server.',
+    bullets: ['Grouped by compose project', 'Logs, disk usage and live CPU and memory', 'Nothing is started, stopped or removed until you ask'],
+    shot: shot('docker'),
+    alt: 'Docker containers on a server grouped by compose project, showing running and exited containers'
+  },
+  {
+    id: 'kubernetes',
+    tab: 'Kubernetes',
+    headline: 'Your cluster, through the kubeconfig the server already has.',
+    body: 'Pods, workloads, nodes and events across namespaces, read with kubectl on the server you pick. A pod in CrashLoopBackOff is marked in red, with how often it has restarted.',
+    bullets: [
+      'Pods, workloads, nodes, events, usage and storage',
+      'Reading only, except rollout restart — which asks first',
+      'Never switches your context, never deletes anything'
+    ],
+    shot: shot('kubernetes'),
+    alt: 'Kubernetes pods across namespaces, with one pod in CrashLoopBackOff and its restart count highlighted'
+  },
+  {
+    id: 'posture',
+    tab: 'Posture',
+    headline: 'How locked-down every server is, in one table.',
+    body: 'Firewall, SELinux or AppArmor, sshd settings, failed logins, security updates, OOM kills and certificate expiry, for every server at once. A check that could not run is reported as exactly that — never as a pass.',
+    bullets: ['The weak sshd settings named, per server', 'Failed logins and OOM kills over a stated window', 'Unread is shown as unread, not as clean'],
+    shot: shot('posture'),
+    alt: 'Security posture table for fifteen servers, flagging two with weak sshd settings and one killing processes for memory'
+  },
+  {
+    id: 'vault',
+    tab: 'Vault',
+    headline: 'One encrypted store for every credential.',
+    body: 'AES-256-GCM for logins, API keys, SSH keys and free-form notes, filed per workspace. Servers point at an entry instead of copying it, and no MCP tool can read it.',
+    bullets: ['Logins, keys, SSH keys, VPN profiles and notes', 'Per-workspace, or shared on purpose', 'Touch ID unlock on a Mac, or lock it by hand'],
+    shot: shot('vault'),
+    alt: 'The vault unlocked, showing a login entry with its URL, username and a hidden password'
+  },
+  {
+    id: 'http',
+    tab: 'HTTP',
+    headline: 'An API client that can leave through any server.',
+    body: 'Send requests from this machine or through any server’s SSH connection, with environments, collections and history. WebSocket and GraphQL too, and it imports OpenAPI specs and cURL commands.',
+    bullets: ['Route a request through a server you are connected to', 'Collections, environments and history', 'WebSocket, GraphQL, OpenAPI and cURL import'],
+    shot: shot('http'),
+    alt: 'The HTTP client showing a GET request and its pretty-printed JSON response with status and timing'
+  }
+]
+
+export const agentTour: TourItem[] = [
   {
     id: 'access',
     tab: 'AI access',
     headline: 'Decide what an agent may do, one capability at a time.',
     body: 'Access groups are not a single yes/no switch. Every capability is ALLOW, ASK or DENY, and you can override individual file paths on top of that.',
     bullets: [
-      'Four groups ship with the app; add as many as you want',
+      'Five groups ship with the app; add as many as you want',
       'ASK holds the request in Approvals until you answer',
       'Escalation shells are refused for every group'
     ],
-    shot: '/shots/access.png',
+    shot: shot('access'),
     alt: 'Access group editor with ALLOW, ASK and DENY set per capability'
+  },
+  {
+    id: 'approvals',
+    tab: 'Approvals',
+    headline: 'When an agent asks, you see exactly what it wants to run.',
+    body: 'The request waits, blocked, until you answer. You get the command, where it would run, how risky it is and why — and the agent’s own reason, marked as its words, not OpsMaxx’s.',
+    bullets: ['Auto-denies if nobody answers in time', 'Approve once, deny, or decide later', 'One button to deny and stop all AI access'],
+    shot: shot('approval'),
+    alt: 'An approval dialog: Claude Code asking to run sudo systemctl restart nginx on api-01, rated high risk'
   },
   {
     id: 'audit',
@@ -100,7 +193,7 @@ export const tour: TourItem[] = [
       'Denied actions logged as loudly as successful ones',
       'No passwords, keys or tokens, ever'
     ],
-    shot: '/shots/audit.png',
+    shot: shot('audit'),
     alt: 'Audit log listing agent actions with approval state and result'
   }
 ]
