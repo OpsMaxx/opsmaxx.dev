@@ -483,11 +483,9 @@ export const install = {
     label: 'Or use a package manager',
     rows: [
       { id: 'macos', cmd: 'brew install --cask opsmaxx/tap/opsmaxx', note: 'Run brew trust opsmaxx/tap first — Homebrew will not load a third-party tap until you do.' },
-      { id: 'windows', cmd: 'winget install OpsMaxx.OpsMaxx', note: 'In review at microsoft/winget-pkgs. Use the installer above until it lands.' },
-      // Deliberately no Linux row: there is no apt or AUR repository yet, and
-      // repeating the .deb command from step 02 under a "package manager"
-      // heading would imply one exists.
-
+      // Deliberately no Windows or Linux row. winget is not pursued (its
+      // submission never got a maintainer review), and there is no apt or AUR
+      // repository. A row naming either would promise an install that fails.
     ]
   },
   verifyLabel: 'Optional: check the hash against the release page',
