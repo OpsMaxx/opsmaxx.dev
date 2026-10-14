@@ -14,7 +14,7 @@ import {
 } from 'lucide-react'
 import {
   site, hero, heroVariants, tour, agentTour, stats, featuresSection, features, operations, personas,
-  ai, install, faq, finalCta
+  ai, install, faq, capture, finalCta
 } from '@/data/copy'
 
 const release = await getRelease()
@@ -370,6 +370,32 @@ const icons = {
       </div>
     </div>
   </section>
+
+  <!-- ──────────────────────────────────────────── release notifications -->
+  <!-- Hidden until `capture.action` names a real endpoint; see copy.ts. -->
+  {capture.action && (
+  <section id="notify" class="border-t border-border">
+    <div class="mx-auto max-w-2xl px-5 py-20 text-center sm:px-6 sm:py-24" data-reveal>
+      <p class="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-brand">{capture.eyebrow}</p>
+      <h2 class="mt-4 text-3xl font-semibold leading-tight sm:text-[2.2rem]">{capture.headline}</h2>
+      <p class="mx-auto mt-4 max-w-lg text-[1.02rem] text-muted-foreground">{capture.line}</p>
+      <form action={capture.action} method="post" target="_blank" class="mx-auto mt-8 flex w-full max-w-md flex-col gap-3 sm:flex-row">
+        <label class="sr-only" for="notify-email">Email address</label>
+        <input
+          id="notify-email"
+          type="email"
+          name="email"
+          required
+          autocomplete="email"
+          placeholder={capture.placeholder}
+          class="h-11 w-full rounded-md border border-border bg-background px-3.5 text-[0.95rem] text-foreground outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
+        />
+        <button type="submit" class={buttonVariants({ size: 'lg' }) + ' shrink-0'}>{capture.button}</button>
+      </form>
+      <p class="mt-4 text-[0.82rem] text-muted-foreground">{capture.note}</p>
+    </div>
+  </section>
+  )}
 
   <!-- ──────────────────────────────────────────────────────── final cta -->
   <section id="cta" class="border-t border-border">

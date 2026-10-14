@@ -3,6 +3,10 @@
   X-Frame-Options: SAMEORIGIN
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
+  # The release-notification form posts to a third-party endpoint with
+  # target=_blank, and `rel` is not a valid <form> attribute — so this is the
+  # only way to deny that tab a live window.opener. Covers every future _blank.
+  Cross-Origin-Opener-Policy: same-origin-allow-popups
 
 # Astro emits content-hashed filenames under /_astro, so they never change.
 /_astro/*

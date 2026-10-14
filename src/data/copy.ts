@@ -470,7 +470,7 @@ export const install = {
   ] as Platform[],
 
   steps: [
-    { n: '01', title: 'Download it', sub: 'No sign-up, no licence key, no “contact sales”.' },
+    { n: '01', title: 'Download it', sub: 'No account, no licence key, no “contact sales”.' },
     { n: '02', title: 'Get past the Windows warning', sub: 'Only Windows still warns, and unsigned is not the same as unsafe.' },
     { n: '03', title: 'Add your servers', sub: 'Or let your agent do the data entry.' }
   ],
@@ -533,9 +533,36 @@ export const faq = [
   }
 ]
 
+/* ---------------------------------------------------------------- capture */
+
+/**
+ * The release-notification list.
+ *
+ * `action` is the provider's form endpoint — a Buttondown embed URL, or any
+ * endpoint taking a POST with an `email` field. This site is an assets-only
+ * Worker with no backend, so the form has to post somewhere else.
+ *
+ * An empty `action` hides the section entirely. That is deliberate: a form
+ * wired to nothing looks identical to a working one and silently drops every
+ * address, which is worse than having no form at all.
+ */
+export const capture = {
+  action: '',
+  eyebrow: 'Release notifications',
+  headline: 'One email per release. Nothing else.',
+  // The honest reason to subscribe, and the thing the FAQ gets asked most.
+  line: 'The Windows build carries no signature today. When that changes, this list is how you hear about it.',
+  placeholder: 'you@example.com',
+  button: 'Notify me',
+  note: 'One email per release. No newsletter, no digest, unsubscribe in one click.'
+}
+
 export const finalCta = {
   headline: 'Close the tabs. Start OpsMaxxing.',
-  line: 'One download, three platforms, zero sign-up forms.',
+  // Was "zero sign-up forms" until the release-notification form above
+  // appeared on the same page and contradicted it. The product still needs no
+  // account; that is the claim worth keeping, and it is the one that is true.
+  line: 'One download, three platforms, no account to create.',
   button: 'Download OpsMaxx',
   secondary: 'Browse the source'
 }
