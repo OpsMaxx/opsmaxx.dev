@@ -29,7 +29,7 @@ export const hero = {
   plain: 'OpsMaxx keeps your terminal, files, databases, tunnels and secrets in a single app — separated into workspaces per client or environment, sharing one credential store, so you stop hunting for the key you saved somewhere else.',
   ctaPrimary: 'Download OpsMaxx',
   ctaSecondary: 'Read the source',
-  trust: 'No account. No telemetry. No paid tier. No cap.',
+  trust: 'No account with us. No telemetry. No paid tier. No cap.',
   shot: {
     src: '/shots/v2/fleet.png',
     alt: 'The OpsMaxx fleet monitor: fifteen servers grouped by role, each with live CPU, memory, disk and network',
@@ -412,6 +412,44 @@ export const ai = {
   pairing: 'opsmaxx claude'
 }
 
+/* ------------------------------------------------------------------- sync */
+
+// Checked against the app repo: what syncs is src/main/services/addy/
+// collections.ts (settings do not), the seven emoji are sidecar/addyd/pair/
+// sas.go, sealing and recovery are sidecar/addyd/crypto.go. The relay sees
+// collection names and sizes (they are in its URLs), so the fine print says
+// so rather than "not what they sync".
+export const sync = {
+  eyebrow: 'Sync & devices',
+  headline: 'Your servers on every laptop. Through a relay you run.',
+  deck: 'OpsMaxx carries your servers, workspaces, tunnels and vault between your own machines through addy, a relay you host. Everything is sealed on your laptop before it leaves. The relay stores what it cannot read.',
+  items: [
+    {
+      icon: 'lock',
+      title: 'Sealed before it leaves.',
+      line: 'Every object is encrypted on your device under a key the relay never holds. The vault travels still locked by your master password: sync can’t open it, and the relay can’t either.'
+    },
+    {
+      icon: 'link',
+      title: 'Pair, don’t paste.',
+      // "Only your own devices" was not the whole truth: recovery adds a device
+      // with the phrase alone (crypto.go, RK-signed roster entries).
+      line: 'A new machine joins with a pairing code and seven emoji you compare on both screens. Only a device already on the account, or your recovery phrase, can add one; the relay can’t.'
+    },
+    {
+      icon: 'key',
+      title: 'Lose a laptop, keep the estate.',
+      line: 'Remove it from any other machine and re-key with your twelve-word recovery phrase. If every device is gone, the phrase rebuilds the account on a new one.'
+    }
+  ],
+  finePrint: 'Credentials saved only in a machine’s keychain are never synced: sync leaves them on that machine. The relay sees how many devices you have, when they sync, and the name and size of each sealed collection — never what is inside.',
+  installCmd: 'curl -fsSL https://get.opsmaxx.dev/addy/install.sh | sh',
+  ctaPrimary: 'Run a relay',
+  ctaPrimaryHref: 'https://github.com/OpsMaxx/addy#install',
+  ctaSecondary: 'Read the setup guide',
+  ctaSecondaryHref: 'https://github.com/OpsMaxx/OpsMaxx/blob/main/docs/08-user/guides/sync-and-devices.md'
+}
+
 export type Platform = {
   id: 'macos' | 'windows' | 'linux'
   label: string
@@ -529,7 +567,7 @@ export const faq = [
   },
   {
     q: 'Where are my passwords and keys stored?',
-    a: 'Server credentials go in your operating system keychain, read only by the main process. The vault is separate: AES-256-GCM under a master password that is never stored, derived with scrypt. Neither leaves your machine, and no MCP tool can read the vault at all.'
+    a: 'Server credentials go in your operating system keychain, read only by the main process. The vault is separate: AES-256-GCM under a master password that is never stored, derived with scrypt. Credentials kept only in the keychain are never synced and leave your machine only inside an encrypted backup you make. Turn on Sync & devices and the vault travels to your other machines still encrypted under your master password, which sync cannot open. No MCP tool can read the vault at all.'
   }
 ]
 

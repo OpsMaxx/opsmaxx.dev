@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro'
 import { getRelease } from '@/lib/releases'
 import {
-  site, hero, features, operations, personas, ai, install, faq
+  site, hero, features, operations, personas, ai, sync, install, faq
 } from '@/data/copy'
 
 export const prerender = true
@@ -75,6 +75,17 @@ Each tool is governed separately as ALLOW, ASK or DENY by an access group, and
 file paths can be overridden on top of that. Connect Claude Code with
 \`${install.finish.agentCmd}\`, or through AI & MCP → Overview → Connect Claude Code
 in the app. The macOS installer does not put \`opsmaxx\` on the PATH.
+
+## Sync between your machines
+
+${sync.deck}
+
+${sync.items.map((i) => `- **${i.title}** ${i.line}`).join('\n')}
+
+${sync.finePrint}
+
+Run a relay: ${sync.ctaPrimaryHref} (one-line installer: \`${sync.installCmd}\`).
+Setup guide: ${sync.ctaSecondaryHref}
 
 ## Who uses it
 

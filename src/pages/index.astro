@@ -9,12 +9,12 @@ import { DownloadButton } from '@/components/islands/DownloadButton'
 import { IconTile } from '@/components/reui/icon-tile'
 import { buttonVariants } from '@/components/ui/button'
 import {
-  ArrowDownToLine, ArrowRight, Bot, Briefcase, Database, FolderTree, Keyboard,
-  Layers, Lock, Minus, Network, Server, ShieldCheck, Siren, TerminalSquare
+  ArrowDownToLine, ArrowRight, Bot, Briefcase, Database, FolderTree, Keyboard, KeyRound,
+  Layers, Link2, Lock, Minus, Network, Server, ShieldCheck, Siren, TerminalSquare
 } from 'lucide-react'
 import {
   site, hero, heroVariants, tour, agentTour, stats, featuresSection, features, operations, personas,
-  ai, install, faq, capture, finalCta
+  ai, sync, install, faq, capture, finalCta
 } from '@/data/copy'
 
 const release = await getRelease()
@@ -29,7 +29,7 @@ const [h1Before, h1After] = hero.h1.split(hero.h1Mark)
 const icons = {
   terminal: TerminalSquare, folder: FolderTree, database: Database, network: Network,
   lock: Lock, server: Server, bot: Bot, layers: Layers, keyboard: Keyboard,
-  siren: Siren, briefcase: Briefcase
+  siren: Siren, briefcase: Briefcase, link: Link2, key: KeyRound
 }
 ---
 
@@ -43,6 +43,7 @@ const icons = {
       <div class="flex items-center gap-1">
         <a href="#tour" class="hidden px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground md:block">Tour</a>
         <a href="#operations" class="hidden px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground lg:block">Operations</a>
+        <a href="#sync" class="hidden px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground md:block">Sync</a>
         <a href="/mcp/" class="hidden px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground md:block">MCP</a>
         <a href="/changelog/" class="hidden px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground lg:block">Changelog</a>
         <a href="#faq" class="hidden px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground md:block">FAQ</a>
@@ -323,6 +324,48 @@ const icons = {
         <a href={site.repo + '/blob/main/docs/AI-SECURITY.md'} class={buttonVariants({ variant: 'ghost' })}>
           {ai.cta}
         </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────────────────────────────────────────── sync -->
+  <section id="sync" class="border-y border-border bg-band">
+    <div class="mx-auto max-w-6xl px-5 sm:px-6 py-20 sm:py-32">
+      <div class="max-w-2xl" data-reveal>
+        <p class="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-brand">{sync.eyebrow}</p>
+        <h2 class="mt-4 text-3xl font-semibold leading-tight sm:text-[2.6rem]">{sync.headline}</h2>
+        <p class="mt-5 text-[1.02rem] leading-relaxed text-muted-foreground">{sync.deck}</p>
+      </div>
+
+      <div class="mt-14 grid gap-4 lg:grid-cols-3" data-reveal-group>
+        {sync.items.map((f) => {
+          const Icon = icons[f.icon as keyof typeof icons]
+          return (
+            <article class="lift lift-hover rounded-2xl border border-border bg-background p-6 sm:p-7" data-reveal>
+              <IconTile variant="soft" size="default" className="text-brand">
+                <Icon />
+              </IconTile>
+              <h3 class="mt-5 text-[1.05rem] font-semibold leading-snug">{f.title}</h3>
+              <p class="mt-2.5 text-[0.92rem] leading-relaxed text-muted-foreground">{f.line}</p>
+            </article>
+          )
+        })}
+      </div>
+
+      <p class="mt-6 max-w-3xl text-[0.83rem] leading-relaxed text-muted-foreground" data-reveal>{sync.finePrint}</p>
+
+      <div class="mt-14 max-w-2xl" data-reveal>
+        <p class="text-[0.78rem] text-muted-foreground">Install the relay:</p>
+        <pre class="mt-2 rounded-lg border border-brand/25 bg-brand-soft px-3.5 py-2.5 font-mono text-[0.78rem] whitespace-pre-wrap [overflow-wrap:anywhere] text-brand"><code>{sync.installCmd}</code></pre>
+        <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+          <a href={sync.ctaPrimaryHref} class={buttonVariants({ variant: 'outline' })}>
+            {sync.ctaPrimary}
+            <ArrowRight className="size-4" />
+          </a>
+          <a href={sync.ctaSecondaryHref} class={buttonVariants({ variant: 'ghost' })}>
+            {sync.ctaSecondary}
+          </a>
+        </div>
       </div>
     </div>
   </section>
