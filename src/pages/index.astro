@@ -318,7 +318,7 @@ const icons = {
     <div class="mt-14" data-reveal>
       <div class="flex flex-col gap-3 sm:flex-row">
         <a href="/mcp/" class={buttonVariants({ variant: 'outline' })}>
-          All 28 tools and how to connect
+          All {ai.toolCount} tools and how to connect
           <ArrowRight className="size-4" />
         </a>
         <a href={site.repo + '/blob/main/docs/AI-SECURITY.md'} class={buttonVariants({ variant: 'ghost' })}>
@@ -462,6 +462,8 @@ const icons = {
         <a href={site.repo + '/blob/main/SECURITY.md'} class="transition-colors hover:text-foreground">Security</a>
         <a href="/changelog/" class="transition-colors hover:text-foreground">Changelog</a>
         <a href={site.releases} class="transition-colors hover:text-foreground">Releases</a>
+        <a href="mailto:support@opsmaxx.dev" class="transition-colors hover:text-foreground">Contact</a>
+        <a href="/privacy/" class="transition-colors hover:text-foreground">Privacy</a>
         <!-- CookieYes binds this class to reopen its consent banner. -->
         <button type="button" class="cky-banner-element transition-colors hover:text-foreground">Cookie settings</button>
       </div>

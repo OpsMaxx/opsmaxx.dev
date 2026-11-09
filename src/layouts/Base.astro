@@ -99,6 +99,24 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString()
       gtag('config', 'G-PF96S41GE7')
     </script>
 
+    <!-- Google Tag Manager. After the consent defaults above, so every tag in
+         the container starts denied too. GTM does not enforce that on its
+         own: a tag only waits for consent if it has "Require additional
+         consent" set in the container. GA4 is NOT in the container — it is the
+         gtag above, and a second GA4 tag there would count every view twice.
+         The <noscript> iframe is left out on purpose: without JavaScript there
+         is no consent check, so it would fire for people who never agreed. -->
+    <script is:inline>
+      ;(function (w, d, s, l, i) {
+        w[l] = w[l] || []
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' })
+        var f = d.getElementsByTagName(s)[0], j = d.createElement(s)
+        j.async = true
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i
+        f.parentNode.insertBefore(j, f)
+      })(window, document, 'script', 'dataLayer', 'GTM-PG23V3L3')
+    </script>
+
     <!-- Dark is the default. Only a stored preference turns the page light,
          so a first-time visitor never gets a flash of the wrong theme. A
          stored 'dark' from when light was the default now means the default. -->

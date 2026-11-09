@@ -1,0 +1,145 @@
+---
+import Base from '@/layouts/Base.astro'
+import { ArrowLeft } from 'lucide-react'
+import { site, capture } from '@/data/copy'
+import { getRelease } from '@/lib/releases'
+
+const release = await getRelease()
+
+const title = 'Privacy — OpsMaxx'
+const description =
+  'The OpsMaxx app collects nothing: no account, no telemetry, no analytics. This website uses Google Analytics only after you accept cookies. The detail, in plain words.'
+
+// Change this whenever a sentence below changes, and only then.
+const updated = '9 November 2026'
+
+// The two events Base.astro sends. Kept here by hand: if one is added there,
+// it has to be listed here too, or this page says less than the site does.
+const events = [
+  ['app_download', 'Which installer was clicked: platform, file name, version, and which section of the page the link was in.'],
+  ['install_platform_select', 'Which tab of the install section was opened: macOS, Windows or Linux.']
+]
+---
+
+<Base title={title} description={description} version={release.version}>
+  <header class="sticky top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur-xl">
+    <nav class="mx-auto flex h-16 max-w-3xl items-center justify-between px-5 sm:px-6">
+      <a href="/" class="flex shrink-0 items-center gap-2.5 text-[0.98rem] font-semibold tracking-tight">
+        <img src="/favicon.svg" alt="" width="24" height="24" />
+        OpsMaxx
+      </a>
+      <a href="/" class="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
+        <ArrowLeft className="size-3.5" />
+        Back to the site
+      </a>
+    </nav>
+  </header>
+
+  <main class="mx-auto max-w-3xl px-5 sm:px-6">
+    <section class="border-b border-border py-16 sm:py-20">
+      <p class="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-brand">Privacy</p>
+      <h1 class="mt-4 text-3xl font-semibold leading-tight sm:text-[2.6rem]">The app collects nothing. The website asks first.</h1>
+      <p class="mt-6 max-w-2xl text-[1.02rem] leading-relaxed text-muted-foreground">
+        Two different things, so two different answers. Last updated {updated}.
+      </p>
+    </section>
+
+    <section class="border-b border-border py-12">
+      <h2 class="text-xl font-semibold tracking-tight">The OpsMaxx app</h2>
+      <div class="mt-5 space-y-4 text-[0.97rem] leading-relaxed">
+        <p>
+          No account, no telemetry, no analytics, no crash reporting. Nothing about you, your servers or how
+          you use the app is sent to us — there is no server of ours for it to be sent to.
+        </p>
+        <p>
+          Every connection the app makes is one you set up: your servers, databases, CI providers, VPNs and
+          sync destinations. The one exception is the <strong>update check</strong>, which asks GitHub for the
+          latest release. It is on by default; turn it off with <em>Check for updates automatically</em> in
+          Settings. GitHub sees that request the way it sees any download. All we can see is GitHub's public
+          count of how many times each release file was downloaded — the same number anyone can read.
+        </p>
+        <p>
+          The debug trace in Settings → Advanced is off by default, stays on your machine, and is never
+          uploaded. If you want to share one, you attach it to an issue yourself.
+        </p>
+        <p>
+          The source is public, so none of this has to be taken on trust: read
+          <a href={site.repo + '/blob/main/SECURITY.md'} class="text-brand underline-offset-4 hover:underline">SECURITY.md</a>
+          or the code itself.
+        </p>
+      </div>
+    </section>
+
+    <section class="border-b border-border py-12">
+      <h2 class="text-xl font-semibold tracking-tight">This website</h2>
+      <div class="mt-5 space-y-4 text-[0.97rem] leading-relaxed">
+        <p>
+          Cloudflare serves the site and handles each request the way any host does. Cookie consent is managed
+          by CookieYes, which stores your choice in a cookie of its own.
+        </p>
+        <p>
+          We use <strong>Google Analytics</strong> to learn which pages and launch posts bring people here and
+          which installers they download. It loads with every kind of storage denied: until you accept, it sets
+          no cookie and sends no measurement. Accept, and it sets its usual cookies and records page views plus
+          two events of our own:
+        </p>
+        <ul class="space-y-2.5">
+          {events.map(([name, what]) => (
+            <li class="flex gap-3">
+              <span class="mt-[0.6rem] size-1 shrink-0 rounded-full bg-brand/60" />
+              <span><code class="font-mono text-[0.86rem]">{name}</code> — {what}</span>
+            </li>
+          ))}
+        </ul>
+        <p>
+          Both are loaded through <strong>Google Tag Manager</strong>, which starts with the same
+          everything-denied defaults.
+        </p>
+        <p>
+          If you also accept <strong>advertising</strong> cookies, the site loads <strong>RB2B</strong>. For
+          visitors in the United States, RB2B can match a visit to a LinkedIn profile, so we may learn who
+          visited — your name, job title and company, and which pages you saw. We use that only to understand
+          who is interested in OpsMaxx. If you do not accept advertising cookies, RB2B never loads.
+        </p>
+        <p>
+          The site runs no ads. Change your choice at any time with
+          <button type="button" class="cky-banner-element text-brand underline-offset-4 hover:underline">Cookie settings</button>.
+        </p>
+        <p>
+          The installers are hosted on GitHub, so downloading one is covered by
+          <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener" class="text-brand underline-offset-4 hover:underline">GitHub's privacy statement</a>.
+        </p>
+      </div>
+    </section>
+
+    {capture.action && (
+      <section class="border-b border-border py-12">
+        <h2 class="text-xl font-semibold tracking-tight">Release emails</h2>
+        <div class="mt-5 space-y-4 text-[0.97rem] leading-relaxed">
+          <p>
+            If you sign up for release notifications, we keep your email address and use it for one email per
+            release, nothing else. Every email has a one-click unsubscribe, and we do not track opens or clicks.
+          </p>
+        </div>
+      </section>
+    )}
+
+    <section class="py-12">
+      <h2 class="text-xl font-semibold tracking-tight">Questions</h2>
+      <p class="mt-5 text-[0.97rem] leading-relaxed">
+        Email <a href="mailto:support@opsmaxx.dev" class="text-brand underline-offset-4 hover:underline">support@opsmaxx.dev</a>.
+      </p>
+    </section>
+  </main>
+
+  <footer class="border-t border-border bg-band">
+    <div class="mx-auto flex max-w-3xl flex-col items-center justify-between gap-4 px-5 py-10 text-[0.86rem] text-muted-foreground sm:flex-row sm:px-6">
+      <span>OpsMaxx {release.version ? `v${release.version}` : ''} · MIT licensed · {site.domain} · A <a href="https://cyphlon.com" rel="noopener" class="transition-colors hover:text-foreground">Cyphlon</a> product · <a href="https://chain305.com" rel="noopener" class="transition-colors hover:text-foreground">Chain305</a></span>
+      <div class="flex items-center gap-6">
+        <a href="/" class="transition-colors hover:text-foreground">Home</a>
+        <a href="/mcp/" class="transition-colors hover:text-foreground">MCP</a>
+        <a href={site.repo} class="transition-colors hover:text-foreground">GitHub</a>
+      </div>
+    </div>
+  </footer>
+</Base>

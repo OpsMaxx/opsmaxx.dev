@@ -1,3 +1,5 @@
+import { mcpToolCount } from './mcp'
+
 export const site = {
   domain: 'opsmaxx.dev',
   url: 'https://opsmaxx.dev',
@@ -65,7 +67,7 @@ export const heroVariants: Record<string, HeroCopy> = {
     eyebrow: 'MIT licensed',
     h1: 'Actually free. No cap.',
     h1Mark: 'No cap.',
-    sub: 'No account, no telemetry, no paid tier, no session limit. SSH, SFTP, five databases, tunnels and a vault in one window, and the source is public.'
+    sub: 'No account, no telemetry, no paid tier, no session limit. SSH, SFTP, six databases, tunnels and a vault in one window, and the source is public.'
   }
 }
 
@@ -140,8 +142,8 @@ export const tour: TourItem[] = [
   {
     id: 'databases',
     tab: 'Databases',
-    headline: 'Five databases. Zero extra apps.',
-    body: 'Five engines built in — Postgres, MySQL, SQL Server, MongoDB and Redis — each with a query editor, a shell and its own operations view, reachable through a bastion when that is the only route.',
+    headline: 'Six databases. Zero extra apps.',
+    body: 'Six engines built in — Postgres, MySQL, SQL Server, MongoDB, Redis and ClickHouse — each with a query editor and a shell, all but ClickHouse with an operations view, reachable through a bastion when that is the only route.',
     bullets: ['Tables listed as soon as you connect', 'Results in a grid, with row count and timing', 'Nothing is sent to the server until you press Run'],
     shot: shot('database'),
     alt: 'A PostgreSQL connection with its tables listed and a query result grid of recent orders'
@@ -268,9 +270,9 @@ export const features: Feature[] = [
   },
   {
     icon: 'database',
-    name: 'Five database engines, built in',
+    name: 'Six database engines, built in',
     line: 'Query and shell into each one, through a bastion when that is the only route.',
-    chips: ['postgres', 'mysql', 'sql server', 'mongodb', 'redis']
+    chips: ['postgres', 'mysql', 'sql server', 'mongodb', 'redis', 'clickhouse']
   },
   {
     icon: 'lock',
@@ -379,7 +381,7 @@ export const ai = {
 
   clients: ['Claude Code', 'Claude Desktop', 'Codex', 'Gemini CLI', 'any MCP client'],
 
-  toolCount: 28,
+  toolCount: mcpToolCount,
   toolGroups: [
     { title: 'Servers', tools: ['list_servers', 'get_server_details', 'get_host_facts', 'get_server_metrics', 'execute_command', 'add_server'] },
     { title: 'Files', tools: ['list_files', 'read_file', 'write_file'] },
@@ -407,7 +409,7 @@ export const ai = {
     'Anything in the vault',
     'An interactive root shell'
   ],
-  closing: 'The bridge listens on 127.0.0.1. Escalation shells — sudo -i, su, sudo bash — are refused for every group, with no setting that turns them back on.',
+  closing: 'The bridge listens on 127.0.0.1. Escalation shells — sudo -i, su, sudo bash — are refused for every group. Only a session you put in Bypass mode yourself can run them, and the audit log marks everything Bypass allowed.',
   cta: 'Read the threat model',
   pairing: 'opsmaxx claude'
 }
@@ -547,7 +549,7 @@ export const install = {
 export const faq = [
   {
     q: 'Why is Windows side-eyeing the download?',
-    a: 'macOS does not warn any more: since 0.30.1 that build is signed with an Apple Developer ID and notarized by Apple, with the ticket stapled in, so it opens normally even offline. Windows still warns, because that build carries no signature — a certificate there is $200–$400 a year. The warning means Windows cannot confirm who published the app, not that the file is unsafe. Every installer is scanned with ClamAV, the Windows one with Defender, and the .exe and .dmg with VirusTotal\'s 70+ engines — and every SHA-256 is in the release notes for you to check.'
+    a: 'macOS does not warn any more: since 0.30.1 that build is signed with an Apple Developer ID and notarized by Apple, with the ticket stapled in, so it opens normally even offline. Windows still warns, because that build carries no signature — a certificate there is $200–$400 a year. The warning means Windows cannot confirm who published the app, not that the file is unsafe. Every installer is scanned with ClamAV, the Windows one with Defender, and, when the VirusTotal step runs, the .exe, .dmg, .AppImage and .deb as well; ClamAV and Defender are the ones that can stop a release — and every SHA-256 is in the release notes for you to check.'
   },
   {
     q: 'Free free, or free-until-the-Series-A free?',
@@ -559,7 +561,7 @@ export const faq = [
   },
   {
     q: 'Can my agent go rogue?',
-    a: 'Only within the access group you set. Escalation shells — sudo -i, su, sudo bash — are refused for every group with no setting that reverses it, anything set to ASK waits for your approval, and every action lands in the audit log. Individual privileged reads do use sudo -n, which you can turn off.'
+    a: 'Only within the access group you set. Escalation shells — sudo -i, su, sudo bash — are refused for every group unless you put the session in Bypass mode yourself, anything set to ASK waits for your approval, and every action lands in the audit log. Individual privileged reads do use sudo -n, which you can turn off.'
   },
   {
     q: 'Do I have to nuke my current setup?',
