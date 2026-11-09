@@ -587,14 +587,16 @@ export const faq = [
  * address, which is worse than having no form at all.
  */
 export const capture = {
-  action: '',
+  action: 'https://buttondown.com/api/emails/embed-subscribe/opsmaxx',
   eyebrow: 'Release notifications',
-  headline: 'One email per release. Nothing else.',
+  // Not "one per release": patch releases can land several times a week, and
+  // emailing each one is how a list gets unsubscribed. Sent by hand.
+  headline: 'Only the releases worth knowing about.',
   // The honest reason to subscribe, and the thing the FAQ gets asked most.
   line: 'The Windows build carries no signature today. When that changes, this list is how you hear about it.',
   placeholder: 'you@example.com',
   button: 'Notify me',
-  note: 'One email per release. No newsletter, no digest, unsubscribe in one click.'
+  note: 'A few emails a month at most. No newsletter, no tracking, unsubscribe in one click.'
 }
 
 export const finalCta = {
