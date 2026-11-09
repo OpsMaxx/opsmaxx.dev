@@ -422,7 +422,7 @@ const icons = {
       <p class="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-brand">{capture.eyebrow}</p>
       <h2 class="mt-4 text-3xl font-semibold leading-tight sm:text-[2.2rem]">{capture.headline}</h2>
       <p class="mx-auto mt-4 max-w-lg text-[1.02rem] text-muted-foreground">{capture.line}</p>
-      <form action={capture.action} method="post" target="_blank" class="mx-auto mt-8 flex w-full max-w-md flex-col gap-3 sm:flex-row">
+      <form id="notify-form" action={capture.action} method="post" class="mx-auto mt-8 flex w-full max-w-md flex-col gap-3 sm:flex-row">
         <label class="sr-only" for="notify-email">Email address</label>
         <input
           id="notify-email"
@@ -435,8 +435,16 @@ const icons = {
         />
         <button type="submit" class={buttonVariants({ size: 'lg' }) + ' shrink-0'}>{capture.button}</button>
       </form>
+      <p id="notify-done" hidden class="mx-auto mt-8 max-w-md rounded-md border border-border bg-brand-soft px-4 py-3 text-[0.95rem]">{capture.done}</p>
       <p class="mt-4 text-[0.82rem] text-muted-foreground">{capture.note}</p>
     </div>
+    <!-- Set in Base.astro's head, where the address is stripped from the URL. -->
+    <script is:inline>
+      if (window.__opsmaxxSubscribed) {
+        document.getElementById('notify-form').hidden = true
+        document.getElementById('notify-done').hidden = false
+      }
+    </script>
   </section>
   )}
 

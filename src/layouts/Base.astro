@@ -72,6 +72,19 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString()
          stays denied forever — quietly, which is the failure mode to watch
          for if the GA4 property shows no traffic. -->
     <script is:inline>
+      // Buttondown sends a new subscriber back here with ?email_address=<their
+      // address>. That URL would otherwise reach GA as page_location, which is
+      // an email address in Google Analytics. Note only THAT it happened, then
+      // strip it, before gtag or GTM can read location. Must stay first.
+      ;(function () {
+        try {
+          var u = new URL(location.href)
+          if (!u.searchParams.has('email_address')) return
+          window.__opsmaxxSubscribed = true
+          u.searchParams.delete('email_address')
+          history.replaceState(null, '', u.pathname + u.search + '#notify')
+        } catch (e) {}
+      })()
       window.dataLayer = window.dataLayer || []
       function gtag() { dataLayer.push(arguments) }
       gtag('consent', 'default', {

@@ -596,7 +596,9 @@ export const capture = {
   line: 'The Windows build carries no signature today. When that changes, this list is how you hear about it.',
   placeholder: 'you@example.com',
   button: 'Notify me',
-  note: 'A few emails a month at most. No newsletter, no tracking, unsubscribe in one click.'
+  note: 'A few emails a month at most. No newsletter, no tracking, unsubscribe in one click.',
+  // Shown in place of the form when Buttondown sends a new subscriber back.
+  done: 'You\'re on the list. If an email from Buttondown asks you to confirm, click the link in it.'
 }
 
 export const finalCta = {
